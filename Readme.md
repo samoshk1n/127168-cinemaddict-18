@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
 * Студент: [Dima Samoshkin](https://up.htmlacademy.ru/ecmascript/18/user/127168).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
 
 ---
 
