@@ -1,4 +1,4 @@
-import ProfileView from '../view/profil-view.js';
+import ProfileView from '../view/profile-view.js';
 import {render} from '../render.js';
 
 export default class ProfilePresenter {
