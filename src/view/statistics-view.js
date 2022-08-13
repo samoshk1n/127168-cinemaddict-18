@@ -7,7 +7,7 @@ const createStatisticsTemplate = () => (
   </section>`
 );
 
-export default class NewStatisticsView {
+export default class StatisticsView {
   getTemplate() {
     return createStatisticsTemplate();
   }

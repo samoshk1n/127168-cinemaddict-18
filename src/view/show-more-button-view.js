@@ -7,7 +7,7 @@ const createShowMoreButtonTemplate = () => (
   </section>`
 );
 
-export default class NewShowMoreButtonView {
+export default class ShowMoreButtonView {
   getTemplate() {
     return createShowMoreButtonTemplate();
   }
