@@ -4,6 +4,8 @@ import FilmCardView from '../view/film-card-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import {render} from '../render.js';
 
+const NUMBER_OF_FILMS = 5;
+
 export default class FilmsPresenter {
   filmsComponent = new FilmsView();
   filmsListComponent = new FilmsListView();
@@ -16,7 +18,7 @@ export default class FilmsPresenter {
 
     const filmsListElement = this.filmsListComponent.getElement();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < NUMBER_OF_FILMS; i++) {
       render(new FilmCardView(), filmsListElement.querySelector('.films-list__container'));
     }
 

@@ -6,6 +6,8 @@ import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import {render} from '../render.js';
 
+const NUMBER_OF_COMMENTS = 4;
+
 export default class PopupPresenter {
   filmDetailsContainer = new FilmDetailsContainerView();
   filmCommentsView = new FilmCommentsView();
@@ -24,7 +26,7 @@ export default class PopupPresenter {
     render(this.filmCommentsView, innerContainer);
     render(this.commentsListView, innerContainer);
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < NUMBER_OF_COMMENTS; i++) {
       render(new CommentView(), commentsWrap);
     }
 
