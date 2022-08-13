@@ -1,11 +1,6 @@
 import {createElement} from '../render.js';
 
-const createStatisticsTemplate = () => (
-  `<section class="films-list">
-    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-    <div class="films-list__container"></div>
-  </section>`
-);
+const createStatisticsTemplate = () => '<p>130 291 movies inside</p>';
 
 export default class StatisticsView {
   getTemplate() {
