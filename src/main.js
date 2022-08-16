@@ -4,6 +4,7 @@ import SortPresenter from './presenter/sort-presenter.js';
 import FilmsPresenter from './presenter/films-presenter.js';
 import StatisticsPresenter from './presenter/statistics-presenter.js';
 import PopupPresenter from './presenter/popup-presenter.js';
+import FilmsModel from './model/films-model.js';
 
 const siteBodyElement = document.querySelector('body');
 const siteHeaderElement = siteBodyElement.querySelector('.header');
@@ -16,10 +17,11 @@ const sortPresenter = new SortPresenter();
 const filmsPresenter = new FilmsPresenter();
 const statisticsPresenter = new StatisticsPresenter();
 const popupPresenter = new PopupPresenter();
+const filmsModel = new FilmsModel();
 
 profilePresenter.init(siteHeaderElement);
 navigationPresenter.init(siteMainElement);
 sortPresenter.init(siteMainElement);
-filmsPresenter.init(siteMainElement);
+filmsPresenter.init(siteMainElement, filmsModel);
 statisticsPresenter.init(statisticElement);
 popupPresenter.init(siteBodyElement);
