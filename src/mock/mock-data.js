@@ -23,6 +23,30 @@ const POSTERS = [
 
 const AGE_RATINGS = [0, 13, 17, 18];
 
-export {TITLES,
+const DIRECTORS = [
+  'Frank Darabont',
+  'Francis Ford Coppola',
+  'Christopher Nolan',
+  'Sidney Lumet',
+  'Steven Spielberg',
+  'Peter Jackson',
+  'Quentin Tarantino',
+  'Robert Zemeckis'
+];
+
+const СOUNTRIES = [
+  'United States',
+  'United Kingdom',
+  'New Zealand',
+  'Finland',
+  'Germany',
+  'France'
+];
+
+export {
+  TITLES,
   POSTERS,
-  AGE_RATINGS};
+  AGE_RATINGS,
+  DIRECTORS,
+  СOUNTRIES
+};

@@ -1,9 +1,16 @@
-import {getRandomIntFromInterval,
+import {
+  getRandomIntFromInterval,
   getRandomFloatFromInterval,
-  getRandomArrayElement} from '../utils.js';
-import {TITLES,
+  getRandomArrayElement
+} from '../utils.js';
+
+import {
+  TITLES,
   POSTERS,
-  AGE_RATINGS} from './mock-data.js';
+  AGE_RATINGS,
+  DIRECTORS,
+  СOUNTRIES
+} from './mock-data.js';
 
 export const generateFilm = (id) => {
   const randomPoster = getRandomArrayElement(POSTERS);
@@ -17,8 +24,8 @@ export const generateFilm = (id) => {
       alternativeTitle: commonTitle, // альтернативное название такое же, как и главное название (сделано для упрощения)
       totalRating: getRandomFloatFromInterval(),
       poster: `images/posters/${randomPoster}`,
-      ageRating: getRandomArrayElement(AGE_RATINGS), // TODO Выбор из произвольного массива. Попап
-      director: 'Tom Ford', // TODO Выбор из произвольного массива. Попап
+      ageRating: getRandomArrayElement(AGE_RATINGS),
+      director: getRandomArrayElement(DIRECTORS),
       writers: [
         'Takeshi Kitano'
       ], // TODO Выбор из произвольного массива несколько значений (1-3). Обработка writer(s). Попап
@@ -26,8 +33,8 @@ export const generateFilm = (id) => {
         'Morgan Freeman'
       ], // TODO Выбор из произвольного массива несколько значений (3-7). Попап
       release: {
-        'date': '2019-05-11T00:00:00.000Z', // TODO Генерация случайных дат. Главная и попап. На главной только год, на попапе "день месяц год"
-        'release_country': 'Finland' // TODO Выбор из произвольного массива. Попап
+        date: '2019-05-11T00:00:00.000Z', // TODO Генерация случайных дат. Главная и попап. На главной только год, на попапе "день месяц год"
+        releaseСountry: getRandomArrayElement(СOUNTRIES)
       },
       runtime: 77, // TODO Генерация случайного числа. Главная и попап. Формат "часы минуты"
       genre: [

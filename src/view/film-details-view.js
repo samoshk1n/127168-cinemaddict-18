@@ -7,7 +7,11 @@ const createFilmDetailsTemplate = (film) => {
       alternativeTitle,
       totalRating,
       poster,
-      ageRating
+      ageRating,
+      director,
+      release: {
+        releaseСountry
+      }
     }
   } = film;
 
@@ -18,7 +22,6 @@ const createFilmDetailsTemplate = (film) => {
     <div class="film-details__info-wrap">
       <div class="film-details__poster">
         <img class="film-details__poster-img" src="./${poster}" alt="">
-
         <p class="film-details__age">${ageRating}+</p>
       </div>
 
@@ -37,7 +40,7 @@ const createFilmDetailsTemplate = (film) => {
         <table class="film-details__table">
           <tbody><tr class="film-details__row">
             <td class="film-details__term">Director</td>
-            <td class="film-details__cell">Anthony Mann</td>
+            <td class="film-details__cell">${director}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Writers</td>
@@ -57,7 +60,7 @@ const createFilmDetailsTemplate = (film) => {
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Country</td>
-            <td class="film-details__cell">USA</td>
+            <td class="film-details__cell">${releaseСountry}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Genres</td>
