@@ -1,7 +1,11 @@
 import {createElement} from '../render.js';
 
 const createFilmDetailsTemplate = (film) => {
-  console.log(film);
+  const {
+    filmInfo: {
+      title
+    }
+  } = film;
 
   return `<div class="film-details__top-container">
     <div class="film-details__close">
@@ -17,7 +21,7 @@ const createFilmDetailsTemplate = (film) => {
       <div class="film-details__info">
         <div class="film-details__info-head">
           <div class="film-details__title-wrap">
-            <h3 class="film-details__title">The Great Flamarion</h3>
+            <h3 class="film-details__title">${title}</h3>
             <p class="film-details__title-original">Original: The Great Flamarion</p>
           </div>
 

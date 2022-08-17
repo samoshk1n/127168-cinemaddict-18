@@ -1,12 +1,13 @@
 import {getRandomIntFromInterval,
   getRandomFloatFromInterval,
   getRandomArrayElement} from '../utils.js';
+import {TITLES} from './mock-data.js';
 
 export const generateFilm = (id) => ({
   id, // TODO Сделать генерацию айдишников;
   comments: [], // TODO Сгенерировать айдишники комментариев 0-5 шт. Главная и попап
   filmInfo: {
-    title: 'A Little Pony Without The Carpet', // TODO Выбор из произвольного массива. Главная и попап
+    title: getRandomArrayElement(TITLES), // TODO Выбор из произвольного массива. Главная и попап
     alternativeTitle: 'Laziness Who Sold Themselves', // TODO Для рыбы подставим из основного title. Попап
     totalRating: 5.3, // TODO Генерация случайного числа. Главная и попап
     poster: 'images/posters/blue-blazes.jpg', // TODO Выбор из массива адрессов. Главная и попап
