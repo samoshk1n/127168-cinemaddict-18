@@ -3,7 +3,9 @@ import {createElement} from '../render.js';
 const createFilmDetailsTemplate = (film) => {
   const {
     filmInfo: {
-      title
+      title,
+      totalRating,
+      poster
     }
   } = film;
 
@@ -13,7 +15,7 @@ const createFilmDetailsTemplate = (film) => {
     </div>
     <div class="film-details__info-wrap">
       <div class="film-details__poster">
-        <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
+        <img class="film-details__poster-img" src="./${poster}" alt="">
 
         <p class="film-details__age">18+</p>
       </div>
@@ -26,7 +28,7 @@ const createFilmDetailsTemplate = (film) => {
           </div>
 
           <div class="film-details__rating">
-            <p class="film-details__total-rating">8.9</p>
+            <p class="film-details__total-rating">${totalRating}</p>
           </div>
         </div>
 
