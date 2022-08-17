@@ -6,13 +6,14 @@ import {TITLES,
 
 export const generateFilm = (id) => {
   const randomPoster = getRandomArrayElement(POSTERS);
+  const commonTitle = getRandomArrayElement(TITLES);
 
   return {
     id, // TODO Сделать генерацию айдишников;
     comments: [], // TODO Сгенерировать айдишники комментариев 0-5 шт. Главная и попап
     filmInfo: {
-      title: getRandomArrayElement(TITLES),
-      alternativeTitle: 'Laziness Who Sold Themselves', // TODO Для рыбы подставим из основного title. Попап
+      title: commonTitle,
+      alternativeTitle: commonTitle, // альтернативное название такое же, как и главное название (сделано для упрощения)
       totalRating: getRandomFloatFromInterval(),
       poster: `images/posters/${randomPoster}`,
       ageRating: 0, // TODO Выбор из произвольного массива. Попап

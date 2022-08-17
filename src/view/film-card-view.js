@@ -4,6 +4,7 @@ const createFilmCardTemplate = (film) => {
   const {
     filmInfo: {
       title,
+      alternativeTitle,
       totalRating,
       poster
     }

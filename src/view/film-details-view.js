@@ -4,6 +4,7 @@ const createFilmDetailsTemplate = (film) => {
   const {
     filmInfo: {
       title,
+      alternativeTitle,
       totalRating,
       poster
     }
@@ -24,7 +25,7 @@ const createFilmDetailsTemplate = (film) => {
         <div class="film-details__info-head">
           <div class="film-details__title-wrap">
             <h3 class="film-details__title">${title}</h3>
-            <p class="film-details__title-original">Original: The Great Flamarion</p>
+            <p class="film-details__title-original">Original: ${alternativeTitle}</p>
           </div>
 
           <div class="film-details__rating">
