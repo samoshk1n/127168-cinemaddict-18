@@ -17,7 +17,7 @@ export const generateFilm = (id) => {
   const commonTitle = getRandomArrayElement(TITLES);
 
   return {
-    id, // TODO Сделать генерацию айдишников;
+    id,
     comments: [], // TODO Сгенерировать айдишники комментариев 0-5 шт. Главная и попап
     filmInfo: {
       title: commonTitle,
