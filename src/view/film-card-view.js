@@ -1,11 +1,14 @@
 import {createElement} from '../render.js';
+import {cutEndOfDescription} from '../utils.js';
 
 const createFilmCardTemplate = (film) => {
   const {
     filmInfo: {
       title,
       totalRating,
-      poster
+      poster,
+      genres,
+      description
     }
   } = film;
 
@@ -16,10 +19,10 @@ const createFilmCardTemplate = (film) => {
       <p class="film-card__info">
         <span class="film-card__year">1929</span>
         <span class="film-card__duration">1h 55m</span>
-        <span class="film-card__genre">Musical</span>
+        <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="./${poster}" alt="" class="film-card__poster">
-      <p class="film-card__description">Burlesque comic Ralph "Skid" Johnson (Skelly), and specialty dancer Bonny Lee King (Carroll), end up together on a cold, rainy night at a tr…</p>
+      <p class="film-card__description">${cutEndOfDescription(description)}</p>
       <span class="film-card__comments">5 comments</span>
     </a>
     <div class="film-card__controls">

@@ -24,6 +24,38 @@ const getRandomFloatFromInterval = (a = 1, b = 10, counter = 1) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomIntFromInterval(0, elements.length - 1)];
 
-export {getRandomIntFromInterval,
+const getSomeRandomArrayElements = (elements, numElements) => {
+  const usedElements = [];
+
+  for (let i = 0; i < numElements; i++) {
+    const newElement = getRandomArrayElement(elements);
+
+    if (usedElements.includes(newElement)) {
+      i--;
+      continue;
+    }
+
+    usedElements.push(newElement);
+  }
+
+  return usedElements;
+};
+
+const correctEndOfWord = (word, array) => (array.length === 1)
+  ? word
+  : `${word}s`;
+
+const cutEndOfDescription = (description,
+  maxLength = 140,
+  finalSymbol = '…') => (description.length > maxLength)
+  ? `${description.slice(0, maxLength - 1)}${finalSymbol}`
+  : description;
+
+export {
+  getRandomIntFromInterval,
   getRandomFloatFromInterval,
-  getRandomArrayElement};
+  getRandomArrayElement,
+  getSomeRandomArrayElements,
+  correctEndOfWord,
+  cutEndOfDescription
+};
