@@ -2,7 +2,8 @@ import {getRandomIntFromInterval,
   getRandomFloatFromInterval,
   getRandomArrayElement} from '../utils.js';
 import {TITLES,
-  POSTERS} from './mock-data.js';
+  POSTERS,
+  AGE_RATINGS} from './mock-data.js';
 
 export const generateFilm = (id) => {
   const randomPoster = getRandomArrayElement(POSTERS);
@@ -16,7 +17,7 @@ export const generateFilm = (id) => {
       alternativeTitle: commonTitle, // альтернативное название такое же, как и главное название (сделано для упрощения)
       totalRating: getRandomFloatFromInterval(),
       poster: `images/posters/${randomPoster}`,
-      ageRating: 0, // TODO Выбор из произвольного массива. Попап
+      ageRating: getRandomArrayElement(AGE_RATINGS), // TODO Выбор из произвольного массива. Попап
       director: 'Tom Ford', // TODO Выбор из произвольного массива. Попап
       writers: [
         'Takeshi Kitano'

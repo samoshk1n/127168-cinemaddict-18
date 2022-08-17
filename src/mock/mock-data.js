@@ -21,5 +21,8 @@ const POSTERS = [
   'the-man-with-the-golden-arm.jpg'
 ];
 
+const AGE_RATINGS = [0, 13, 17, 18];
+
 export {TITLES,
-  POSTERS};
+  POSTERS,
+  AGE_RATINGS};
