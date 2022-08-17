@@ -1,3 +1,7 @@
+import {getRandomIntFromInterval,
+  getRandomFloatFromInterval,
+  getRandomArrayElement} from '../utils.js';
+
 export const generateFilm = (id) => ({
   id, // TODO Сделать генерацию айдишников;
   comments: [], // TODO Сгенерировать айдишники комментариев 0-5 шт. Главная и попап
@@ -25,9 +29,9 @@ export const generateFilm = (id) => ({
     description: 'Oscar-winning film, a war drama about two young people, from the creators of timeless classic "Nu, Pogodi!" and "Alice in Wonderland", with the best fight scenes since Bruce Lee.' // TODO Выбор из произвольного массива. Главная и попап. На главной не больше 140 символов
   },
   userDetails: {
-    watchlist: false, // TODO Генерация случайного булева значения
-    alreadyWatched: true, // TODO Генерация случайного булева значения
+    watchlist: Boolean(getRandomIntFromInterval()),
+    alreadyWatched: Boolean(getRandomIntFromInterval()),
     watchingDate: '2019-04-12T16:12:32.554Z', // TODO Генерация случайной даты
-    favorite: false // TODO Генерация случайного булева значения
+    favorite: Boolean(getRandomIntFromInterval())
   }
 });
