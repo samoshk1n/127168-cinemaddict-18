@@ -13,8 +13,11 @@ export default class PopupPresenter {
   filmCommentsView = new FilmCommentsView();
   commentsListView = new CommentsListView();
 
-  init = (popupContainer) => {
+  init = (popupContainer, filmsModel) => {
     this.popupContainer = popupContainer;
+    this.filmsModel = filmsModel;
+    this.filmInformation = this.filmsModel.getFilms()[0]; // Передадим в попап информацию о первом фильме
+
     const bodyElement = document.querySelector('body');
     const innerContainer = this.filmDetailsContainer.getElement().querySelector('.film-details__inner');
     const commentsWrap = this.filmCommentsView.getElement().querySelector('.film-details__comments-wrap');
@@ -22,7 +25,7 @@ export default class PopupPresenter {
     bodyElement.classList.add('hide-overflow');
 
     render(this.filmDetailsContainer, this.popupContainer);
-    render(new FilmDetailsView(), innerContainer);
+    render(new FilmDetailsView(this.filmInformation), innerContainer);
     render(this.filmCommentsView, innerContainer);
     render(this.commentsListView, innerContainer);
 

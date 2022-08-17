@@ -24,4 +24,4 @@ navigationPresenter.init(siteMainElement);
 sortPresenter.init(siteMainElement);
 filmsPresenter.init(siteMainElement, filmsModel);
 statisticsPresenter.init(statisticElement);
-// popupPresenter.init(siteBodyElement);
+popupPresenter.init(siteBodyElement, filmsModel);
