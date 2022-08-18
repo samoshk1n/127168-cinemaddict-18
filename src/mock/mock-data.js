@@ -116,6 +116,66 @@ const DESCRIPTIONS = [
   'The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold from the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.'
 ];
 
+const FIRST_NAMES = [
+  'Gloria',
+  'Faye',
+  'Ivory',
+  'Wynne',
+  'Donald',
+  'Tabitha',
+  'Vanessa',
+  'Alan',
+  'Ted',
+  'Warwick',
+  'Manfred',
+  'Sarah',
+  'Walter',
+  'Kenneth',
+  'Vernon'
+];
+
+const SECOND_NAMES = [
+  'Stone',
+  'Hawkins',
+  'Burke',
+  'Simmons',
+  'Boyd',
+  'Hines',
+  'Montgomery',
+  'Simonds',
+  'Read',
+  'Hurlbutt',
+  'Alvarado',
+  'Reynolds',
+  'Pierpoint',
+  'Crawford',
+  'Nicholls',
+  'Berry'
+];
+
+const COMMENTS = [
+  'going to need every single one of you to RUN to the theater to see this when its playing near you. just the most poignant little film that made me cry so much. i am very happy it exists and will be rewatching it one million more times when i am sad. and thats all i know for sure',
+  'ZZZZZZZZZZzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz \n sorry nana connie was on the keyboard',
+  'Yeah the flying is amazing and it has the most thrilling action finale Ive seen in a blockbuster in years but honestly one of the most exciting things about this movie is that Tom Cruise finally made a movie that acknowledges hes getting older',
+  'Miles and Glen didnt kiss at the end so thats why i give it 4 stars.',
+  'Exquisite piece of dad movie filmmaking',
+  'During the screening of TOP GUN: MAVERICK, a man in his fifties yelled out in what sounded like a fit of pure ecstasy during one of the aerial stunts. He sounded like he was being raptured. \n I cannot wait for the dads of the world to experience this movie this summer.',
+  'HOLY MOLY I LOVE HOT MEN',
+  'Jesus? What the fuck.',
+  'I know when that hotline bling that could only mean one thing',
+  'My screen debut! \n Just kidding, sort of, I was an extra in this and its the first time Ive ever seen myself on screen and it was weird and .000000000002 seconds but Im going to choose to celebrate it. \n What a scary, enthralling, perfect movie.',
+  'why was the grabber so fun with his funky masks and balloons',
+  'redownloading duolingo to pick back up on my french lessons with the little green owl as we SPEAK!',
+  'you know I was skeptical that mrs harris would be going to paris but then she went to paris and I lost my shit',
+  'So stupid and so sweet. Lesley Manville made me cry 3 times. The outfit the French hunk is wearing on the Seine is the hottest thing Ive ever seen, my dream clothes. When the mean, rich French bitch did something horrendously bitchy to Mrs. Harris, a septuagenarian (octogenarian?) behind me grumbled, “What a bitch!” Les Mrsrables.',
+  'rebecca hall is really in her reputation era',
+  'Imagine being the poor intern that has to stand there and listen to Rebecca Halls demented eight minute monologue and then go home and pretend everythings fine',
+  'Oh I was so into this - wickedly good, nasty performances from Rebecca Hall and Tim Roth but I also loved how the script is just constantly fucking with someone and that seesaws between us and them all the time. Much to be said on gaslighting and mothering and protecting and leaving but its also just such horrible fun to watch without thinking about any of it',
+  'Resurrection is not to be enjoyed but rather endured. Infused with a tormenting ambiguity, Andrew Semans’ film is an unflinching tale of trauma and haunted memories, and though it edges close to narrative implosion, Rebecca Halls intensely committed performance prevents the piece from becoming another abstract thriller of little substance.',
+  'Jordan Peele puts his whole bussy in his movies and i love him for that',
+  'tfw youre so hungry you could eat a horse'
+];
+
 export {
   TITLES,
   POSTERS,
@@ -125,5 +185,8 @@ export {
   ACTORS,
   СOUNTRIES,
   GENRES,
-  DESCRIPTIONS
+  DESCRIPTIONS,
+  FIRST_NAMES,
+  SECOND_NAMES,
+  COMMENTS
 };

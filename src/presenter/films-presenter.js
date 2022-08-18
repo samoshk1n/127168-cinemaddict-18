@@ -3,8 +3,7 @@ import FilmsListView from '../view/films-list-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import {render} from '../render.js';
-
-const NUMBER_OF_FILMS = 5;
+import {NUMBER_OF_FILMS} from '../const.js';
 
 export default class FilmsPresenter {
   filmsComponent = new FilmsView();

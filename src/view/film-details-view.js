@@ -71,7 +71,7 @@ const createFilmDetailsTemplate = (film) => {
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Release Date</td>
-            <td class="film-details__cell">${humanizeDate(date, true)}</td>
+            <td class="film-details__cell">${humanizeDate(date, 'day-month-year')}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Runtime</td>

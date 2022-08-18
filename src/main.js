@@ -5,6 +5,7 @@ import FilmsPresenter from './presenter/films-presenter.js';
 import StatisticsPresenter from './presenter/statistics-presenter.js';
 import PopupPresenter from './presenter/popup-presenter.js';
 import FilmsModel from './model/films-model.js';
+import CommentsModel from './model/comments-model.js';
 
 const siteBodyElement = document.querySelector('body');
 const siteHeaderElement = siteBodyElement.querySelector('.header');
@@ -18,10 +19,11 @@ const filmsPresenter = new FilmsPresenter();
 const statisticsPresenter = new StatisticsPresenter();
 const popupPresenter = new PopupPresenter();
 const filmsModel = new FilmsModel();
+const commentsModel = new CommentsModel();
 
 profilePresenter.init(siteHeaderElement);
 navigationPresenter.init(siteMainElement);
 sortPresenter.init(siteMainElement);
 filmsPresenter.init(siteMainElement, filmsModel);
 statisticsPresenter.init(statisticElement);
-popupPresenter.init(siteBodyElement, filmsModel);
+popupPresenter.init(siteBodyElement, filmsModel, commentsModel);

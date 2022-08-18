@@ -70,17 +70,24 @@ const convertMinutesToHoursMinutes = (minutes) => {
 
 const generateRandomDatePast = (yearsAgo) => {
   const daysAgo = yearsAgo * 365; // принебрегаем високосными годами
-  const daysGap = -getRandomIntFromInterval(0, daysAgo);
+  const hoursAgo = daysAgo * 24;
+  const minutesAgo = hoursAgo * 60;
+  const minutesGap = -getRandomIntFromInterval(0, minutesAgo);
 
-  return dayjs().add(daysGap, 'day').toDate();
+  return dayjs().add(minutesGap, 'minute').toDate();
 };
 
-const humanizeDate = (date, popupView = false) => {
-  if (!popupView) {
-    return dayjs(date).format('YYYY');
+const humanizeDate = (date, type) => {
+  switch (type) {
+    case 'year':
+      return dayjs(date).format('YYYY');
+    case 'day-month-year':
+      return dayjs(date).format('D MMMM YYYY');
+    case 'full':
+      return dayjs(date).format('YYYY/MM/DD HH:mm');
+    default:
+      return 'Something goes wrong';
   }
-
-  return dayjs(date).format('D MMMM YYYY');
 };
 
 export {

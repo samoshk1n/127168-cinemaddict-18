@@ -6,17 +6,19 @@ import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import {render} from '../render.js';
 
-const NUMBER_OF_COMMENTS = 4;
-
 export default class PopupPresenter {
   filmDetailsContainer = new FilmDetailsContainerView();
-  filmCommentsView = new FilmCommentsView();
   commentsListView = new CommentsListView();
 
-  init = (popupContainer, filmsModel) => {
+  init = (popupContainer, filmsModel, commentsModel) => {
     this.popupContainer = popupContainer;
     this.filmsModel = filmsModel;
     this.filmInformation = this.filmsModel.getFilms()[0]; // Передадим в попап информацию о первом фильме
+    this.filmCommentsInformation = this.filmInformation.comments;
+    this.commentsModel = commentsModel;
+    this.commentsContent = commentsModel.getComments();
+
+    this.filmCommentsView = new FilmCommentsView(this.filmCommentsInformation.length);
 
     const bodyElement = document.querySelector('body');
     const innerContainer = this.filmDetailsContainer.getElement().querySelector('.film-details__inner');
@@ -29,8 +31,9 @@ export default class PopupPresenter {
     render(this.filmCommentsView, innerContainer);
     render(this.commentsListView, innerContainer);
 
-    for (let i = 0; i < NUMBER_OF_COMMENTS; i++) {
-      render(new CommentView(), commentsWrap);
+    for (const filmCommentId of this.filmCommentsInformation) {
+      const currentComment = this.commentsContent[filmCommentId];
+      render(new CommentView(currentComment), commentsWrap);
     }
 
     render(new NewCommentView(), commentsWrap);
