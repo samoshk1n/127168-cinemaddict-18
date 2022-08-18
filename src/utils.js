@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 const MINUTES_IN_HOUR = 60;
 
 const getRandomIntFromInterval = (a = 0, b = 1) => {
@@ -66,6 +68,21 @@ const convertMinutesToHoursMinutes = (minutes) => {
     : `${hours}h`;
 };
 
+const generateRandomDatePast = (yearsAgo) => {
+  const daysAgo = yearsAgo * 365; // принебрегаем високосными годами
+  const daysGap = -getRandomIntFromInterval(0, daysAgo);
+
+  return dayjs().add(daysGap, 'day').toDate();
+};
+
+const humanizeDate = (date, popupView = false) => {
+  if (!popupView) {
+    return dayjs(date).format('YYYY');
+  }
+
+  return dayjs(date).format('D MMMM YYYY');
+};
+
 export {
   getRandomIntFromInterval,
   getRandomFloatFromInterval,
@@ -73,5 +90,7 @@ export {
   getSomeRandomArrayElements,
   correctEndOfWord,
   cutEndOfDescription,
-  convertMinutesToHoursMinutes
+  convertMinutesToHoursMinutes,
+  generateRandomDatePast,
+  humanizeDate
 };

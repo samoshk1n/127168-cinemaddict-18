@@ -1,7 +1,8 @@
 import {createElement} from '../render.js';
 import {
   cutEndOfDescription,
-  convertMinutesToHoursMinutes
+  convertMinutesToHoursMinutes,
+  humanizeDate
 } from '../utils.js';
 
 const createFilmCardTemplate = (film) => {
@@ -11,6 +12,9 @@ const createFilmCardTemplate = (film) => {
       totalRating,
       poster,
       runtime,
+      release: {
+        date
+      },
       genres,
       description
     }
@@ -21,7 +25,7 @@ const createFilmCardTemplate = (film) => {
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${totalRating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">1929</span>
+        <span class="film-card__year">${humanizeDate(date)}</span>
         <span class="film-card__duration">${convertMinutesToHoursMinutes(runtime)}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>

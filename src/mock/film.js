@@ -2,7 +2,8 @@ import {
   getRandomIntFromInterval,
   getRandomFloatFromInterval,
   getRandomArrayElement,
-  getSomeRandomArrayElements
+  getSomeRandomArrayElements,
+  generateRandomDatePast
 } from '../utils.js';
 
 import {
@@ -22,10 +23,12 @@ const MIN_WRITERS = 1;
 const MAX_WRITERS = 3;
 const MIN_ACTORS = 3;
 const MAX_ACTORS = 7;
+const FILM_YEARS_AGO = 50;
 const MIN_MINUTES = 50;
 const MAX_MINUTES = 120;
 const MIN_GENRES = 1;
 const MAX_GENRES = 3;
+const WATCHED_YEARS_AGO = 2;
 
 export const generateFilm = (id) => {
   const commonTitle = getRandomArrayElement(TITLES);
@@ -47,7 +50,7 @@ export const generateFilm = (id) => {
       writers: getSomeRandomArrayElements(WRITERS, numberOfWriters),
       actors: getSomeRandomArrayElements(ACTORS, numberOfActors),
       release: {
-        date: '2019-05-11T00:00:00.000Z', // TODO Генерация случайных дат. Главная и попап. На главной только год, на попапе "день месяц год"
+        date: generateRandomDatePast(FILM_YEARS_AGO),
         releaseСountry: getRandomArrayElement(СOUNTRIES)
       },
       runtime: getRandomIntFromInterval(MIN_MINUTES, MAX_MINUTES),
@@ -57,7 +60,7 @@ export const generateFilm = (id) => {
     userDetails: {
       watchlist: Boolean(getRandomIntFromInterval()),
       alreadyWatched: Boolean(getRandomIntFromInterval()),
-      watchingDate: '2019-04-12T16:12:32.554Z', // TODO Генерация случайной даты
+      watchingDate: generateRandomDatePast(WATCHED_YEARS_AGO),
       favorite: Boolean(getRandomIntFromInterval())
     }
   };

@@ -1,7 +1,8 @@
 import {createElement} from '../render.js';
 import {
   correctEndOfWord,
-  convertMinutesToHoursMinutes
+  convertMinutesToHoursMinutes,
+  humanizeDate
 } from '../utils.js';
 
 const createGenresElements = (genres) => {
@@ -24,6 +25,7 @@ const createFilmDetailsTemplate = (film) => {
       writers,
       actors,
       release: {
+        date,
         releaseСountry
       },
       runtime,
@@ -69,7 +71,7 @@ const createFilmDetailsTemplate = (film) => {
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Release Date</td>
-            <td class="film-details__cell">30 March 1945</td>
+            <td class="film-details__cell">${humanizeDate(date, true)}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Runtime</td>
