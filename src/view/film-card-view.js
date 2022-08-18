@@ -1,5 +1,8 @@
 import {createElement} from '../render.js';
-import {cutEndOfDescription} from '../utils.js';
+import {
+  cutEndOfDescription,
+  convertMinutesToHoursMinutes
+} from '../utils.js';
 
 const createFilmCardTemplate = (film) => {
   const {
@@ -7,6 +10,7 @@ const createFilmCardTemplate = (film) => {
       title,
       totalRating,
       poster,
+      runtime,
       genres,
       description
     }
@@ -18,7 +22,7 @@ const createFilmCardTemplate = (film) => {
       <p class="film-card__rating">${totalRating}</p>
       <p class="film-card__info">
         <span class="film-card__year">1929</span>
-        <span class="film-card__duration">1h 55m</span>
+        <span class="film-card__duration">${convertMinutesToHoursMinutes(runtime)}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="./${poster}" alt="" class="film-card__poster">

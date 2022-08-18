@@ -17,10 +17,13 @@ import {
   DESCRIPTIONS
 } from './mock-data.js';
 
+
 const MIN_WRITERS = 1;
 const MAX_WRITERS = 3;
 const MIN_ACTORS = 3;
 const MAX_ACTORS = 7;
+const MIN_MINUTES = 50;
+const MAX_MINUTES = 120;
 const MIN_GENRES = 1;
 const MAX_GENRES = 3;
 
@@ -47,7 +50,7 @@ export const generateFilm = (id) => {
         date: '2019-05-11T00:00:00.000Z', // TODO Генерация случайных дат. Главная и попап. На главной только год, на попапе "день месяц год"
         releaseСountry: getRandomArrayElement(СOUNTRIES)
       },
-      runtime: 77, // TODO Генерация случайного числа. Главная и попап. Формат "часы минуты"
+      runtime: getRandomIntFromInterval(MIN_MINUTES, MAX_MINUTES),
       genres: getSomeRandomArrayElements(GENRES, numberOfGenres),
       description: getRandomArrayElement(DESCRIPTIONS)
     },

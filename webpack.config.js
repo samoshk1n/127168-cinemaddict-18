@@ -1,5 +1,10 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const duration = require('dayjs/plugin/duration');
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
+
 
 module.exports = {
   entry: './src/main.js',

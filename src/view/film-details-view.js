@@ -1,5 +1,8 @@
 import {createElement} from '../render.js';
-import {correctEndOfWord} from '../utils.js';
+import {
+  correctEndOfWord,
+  convertMinutesToHoursMinutes
+} from '../utils.js';
 
 const createGenresElements = (genres) => {
   let genresElements = '';
@@ -23,6 +26,7 @@ const createFilmDetailsTemplate = (film) => {
       release: {
         releaseСountry
       },
+      runtime,
       genres,
       description
     }
@@ -69,7 +73,7 @@ const createFilmDetailsTemplate = (film) => {
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Runtime</td>
-            <td class="film-details__cell">1h 18m</td>
+            <td class="film-details__cell">${convertMinutesToHoursMinutes(runtime)}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Country</td>

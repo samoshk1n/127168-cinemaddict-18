@@ -1,3 +1,5 @@
+const MINUTES_IN_HOUR = 60;
+
 const getRandomIntFromInterval = (a = 0, b = 1) => {
   // Функция взята из интернета и доработана
   // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
@@ -51,11 +53,25 @@ const cutEndOfDescription = (description,
   ? `${description.slice(0, maxLength - 1)}${finalSymbol}`
   : description;
 
+const convertMinutesToHoursMinutes = (minutes) => {
+  if (minutes < MINUTES_IN_HOUR) {
+    return `${minutes}m`;
+  }
+
+  const hours = Math.floor(minutes / MINUTES_IN_HOUR);
+  const remainingMinutes = minutes % MINUTES_IN_HOUR;
+
+  return (remainingMinutes !== 0)
+    ? `${hours}h ${remainingMinutes}m`
+    : `${hours}h`;
+};
+
 export {
   getRandomIntFromInterval,
   getRandomFloatFromInterval,
   getRandomArrayElement,
   getSomeRandomArrayElements,
   correctEndOfWord,
-  cutEndOfDescription
+  cutEndOfDescription,
+  convertMinutesToHoursMinutes
 };
