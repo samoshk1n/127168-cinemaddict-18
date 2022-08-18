@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 
 const MINUTES_IN_HOUR = 60;
+const HOURS_IN_DAY = 24;
+const DAYS_IN_YEAR = 365; // принебрегаем високосными годами
 
 const getRandomIntFromInterval = (a = 0, b = 1) => {
   // Функция взята из интернета и доработана
@@ -69,9 +71,9 @@ const convertMinutesToHoursMinutes = (minutes) => {
 };
 
 const generateRandomDatePast = (yearsAgo) => {
-  const daysAgo = yearsAgo * 365; // принебрегаем високосными годами
-  const hoursAgo = daysAgo * 24;
-  const minutesAgo = hoursAgo * 60;
+  const daysAgo = yearsAgo * DAYS_IN_YEAR;
+  const hoursAgo = daysAgo * HOURS_IN_DAY;
+  const minutesAgo = hoursAgo * MINUTES_IN_HOUR;
   const minutesGap = -getRandomIntFromInterval(0, minutesAgo);
 
   return dayjs().add(minutesGap, 'minute').toDate();
