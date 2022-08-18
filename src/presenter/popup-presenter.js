@@ -6,6 +6,23 @@ import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import {render} from '../render.js';
 
+const collectComments = (filmCommentsInformation, commentsContent) => {
+  const sortedComments = [];
+
+  for (const filmCommentId of filmCommentsInformation) {
+    const currentComment = commentsContent[filmCommentId];
+    sortedComments.push(currentComment);
+  }
+
+  return sortedComments;
+};
+
+const prepareComments = (commentsInformation, commentsModel) => {
+  const commentsContent = commentsModel.getComments();
+  const collectedComments = collectComments(commentsInformation, commentsContent);
+  return collectedComments.sort((a, b) => a.date - b.date);
+};
+
 export default class PopupPresenter {
   filmDetailsContainer = new FilmDetailsContainerView();
   commentsListView = new CommentsListView();
@@ -14,11 +31,8 @@ export default class PopupPresenter {
     this.popupContainer = popupContainer;
     this.filmsModel = filmsModel;
     this.filmInformation = this.filmsModel.getFilms()[0]; // Передадим в попап информацию о первом фильме
-    this.filmCommentsInformation = this.filmInformation.comments;
-    this.commentsModel = commentsModel;
-    this.commentsContent = commentsModel.getComments();
-
-    this.filmCommentsView = new FilmCommentsView(this.filmCommentsInformation.length);
+    this.collectedComments = prepareComments(this.filmInformation.comments, commentsModel);
+    this.filmCommentsView = new FilmCommentsView(this.filmInformation.comments.length);
 
     const bodyElement = document.querySelector('body');
     const innerContainer = this.filmDetailsContainer.getElement().querySelector('.film-details__inner');
@@ -31,8 +45,7 @@ export default class PopupPresenter {
     render(this.filmCommentsView, innerContainer);
     render(this.commentsListView, innerContainer);
 
-    for (const filmCommentId of this.filmCommentsInformation) {
-      const currentComment = this.commentsContent[filmCommentId];
+    for (const currentComment of this.collectedComments) {
       render(new CommentView(currentComment), commentsWrap);
     }
 
