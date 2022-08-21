@@ -25,23 +25,26 @@ const createCommentTemplate = (currentComment) => {
 };
 
 export default class CommentView {
+  #currentComment = null;
+  #element = null;
+
   constructor(currentComment) {
-    this.currentComment = currentComment;
+    this.#currentComment = currentComment;
   }
 
-  getTemplate() {
-    return createCommentTemplate(this.currentComment);
+  get template() {
+    return createCommentTemplate(this.#currentComment);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

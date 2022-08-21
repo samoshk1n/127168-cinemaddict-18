@@ -9,23 +9,26 @@ const createFilmCommentsTemplate = (numComments) => (
 );
 
 export default class FilmCommentsView {
+  #element = null;
+  #numComments = null;
+
   constructor (numComments) {
-    this.numComments = numComments;
+    this.#numComments = numComments;
   }
 
-  getTemplate() {
-    return createFilmCommentsTemplate(this.numComments);
+  get template() {
+    return createFilmCommentsTemplate(this.#numComments);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

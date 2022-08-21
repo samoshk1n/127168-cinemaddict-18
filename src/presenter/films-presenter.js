@@ -6,21 +6,26 @@ import {render} from '../render.js';
 import {NUMBER_OF_FILMS} from '../const.js';
 
 export default class FilmsPresenter {
-  filmsComponent = new FilmsView();
-  filmsListComponent = new FilmsListView();
+  #filmsContainer = null;
+  #filmsModel = null;
+
+  #filmsComponent = new FilmsView();
+  #filmsListComponent = new FilmsListView();
+
+  #filmInformations = [];
 
   init = (filmsContainer, filmsModel) => {
-    this.filmsContainer = filmsContainer;
-    this.filmsModel = filmsModel;
-    this.filmInformations = [...this.filmsModel.getFilms()];
+    this.#filmsContainer = filmsContainer;
+    this.#filmsModel = filmsModel;
+    this.#filmInformations = [...this.#filmsModel.films];
 
-    render(this.filmsComponent, this.filmsContainer);
-    render(this.filmsListComponent, this.filmsComponent.getElement());
+    render(this.#filmsComponent, this.#filmsContainer);
+    render(this.#filmsListComponent, this.#filmsComponent.element);
 
-    const filmsListElement = this.filmsListComponent.getElement();
+    const filmsListElement = this.#filmsListComponent.element;
 
     for (let i = 0; i < NUMBER_OF_FILMS; i++) {
-      render(new FilmCardView(this.filmInformations[i]), filmsListElement.querySelector('.films-list__container'));
+      render(new FilmCardView(this.#filmInformations[i]), filmsListElement.querySelector('.films-list__container'));
     }
 
     render(new ShowMoreButtonView(), filmsListElement);
