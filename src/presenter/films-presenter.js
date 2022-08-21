@@ -22,12 +22,22 @@ export default class FilmsPresenter {
     render(this.#filmsComponent, this.#filmsContainer);
     render(this.#filmsListComponent, this.#filmsComponent.element);
 
-    const filmsListElement = this.#filmsListComponent.element;
-
     for (let i = 0; i < NUMBER_OF_FILMS; i++) {
-      render(new FilmCardView(this.#filmInformations[i]), filmsListElement.querySelector('.films-list__container'));
+      this.#renderFilm(this.#filmInformations[i]);
     }
 
-    render(new ShowMoreButtonView(), filmsListElement);
+    render(new ShowMoreButtonView(), this.filmsListElementContainer);
   };
+
+  #renderFilm = (filmInformation) => {
+    const filmComponent = new FilmCardView(filmInformation);
+
+    render (filmComponent, this.filmsListElementContainer);
+  };
+
+  get filmsListElementContainer () {
+    const filmsListElement = this.#filmsListComponent.element;
+
+    return filmsListElement.querySelector('.films-list__container');
+  }
 }
