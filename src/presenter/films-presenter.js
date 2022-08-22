@@ -14,9 +14,12 @@ export default class FilmsPresenter {
 
   #filmInformations = [];
 
-  init = (filmsContainer, filmsModel) => {
+  constructor (filmsContainer, filmsModel) {
     this.#filmsContainer = filmsContainer;
     this.#filmsModel = filmsModel;
+  }
+
+  init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
 
     render(this.#filmsComponent, this.#filmsContainer);

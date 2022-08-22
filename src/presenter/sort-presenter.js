@@ -4,8 +4,9 @@ import {render} from '../render.js';
 export default class SortPresenter {
   #sortContainer = null;
 
-  init = (sortContainer) => {
+  constructor (sortContainer) {
     this.#sortContainer = sortContainer;
-    render(new SortView(), this.#sortContainer);
-  };
+  }
+
+  init = () => render(new SortView(), this.#sortContainer);
 }

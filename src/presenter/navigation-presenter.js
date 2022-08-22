@@ -4,8 +4,9 @@ import {render} from '../render.js';
 export default class NavigationPresenter {
   #navigationContainer = null;
 
-  init = (navigationContainer) => {
+  constructor (navigationContainer) {
     this.#navigationContainer = navigationContainer;
-    render(new NavigationView(), this.#navigationContainer);
-  };
+  }
+
+  init = () => render(new NavigationView(), this.#navigationContainer);
 }

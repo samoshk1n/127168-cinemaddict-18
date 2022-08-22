@@ -26,6 +26,7 @@ const prepareComments = (commentsInformation, commentsModel) => {
 export default class PopupPresenter {
   #collectedComments = null;
   #commentComponent = null;
+  #commentsModel = null;
   #filmDetailsComponent = null;
   #filmInformation = null;
   #filmsModel = null;
@@ -35,11 +36,15 @@ export default class PopupPresenter {
   #filmDetailsControlsComponent = new FilmDetailsControlsView();
   #newCommentComponent = new NewCommentView();
 
-  init = (popupContainer, filmsModel, commentsModel) => {
+  constructor (popupContainer, filmsModel, commentsModel) {
     this.#popupContainer = popupContainer;
     this.#filmsModel = filmsModel;
+    this.#commentsModel = commentsModel;
+  }
+
+  init = () => {
     this.#filmInformation = this.#filmsModel.films[0]; // Передадим в попап информацию о первом фильме
-    this.#collectedComments = prepareComments(this.#filmInformation.comments, commentsModel);
+    this.#collectedComments = prepareComments(this.#filmInformation.comments, this.#commentsModel);
     this.#popupComponent = new PopupView(this.#filmInformation.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(this.#filmInformation);
 

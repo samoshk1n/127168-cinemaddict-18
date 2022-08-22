@@ -4,8 +4,9 @@ import {render} from '../render.js';
 export default class StatisticsPresenter {
   #statisticsContainer = null;
 
-  init = (statisticsContainer) => {
+  constructor (statisticsContainer) {
     this.#statisticsContainer = statisticsContainer;
-    render(new StatisticsView(), this.#statisticsContainer);
-  };
+  }
+
+  init = () => render(new StatisticsView(), this.#statisticsContainer);
 }
