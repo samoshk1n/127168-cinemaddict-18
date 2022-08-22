@@ -1,10 +1,10 @@
-import FilmDetailsContainerView from '../view/film-details-container-view.js';
-import FilmDetailsView from '../view/film-details-view.js';
-import FilmCommentsView from '../view/film-comments-view.js';
-import CommentsListView from '../view/comments-list-view.js';
 import CommentView from '../view/comment-view.js';
+import FilmDetailsControlsView from '../view/film-details-controls-view.js';
+import FilmDetailsView from '../view/film-details-view.js';
 import NewCommentView from '../view/new-comment-view.js';
+import PopupView from '../view/popup-view.js';
 import {render} from '../render.js';
+import {hideOverflow} from '../utils.js';
 
 const collectComments = (filmCommentsInformation, commentsContent) => {
   const sortedComments = [];
@@ -25,36 +25,35 @@ const prepareComments = (commentsInformation, commentsModel) => {
 
 export default class PopupPresenter {
   #collectedComments = null;
-  #filmCommentsView = null;
+  #commentComponent = null;
+  #filmDetailsComponent = null;
   #filmInformation = null;
   #filmsModel = null;
   #popupContainer = null;
+  #popupComponent = null;
 
-  #commentsListView = new CommentsListView();
-  #filmDetailsContainer = new FilmDetailsContainerView();
+  #filmDetailsControlsComponent = new FilmDetailsControlsView();
+  #newCommentComponent = new NewCommentView();
 
   init = (popupContainer, filmsModel, commentsModel) => {
     this.#popupContainer = popupContainer;
     this.#filmsModel = filmsModel;
     this.#filmInformation = this.#filmsModel.films[0]; // Передадим в попап информацию о первом фильме
     this.#collectedComments = prepareComments(this.#filmInformation.comments, commentsModel);
-    this.#filmCommentsView = new FilmCommentsView(this.#filmInformation.comments.length);
+    this.#popupComponent = new PopupView(this.#filmInformation.comments.length);
+    this.#filmDetailsComponent = new FilmDetailsView(this.#filmInformation);
 
-    const bodyElement = document.querySelector('body');
-    const innerContainer = this.#filmDetailsContainer.element.querySelector('.film-details__inner');
-    const commentsWrap = this.#filmCommentsView.element.querySelector('.film-details__comments-wrap');
+    hideOverflow();
 
-    bodyElement.classList.add('hide-overflow');
-
-    render(this.#filmDetailsContainer, this.#popupContainer);
-    render(new FilmDetailsView(this.#filmInformation), innerContainer);
-    render(this.#filmCommentsView, innerContainer);
-    render(this.#commentsListView, innerContainer);
+    render(this.#popupComponent, this.#popupContainer);
+    render(this.#filmDetailsComponent, this.#popupComponent.topContainer);
+    render(this.#filmDetailsControlsComponent, this.#popupComponent.topContainer);
 
     for (const currentComment of this.#collectedComments) {
-      render(new CommentView(currentComment), commentsWrap);
+      this.#commentComponent = new CommentView(currentComment);
+      render(this.#commentComponent, this.#popupComponent.commentsList);
     }
 
-    render(new NewCommentView(), commentsWrap);
+    render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
   };
 }

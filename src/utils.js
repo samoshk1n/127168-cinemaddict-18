@@ -92,14 +92,20 @@ const humanizeDate = (date, type) => {
   }
 };
 
+const hideOverflow = () => {
+  const bodyElement = document.querySelector('body');
+  bodyElement.classList.add('hide-overflow');
+};
+
 export {
-  getRandomIntFromInterval,
-  getRandomFloatFromInterval,
-  getRandomArrayElement,
-  getSomeRandomArrayElements,
+  convertMinutesToHoursMinutes,
   correctEndOfWord,
   cutEndOfDescription,
-  convertMinutesToHoursMinutes,
   generateRandomDatePast,
+  getRandomArrayElement,
+  getRandomFloatFromInterval,
+  getRandomIntFromInterval,
+  getSomeRandomArrayElements,
+  hideOverflow,
   humanizeDate
 };

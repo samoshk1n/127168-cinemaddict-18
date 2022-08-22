@@ -34,11 +34,8 @@ const createFilmDetailsTemplate = (film) => {
     }
   } = film;
 
-  return `<div class="film-details__top-container">
-    <div class="film-details__close">
-      <button class="film-details__close-btn" type="button">close</button>
-    </div>
-    <div class="film-details__info-wrap">
+  return (
+    `<div class="film-details__info-wrap">
       <div class="film-details__poster">
         <img class="film-details__poster-img" src="./${poster}" alt="">
         <p class="film-details__age">${ageRating}+</p>
@@ -89,14 +86,8 @@ const createFilmDetailsTemplate = (film) => {
 
         <p class="film-details__film-description">${description}</p>
       </div>
-    </div>
-
-    <section class="film-details__controls">
-      <button type="button" class="film-details__control-button film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-      <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watched" id="watched" name="watched">Already watched</button>
-      <button type="button" class="film-details__control-button film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
-    </section>
-  </div>`;
+    </div>`
+  );
 };
 
 export default class FilmDetailsView {
