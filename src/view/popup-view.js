@@ -45,14 +45,18 @@ export default class PopupView {
   }
 
   get topContainer() {
-    return this.#element.querySelector('.film-details__top-container');
+    return this.element.querySelector('.film-details__top-container');
   }
 
   get commentsList() {
-    return this.#element.querySelector('.film-details__comments-list');
+    return this.element.querySelector('.film-details__comments-list');
   }
 
   get commentsWrap() {
-    return this.#element.querySelector('.film-details__comments-wrap');
+    return this.element.querySelector('.film-details__comments-wrap');
+  }
+
+  get closeButtonElement() {
+    return this.element.querySelector('.film-details__close-btn');
   }
 }

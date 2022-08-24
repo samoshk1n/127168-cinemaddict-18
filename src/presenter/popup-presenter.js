@@ -4,26 +4,15 @@ import FilmDetailsView from '../view/film-details-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import PopupView from '../view/popup-view.js';
 import {render} from '../render.js';
-import {hideOverflow} from '../utils.js';
+import {
+  toggleHideOverflow,
+  prepareComments
+} from '../utils.js';
 
-const collectComments = (filmCommentsInformation, commentsContent) => {
-  const sortedComments = [];
-
-  for (const filmCommentId of filmCommentsInformation) {
-    const currentComment = commentsContent[filmCommentId];
-    sortedComments.push(currentComment);
-  }
-
-  return sortedComments;
-};
-
-const prepareComments = (commentsInformation, commentsModel) => {
-  const commentsContent = commentsModel.comments;
-  const collectedComments = collectComments(commentsInformation, commentsContent);
-  return collectedComments.sort((a, b) => a.date - b.date);
-};
+const ID_GAP = 1;
 
 export default class PopupPresenter {
+  #closeButtonElement = null;
   #collectedComments = null;
   #commentComponent = null;
   #commentsModel = null;
@@ -42,13 +31,15 @@ export default class PopupPresenter {
     this.#commentsModel = commentsModel;
   }
 
-  init = () => {
-    this.#filmInformation = this.#filmsModel.films[0]; // Передадим в попап информацию о первом фильме
+  init = (id) => {
+    this.#filmInformation = this.#filmsModel.films[id - ID_GAP];
     this.#collectedComments = prepareComments(this.#filmInformation.comments, this.#commentsModel);
     this.#popupComponent = new PopupView(this.#filmInformation.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(this.#filmInformation);
+    this.#closeButtonElement = this.#popupComponent.closeButtonElement;
 
-    hideOverflow();
+    toggleHideOverflow();
+    this.initListesers();
 
     render(this.#popupComponent, this.#popupContainer);
     render(this.#filmDetailsComponent, this.#popupComponent.topContainer);
@@ -61,4 +52,29 @@ export default class PopupPresenter {
 
     render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
   };
+
+  onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      this.closePopup();
+    }
+  };
+
+  closePopup = () => {
+    this.#popupContainer.removeChild(this.#popupComponent.element);
+    this.#popupComponent = null;
+    document.removeEventListener('keydown', this.onEscKeyDown);
+    toggleHideOverflow();
+  };
+
+  initListesers = () => {
+    this.#closeButtonElement.addEventListener('click', () => {
+      this.closePopup();
+    });
+    document.addEventListener('keydown', this.onEscKeyDown);
+  };
+
+  get popupComponent() {
+    return this.#popupComponent;
+  }
 }

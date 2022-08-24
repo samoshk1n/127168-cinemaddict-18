@@ -92,12 +92,30 @@ const humanizeDate = (date, type) => {
   }
 };
 
-const hideOverflow = () => {
+const toggleHideOverflow = () => {
   const bodyElement = document.querySelector('body');
-  bodyElement.classList.add('hide-overflow');
+  bodyElement.classList.toggle('hide-overflow');
+};
+
+const collectComments = (filmCommentsInformation, commentsContent) => {
+  const sortedComments = [];
+
+  for (const filmCommentId of filmCommentsInformation) {
+    const currentComment = commentsContent[filmCommentId];
+    sortedComments.push(currentComment);
+  }
+
+  return sortedComments;
+};
+
+const prepareComments = (commentsInformation, commentsModel) => {
+  const commentsContent = commentsModel.comments;
+  const collectedComments = collectComments(commentsInformation, commentsContent);
+  return collectedComments.sort((a, b) => a.date - b.date);
 };
 
 export {
+  collectComments,
   convertMinutesToHoursMinutes,
   correctEndOfWord,
   cutEndOfDescription,
@@ -106,6 +124,7 @@ export {
   getRandomFloatFromInterval,
   getRandomIntFromInterval,
   getSomeRandomArrayElements,
-  hideOverflow,
-  humanizeDate
+  humanizeDate,
+  prepareComments,
+  toggleHideOverflow
 };
