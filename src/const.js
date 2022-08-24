@@ -1,6 +1,6 @@
 const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 const NUMBER_OF_COMMENTS = 50;
-const NUMBER_OF_FILMS = 5;
+const NUMBER_OF_FILMS = 15;
 
 export {
   EMOTIONS,

@@ -92,14 +92,39 @@ const humanizeDate = (date, type) => {
   }
 };
 
+const toggleHideOverflow = () => {
+  const bodyElement = document.querySelector('body');
+  bodyElement.classList.toggle('hide-overflow');
+};
+
+const collectComments = (filmCommentsInformation, commentsContent) => {
+  const sortedComments = [];
+
+  for (const filmCommentId of filmCommentsInformation) {
+    const currentComment = commentsContent[filmCommentId];
+    sortedComments.push(currentComment);
+  }
+
+  return sortedComments;
+};
+
+const prepareComments = (commentsInformation, commentsModel) => {
+  const commentsContent = commentsModel.comments;
+  const collectedComments = collectComments(commentsInformation, commentsContent);
+  return collectedComments.sort((a, b) => a.date - b.date);
+};
+
 export {
-  getRandomIntFromInterval,
-  getRandomFloatFromInterval,
-  getRandomArrayElement,
-  getSomeRandomArrayElements,
+  collectComments,
+  convertMinutesToHoursMinutes,
   correctEndOfWord,
   cutEndOfDescription,
-  convertMinutesToHoursMinutes,
   generateRandomDatePast,
-  humanizeDate
+  getRandomArrayElement,
+  getRandomFloatFromInterval,
+  getRandomIntFromInterval,
+  getSomeRandomArrayElements,
+  humanizeDate,
+  prepareComments,
+  toggleHideOverflow
 };
