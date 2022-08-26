@@ -33,16 +33,26 @@ export default class FilmsPresenter {
     this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#filmsModel, this.#commentsModel);
 
     render(this.#filmsComponent, this.#filmsContainer);
-    render(this.#filmsListComponent, this.#filmsComponent.element);
 
-    for (let i = 0; i < Math.min(this.#filmInformations.length, FILMS_PER_STEP); i++) {
-      this.#renderFilm(this.#filmInformations[i]);
-    }
+    if (this.#filmInformations.length) {
+      render(this.#filmsListComponent, this.#filmsComponent.element);
 
-    if (this.#filmInformations.length > FILMS_PER_STEP) {
-      this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
+      for (let i = 0; i < Math.min(this.#filmInformations.length, FILMS_PER_STEP); i++) {
+        this.#renderFilm(this.#filmInformations[i]);
+      }
 
-      render(this.#showMoreButtonComponent, this.filmsListElementContainer);
+      if (this.#filmInformations.length > FILMS_PER_STEP) {
+        this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
+
+        render(this.#showMoreButtonComponent, this.filmsListElementContainer);
+      }
+    } else {
+      this.#filmsListComponent.filmsListContainer.remove();
+      this.#filmsListComponent.filmsListTitle.textContent = 'There are no movies in our database';
+      this.#filmsListComponent.filmsListTitle.classList.toggle('visually-hidden');
+      // Вариативность отображения скорее всего доработается во вью, когда будем работать с фильтрами
+
+      render(this.#filmsListComponent, this.#filmsComponent.element);
     }
   };
 
