@@ -8,6 +8,8 @@ import ShowMoreButtonView from '../view/show-more-button-view.js';
 import {render} from '../render.js';
 import {FILMS_PER_STEP} from '../const.js';
 
+const siteBodyElement = document.querySelector('body');
+
 export default class FilmsPresenter {
   #filmsContainer = null;
   #filmsModel = null;
@@ -27,33 +29,11 @@ export default class FilmsPresenter {
   }
 
   init = () => {
-    const siteBodyElement = document.querySelector('body');
-
     this.#filmInformations = [...this.#filmsModel.films];
     this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#filmsModel, this.#commentsModel);
 
     render(this.#filmsComponent, this.#filmsContainer);
-
-    if (this.#filmInformations.length) {
-      render(this.#filmsListComponent, this.#filmsComponent.element);
-
-      for (let i = 0; i < Math.min(this.#filmInformations.length, FILMS_PER_STEP); i++) {
-        this.#renderFilm(this.#filmInformations[i]);
-      }
-
-      if (this.#filmInformations.length > FILMS_PER_STEP) {
-        this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
-
-        render(this.#showMoreButtonComponent, this.filmsListElementContainer);
-      }
-    } else {
-      this.#filmsListComponent.filmsListContainer.remove();
-      this.#filmsListComponent.filmsListTitle.textContent = 'There are no movies in our database';
-      this.#filmsListComponent.filmsListTitle.classList.toggle('visually-hidden');
-      // Вариативность отображения скорее всего доработается во вью, когда будем работать с фильтрами
-
-      render(this.#filmsListComponent, this.#filmsComponent.element);
-    }
+    this.#checkAndRenderFilms();
   };
 
   #onShowMoreButtonClick = (evt) => {
@@ -87,6 +67,38 @@ export default class FilmsPresenter {
     });
 
     render (filmComponent, this.filmsListElementContainer);
+  };
+
+  #renderFilms = () => {
+    render(this.#filmsListComponent, this.#filmsComponent.element);
+
+    for (let i = 0; i < Math.min(this.#filmInformations.length, FILMS_PER_STEP); i++) {
+      this.#renderFilm(this.#filmInformations[i]);
+    }
+
+    if (this.#filmInformations.length > FILMS_PER_STEP) {
+      this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
+
+      render(this.#showMoreButtonComponent, this.filmsListElementContainer);
+    }
+  };
+
+  #renderEmptyTitle = () => {
+    this.#filmsListComponent.filmsListContainer.remove();
+    this.#filmsListComponent.filmsListTitle.textContent = 'There are no movies in our database';
+    this.#filmsListComponent.filmsListTitle.classList.toggle('visually-hidden');
+    // Вариативность отображения скорее всего доработается во вью, когда будем работать с фильтрами
+
+    render(this.#filmsListComponent, this.#filmsComponent.element);
+  };
+
+  #checkAndRenderFilms = () => {
+    if (!this.#filmInformations.length) {
+      this.#renderEmptyTitle();
+      return;
+    }
+
+    this.#renderFilms();
   };
 
   get filmsListElementContainer () {
