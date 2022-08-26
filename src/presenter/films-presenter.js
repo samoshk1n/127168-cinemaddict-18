@@ -6,7 +6,7 @@ import PopupPresenter from '../presenter/popup-presenter.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
 import {render} from '../render.js';
-import {NUMBER_OF_FILMS} from '../const.js';
+import {FILMS_PER_STEP} from '../const.js';
 
 export default class FilmsPresenter {
   #filmsContainer = null;
@@ -16,6 +16,7 @@ export default class FilmsPresenter {
   #commentsModel = new CommentsModel();
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
+  #showMoreButtonComponent = new ShowMoreButtonView();
 
   #filmInformations = [];
 
@@ -33,11 +34,19 @@ export default class FilmsPresenter {
     render(this.#filmsComponent, this.#filmsContainer);
     render(this.#filmsListComponent, this.#filmsComponent.element);
 
-    for (let i = 0; i < NUMBER_OF_FILMS; i++) {
+    for (let i = 0; i < Math.min(this.#filmInformations.length, FILMS_PER_STEP); i++) {
       this.#renderFilm(this.#filmInformations[i]);
     }
 
-    render(new ShowMoreButtonView(), this.filmsListElementContainer);
+    if (this.#filmInformations.length > FILMS_PER_STEP) {
+      this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
+
+      render(this.#showMoreButtonComponent, this.filmsListElementContainer);
+    }
+  };
+
+  #onShowMoreButtonClick = () => {
+    console.log('Hi!');
   };
 
   #renderFilm = (filmInformation) => {
