@@ -19,6 +19,7 @@ export default class FilmsPresenter {
   #showMoreButtonComponent = new ShowMoreButtonView();
 
   #filmInformations = [];
+  #renderedFilmCount = FILMS_PER_STEP;
 
   constructor (filmsContainer, filmsModel) {
     this.#filmsContainer = filmsContainer;
@@ -45,12 +46,27 @@ export default class FilmsPresenter {
     }
   };
 
-  #onShowMoreButtonClick = () => {
-    console.log('Hi!');
+  #onShowMoreButtonClick = (evt) => {
+    evt.preventDefault();
+
+    this.#showMoreButtonComponent.element.remove();
+
+    this.#filmInformations
+      .slice(this.#renderedFilmCount, this.#renderedFilmCount + FILMS_PER_STEP)
+      .forEach((film) => this.#renderFilm(film));
+
+    render(this.#showMoreButtonComponent, this.filmsListElementContainer);
+    this.#renderedFilmCount += FILMS_PER_STEP;
+
+    if (this.#renderedFilmCount >= this.#filmInformations.length) {
+      this.#showMoreButtonComponent.element.remove();
+      this.#showMoreButtonComponent.removeElement();
+    }
   };
 
   #renderFilm = (filmInformation) => {
     const filmComponent = new FilmCardView(filmInformation);
+
     filmComponent.element.addEventListener('click', () => {
       if (!this.#popupPresenter.popupComponent) {
         this.#popupPresenter.init(filmInformation.id);
