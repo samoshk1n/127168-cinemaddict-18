@@ -7,7 +7,7 @@ const TITLES = [
   'Schindler\'s List',
   'The Lord of the Rings: The Return of the King',
   'Pulp Fiction',
-  'Original title: The Lord of the Rings: The Fellowship of the Ring',
+  'The Lord of the Rings: The Fellowship of the Ring',
   'Forrest Gump'
 ];
 
