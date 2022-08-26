@@ -4,12 +4,11 @@ import FilmDetailsView from '../view/film-details-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import PopupView from '../view/popup-view.js';
 import {render} from '../render.js';
+import {ID_GAP} from '../const.js';
 import {
   toggleHideOverflow,
   prepareComments
 } from '../utils.js';
-
-const ID_GAP = 1;
 
 export default class PopupPresenter {
   #closeButtonElement = null;
@@ -61,8 +60,8 @@ export default class PopupPresenter {
   };
 
   closePopup = () => {
-    this.#popupContainer.removeChild(this.#popupComponent.element);
-    this.#popupComponent = null;
+    this.#popupComponent.element.remove();
+    this.#popupComponent.removeElement();
     document.removeEventListener('keydown', this.onEscKeyDown);
     toggleHideOverflow();
   };
