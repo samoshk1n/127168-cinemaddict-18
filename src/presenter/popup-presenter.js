@@ -4,12 +4,11 @@ import FilmDetailsView from '../view/film-details-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import PopupView from '../view/popup-view.js';
 import {render} from '../render.js';
+import {ID_GAP} from '../const.js';
 import {
   toggleHideOverflow,
   prepareComments
 } from '../utils.js';
-
-const ID_GAP = 1;
 
 export default class PopupPresenter {
   #closeButtonElement = null;
@@ -32,15 +31,28 @@ export default class PopupPresenter {
   }
 
   init = (id) => {
+    toggleHideOverflow();
+    this.#preparePopup(id);
+    this.#initListesers();
+    this.#renderPopup();
+  };
+
+  #onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      this.closePopup();
+    }
+  };
+
+  #preparePopup = (id) => {
     this.#filmInformation = this.#filmsModel.films[id - ID_GAP];
     this.#collectedComments = prepareComments(this.#filmInformation.comments, this.#commentsModel);
     this.#popupComponent = new PopupView(this.#filmInformation.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(this.#filmInformation);
     this.#closeButtonElement = this.#popupComponent.closeButtonElement;
+  };
 
-    toggleHideOverflow();
-    this.initListesers();
-
+  #renderPopup = () => {
     render(this.#popupComponent, this.#popupContainer);
     render(this.#filmDetailsComponent, this.#popupComponent.topContainer);
     render(this.#filmDetailsControlsComponent, this.#popupComponent.topContainer);
@@ -53,25 +65,19 @@ export default class PopupPresenter {
     render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
   };
 
-  onEscKeyDown = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      evt.preventDefault();
-      this.closePopup();
-    }
-  };
 
-  closePopup = () => {
-    this.#popupContainer.removeChild(this.#popupComponent.element);
-    this.#popupComponent = null;
-    document.removeEventListener('keydown', this.onEscKeyDown);
-    toggleHideOverflow();
-  };
-
-  initListesers = () => {
+  #initListesers = () => {
     this.#closeButtonElement.addEventListener('click', () => {
       this.closePopup();
     });
-    document.addEventListener('keydown', this.onEscKeyDown);
+    document.addEventListener('keydown', this.#onEscKeyDown);
+  };
+
+  closePopup = () => {
+    this.#popupComponent.element.remove();
+    this.#popupComponent.removeElement();
+    document.removeEventListener('keydown', this.#onEscKeyDown);
+    toggleHideOverflow();
   };
 
   get popupComponent() {
