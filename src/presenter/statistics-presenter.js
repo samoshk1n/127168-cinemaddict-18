@@ -1,5 +1,5 @@
 import StatisticsView from '../view/statistics-view.js';
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 
 export default class StatisticsPresenter {
   #statisticsContainer = null;

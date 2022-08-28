@@ -3,7 +3,7 @@ import FilmDetailsControlsView from '../view/film-details-controls-view.js';
 import FilmDetailsView from '../view/film-details-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import PopupView from '../view/popup-view.js';
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 import {ID_GAP} from '../const.js';
 import {
   toggleHideOverflow,

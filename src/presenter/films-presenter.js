@@ -5,7 +5,7 @@ import FilmCardView from '../view/film-card-view.js';
 import PopupPresenter from '../presenter/popup-presenter.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 import {FILMS_PER_STEP} from '../const.js';
 
 const siteBodyElement = document.querySelector('body');
