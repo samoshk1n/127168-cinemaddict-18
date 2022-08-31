@@ -75,7 +75,7 @@ export default class PopupPresenter {
 
   closePopup = () => {
     this.#popupComponent.element.remove();
-    this.#popupComponent.removeElement();
+    this.#popupComponent = null;
     document.removeEventListener('keydown', this.#onEscKeyDown);
     toggleHideOverflow();
   };
