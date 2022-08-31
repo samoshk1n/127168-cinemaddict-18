@@ -1,9 +1,9 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import {cutEndOfDescription} from '../utils/text.js';
+
 import {
-  cutEndOfDescription,
   convertMinutesToHoursMinutes,
-  humanizeDate
-} from '../utils.js';
+  humanizeDate} from '../utils/date.js';
 
 const createFilmCardTemplate = (film) => {
   const {

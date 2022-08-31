@@ -8,7 +8,7 @@ import {ID_GAP} from '../const.js';
 import {
   toggleHideOverflow,
   prepareComments
-} from '../utils.js';
+} from '../utils/popup.js';
 
 export default class PopupPresenter {
   #collectedComments = null;

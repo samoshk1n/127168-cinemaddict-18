@@ -1,9 +1,9 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import {correctEndOfWord} from '../utils/text.js';
 import {
-  correctEndOfWord,
   convertMinutesToHoursMinutes,
   humanizeDate
-} from '../utils.js';
+} from '../utils/date.js';
 
 const createGenresElements = (genres) => {
   let genresElements = '';
