@@ -11,7 +11,6 @@ import {
 } from '../utils.js';
 
 export default class PopupPresenter {
-  #closeButtonElement = null;
   #collectedComments = null;
   #commentComponent = null;
   #commentsModel = null;
@@ -49,7 +48,6 @@ export default class PopupPresenter {
     this.#collectedComments = prepareComments(this.#filmInformation.comments, this.#commentsModel);
     this.#popupComponent = new PopupView(this.#filmInformation.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(this.#filmInformation);
-    this.#closeButtonElement = this.#popupComponent.closeButtonElement;
   };
 
   #renderPopup = () => {
@@ -65,11 +63,8 @@ export default class PopupPresenter {
     render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
   };
 
-
   #initListesers = () => {
-    this.#closeButtonElement.addEventListener('click', () => {
-      this.closePopup();
-    });
+    this.#popupComponent.setCloseButtonHandler(() => this.closePopup());
     document.addEventListener('keydown', this.#onEscKeyDown);
   };
 

@@ -36,9 +36,7 @@ export default class FilmsPresenter {
     this.#checkAndRenderFilms();
   };
 
-  #onShowMoreButtonClick = (evt) => {
-    evt.preventDefault();
-
+  #onShowMoreButtonClick = () => {
     this.#showMoreButtonComponent.element.remove();
 
     this.#filmInformations
@@ -57,7 +55,7 @@ export default class FilmsPresenter {
   #renderFilm = (filmInformation) => {
     const filmComponent = new FilmCardView(filmInformation);
 
-    filmComponent.element.addEventListener('click', () => {
+    filmComponent.setClickHandler(() => {
       if (!this.#popupPresenter.popupComponent) {
         this.#popupPresenter.init(filmInformation.id);
       } else {
@@ -77,8 +75,7 @@ export default class FilmsPresenter {
     }
 
     if (this.#filmInformations.length > FILMS_PER_STEP) {
-      this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
-
+      this.#showMoreButtonComponent.setClickHandler(this.#onShowMoreButtonClick);
       render(this.#showMoreButtonComponent, this.filmsListElementContainer);
     }
   };
