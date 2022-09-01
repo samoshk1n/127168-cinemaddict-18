@@ -6,7 +6,6 @@ export default class NavigationPresenter {
   #filmInformations = null;
   #filmsModel = null;
   #navigationContainer = null;
-  #properties = null;
   #propertiesCounts = null;
 
   constructor (navigationContainer, filmsModel) {

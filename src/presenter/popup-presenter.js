@@ -15,12 +15,12 @@ export default class PopupPresenter {
   #commentComponent = null;
   #commentsModel = null;
   #filmDetailsComponent = null;
+  #filmDetailsControlsComponent = null;
   #filmInformation = null;
   #filmsModel = null;
   #popupContainer = null;
   #popupComponent = null;
 
-  #filmDetailsControlsComponent = new FilmDetailsControlsView();
   #newCommentComponent = new NewCommentView();
 
   constructor (popupContainer, filmsModel, commentsModel) {
@@ -48,6 +48,8 @@ export default class PopupPresenter {
     this.#collectedComments = prepareComments(this.#filmInformation.comments, this.#commentsModel);
     this.#popupComponent = new PopupView(this.#filmInformation.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(this.#filmInformation);
+    this.#filmDetailsControlsComponent = new FilmDetailsControlsView(this.#filmInformation);
+    this.#filmDetailsControlsComponent.updateControlsButton();
   };
 
   #renderPopup = () => {

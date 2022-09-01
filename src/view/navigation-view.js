@@ -1,7 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {
   KEYS_IN_ORDER,
-  NAVIGATION_MATCH
+  CATEGORY_MATCH
 } from '../const.js';
 import {makeFirstLetterUp} from '../utils/text.js';
 
@@ -9,7 +9,7 @@ const createNavigationItems = (propertiesCounts) => {
   let navigationItems = '';
 
   KEYS_IN_ORDER.forEach((key) => {
-    const navigationMatchValue = NAVIGATION_MATCH[key];
+    const navigationMatchValue = CATEGORY_MATCH[key].navigation;
     const propertyCount = propertiesCounts[key];
 
     navigationItems += (

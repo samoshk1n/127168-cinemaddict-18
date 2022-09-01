@@ -1,21 +1,36 @@
+const CATEGORY_MATCH = {
+  watchlist: {
+    active: 'Already in watchlist',
+    inactive: 'Add to watchlist',
+    id: 'watchlist',
+    navigation: 'watchlist'
+  },
+  alreadyWatched: {
+    active: 'Already watched',
+    inactive: 'Not watched yet',
+    id: 'watched',
+    navigation: 'history'
+  },
+  favorite: {
+    active: 'Already in favorites',
+    inactive: 'Add to favorites',
+    id: 'favorite',
+    navigation: 'favorites'
+  }
+};
 const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 const ID_GAP = 1;
 const FILMS_PER_STEP = 5;
 const KEYS_IN_ORDER = ['watchlist', 'alreadyWatched', 'favorite'];
-const NAVIGATION_MATCH = {
-  watchlist: 'watchlist',
-  alreadyWatched: 'history',
-  favorite: 'favorites'
-};
 const NUMBER_OF_COMMENTS = 50;
 const NUMBER_OF_FILMS = 18;
 
 export {
+  CATEGORY_MATCH,
   EMOTIONS,
   ID_GAP,
   FILMS_PER_STEP,
   KEYS_IN_ORDER,
-  NAVIGATION_MATCH,
   NUMBER_OF_COMMENTS,
   NUMBER_OF_FILMS
 };
