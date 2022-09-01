@@ -44,7 +44,7 @@ export const generateFilm = (id) => {
 
   return {
     id,
-    comments: getSomeRandomArrayElements(commentIdentificators, numberOfComments), // TODO Сгенерировать айдишники комментариев 0-5 шт. Главная и попап
+    comments: getSomeRandomArrayElements(commentIdentificators, numberOfComments),
     filmInfo: {
       title: commonTitle,
       alternativeTitle: commonTitle, // альтернативное название такое же, как и главное название (сделано для упрощения)

@@ -8,7 +8,15 @@ const cutEndOfDescription = (description,
   ? `${description.slice(0, maxLength - 1)}${finalSymbol}`
   : description;
 
+const makeFirstLetterUp = (str) => {
+  if (!str) {
+    return str;
+  }
+  return str[0].toUpperCase() + str.slice(1);
+};
+
 export {
   correctEndOfWord,
-  cutEndOfDescription
+  cutEndOfDescription,
+  makeFirstLetterUp
 };

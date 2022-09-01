@@ -13,7 +13,7 @@ const statisticElement = siteBodyElement.querySelector('.footer__statistics');
 
 const filmsModel = new FilmsModel();
 const filmsPresenter = new FilmsPresenter(siteMainElement, filmsModel);
-const navigationPresenter = new NavigationPresenter(siteMainElement);
+const navigationPresenter = new NavigationPresenter(siteMainElement, filmsModel);
 const profilePresenter = new ProfilePresenter(siteHeaderElement);
 const sortPresenter = new SortPresenter(siteMainElement, filmsModel);
 const statisticsPresenter = new StatisticsPresenter(statisticElement);
