@@ -15,8 +15,25 @@ const makeFirstLetterUp = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };
 
+const separateNumber = (number, count = 3) => {
+  const stringNumber = String(number);
+  const numOfSeparation = Math.floor(stringNumber.length / count);
+  let updatedNum = '';
+  let startSlice = count;
+  let endSlice = stringNumber.length;
+
+  for (let i = numOfSeparation; i >= 0; i--) {
+    updatedNum = ` ${stringNumber.slice(-startSlice, endSlice) + updatedNum}`;
+    startSlice += 3;
+    endSlice -= 3;
+  }
+
+  return updatedNum.trim();
+};
+
 export {
   correctEndOfWord,
   cutEndOfDescription,
-  makeFirstLetterUp
+  makeFirstLetterUp,
+  separateNumber
 };
