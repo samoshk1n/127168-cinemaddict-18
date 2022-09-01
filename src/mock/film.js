@@ -2,9 +2,8 @@ import {
   getRandomIntFromInterval,
   getRandomFloatFromInterval,
   getRandomArrayElement,
-  getSomeRandomArrayElements,
-  generateRandomDatePast
-} from '../utils.js';
+  getSomeRandomArrayElements
+} from '../utils/random.js';
 
 import {
   TITLES,
@@ -19,6 +18,7 @@ import {
 } from './mock-data.js';
 
 import {NUMBER_OF_COMMENTS} from '../const.js';
+import {generateRandomDatePast} from '../utils/date.js';
 
 const MIN_WRITERS = 1;
 const MAX_WRITERS = 3;

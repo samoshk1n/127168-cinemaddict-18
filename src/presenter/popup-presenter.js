@@ -3,15 +3,14 @@ import FilmDetailsControlsView from '../view/film-details-controls-view.js';
 import FilmDetailsView from '../view/film-details-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import PopupView from '../view/popup-view.js';
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 import {ID_GAP} from '../const.js';
 import {
   toggleHideOverflow,
   prepareComments
-} from '../utils.js';
+} from '../utils/popup.js';
 
 export default class PopupPresenter {
-  #closeButtonElement = null;
   #collectedComments = null;
   #commentComponent = null;
   #commentsModel = null;
@@ -49,7 +48,6 @@ export default class PopupPresenter {
     this.#collectedComments = prepareComments(this.#filmInformation.comments, this.#commentsModel);
     this.#popupComponent = new PopupView(this.#filmInformation.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(this.#filmInformation);
-    this.#closeButtonElement = this.#popupComponent.closeButtonElement;
   };
 
   #renderPopup = () => {
@@ -65,17 +63,14 @@ export default class PopupPresenter {
     render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
   };
 
-
   #initListesers = () => {
-    this.#closeButtonElement.addEventListener('click', () => {
-      this.closePopup();
-    });
+    this.#popupComponent.setCloseButtonHandler(() => this.closePopup());
     document.addEventListener('keydown', this.#onEscKeyDown);
   };
 
   closePopup = () => {
     this.#popupComponent.element.remove();
-    this.#popupComponent.removeElement();
+    this.#popupComponent = null;
     document.removeEventListener('keydown', this.#onEscKeyDown);
     toggleHideOverflow();
   };

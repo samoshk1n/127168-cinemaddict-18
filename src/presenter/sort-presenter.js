@@ -1,5 +1,5 @@
 import SortView from '../view/sort-view.js';
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 
 export default class SortPresenter {
   #filmsModel = null;

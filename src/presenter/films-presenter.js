@@ -5,7 +5,7 @@ import FilmCardView from '../view/film-card-view.js';
 import PopupPresenter from '../presenter/popup-presenter.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 import {FILMS_PER_STEP} from '../const.js';
 
 const siteBodyElement = document.querySelector('body');
@@ -36,9 +36,7 @@ export default class FilmsPresenter {
     this.#checkAndRenderFilms();
   };
 
-  #onShowMoreButtonClick = (evt) => {
-    evt.preventDefault();
-
+  #onShowMoreButtonClick = () => {
     this.#showMoreButtonComponent.element.remove();
 
     this.#filmInformations
@@ -57,7 +55,7 @@ export default class FilmsPresenter {
   #renderFilm = (filmInformation) => {
     const filmComponent = new FilmCardView(filmInformation);
 
-    filmComponent.element.addEventListener('click', () => {
+    filmComponent.setClickHandler(() => {
       if (!this.#popupPresenter.popupComponent) {
         this.#popupPresenter.init(filmInformation.id);
       } else {
@@ -77,8 +75,7 @@ export default class FilmsPresenter {
     }
 
     if (this.#filmInformations.length > FILMS_PER_STEP) {
-      this.#showMoreButtonComponent.element.addEventListener('click', this.#onShowMoreButtonClick);
-
+      this.#showMoreButtonComponent.setClickHandler(this.#onShowMoreButtonClick);
       render(this.#showMoreButtonComponent, this.filmsListElementContainer);
     }
   };

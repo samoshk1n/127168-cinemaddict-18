@@ -1,9 +1,9 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
+import {correctEndOfWord} from '../utils/text.js';
 import {
-  correctEndOfWord,
   convertMinutesToHoursMinutes,
   humanizeDate
-} from '../utils.js';
+} from '../utils/date.js';
 
 const createGenresElements = (genres) => {
   let genresElements = '';
@@ -90,27 +90,15 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmDetailsView {
-  #element = null;
+export default class FilmDetailsView extends AbstractView {
   #film = null;
 
   constructor(film) {
+    super();
     this.#film = film;
   }
 
   get template() {
     return createFilmDetailsTemplate(this.#film);
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

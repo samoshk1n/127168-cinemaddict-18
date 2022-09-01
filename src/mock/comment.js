@@ -3,12 +3,8 @@ import {
   SECOND_NAMES,
   COMMENTS
 } from './mock-data.js';
-
-import {
-  getRandomArrayElement,
-  generateRandomDatePast
-} from '../utils.js';
-
+import {getRandomArrayElement} from '../utils/random.js';
+import {generateRandomDatePast} from '../utils/date.js';
 import {EMOTIONS} from '../const.js';
 
 const COMMENT_YEARS_AGO = 5;

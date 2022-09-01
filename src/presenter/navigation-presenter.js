@@ -1,5 +1,5 @@
 import NavigationView from '../view/navigation-view.js';
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 
 export default class NavigationPresenter {
   #navigationContainer = null;
