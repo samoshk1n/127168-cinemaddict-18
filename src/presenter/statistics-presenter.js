@@ -3,10 +3,12 @@ import {render} from '../framework/render.js';
 
 export default class StatisticsPresenter {
   #statisticsContainer = null;
+  #statisticsModel = null;
 
-  constructor (statisticsContainer) {
+  constructor (statisticsContainer, statisticsModel) {
     this.#statisticsContainer = statisticsContainer;
+    this.#statisticsModel = statisticsModel;
   }
 
-  init = () => render(new StatisticsView(), this.#statisticsContainer);
+  init = () => render(new StatisticsView(this.#statisticsModel.totalMovies), this.#statisticsContainer);
 }
