@@ -21,7 +21,7 @@ export default class FilmsPresenter {
   #showMoreButtonComponent = new ShowMoreButtonView();
 
   #filmInformations = [];
-  #renderedFilmCount = FILMS_PER_STEP;
+  #renderedFilmCount = 0;
 
   constructor (filmsContainer, filmsModel) {
     this.#filmsContainer = filmsContainer;
@@ -31,7 +31,6 @@ export default class FilmsPresenter {
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
     this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#filmsModel, this.#commentsModel);
-
     render(this.#filmsComponent, this.#filmsContainer);
     this.#checkAndRenderFilms();
   };
@@ -39,12 +38,8 @@ export default class FilmsPresenter {
   #onShowMoreButtonClick = () => {
     this.#showMoreButtonComponent.element.remove();
 
-    this.#filmInformations
-      .slice(this.#renderedFilmCount, this.#renderedFilmCount + FILMS_PER_STEP)
-      .forEach((film) => this.#renderFilm(film));
-
+    this.#renderFilms(this.#renderedFilmCount, this.#renderedFilmCount + FILMS_PER_STEP);
     render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
-    this.#renderedFilmCount += FILMS_PER_STEP;
 
     if (this.#renderedFilmCount >= this.#filmInformations.length) {
       this.#showMoreButtonComponent.element.remove();
@@ -67,12 +62,19 @@ export default class FilmsPresenter {
     render (filmComponent, this.#filmsListComponent.filmsListContainer);
   };
 
-  #renderFilms = () => {
-    render(this.#filmsListComponent, this.#filmsComponent.element);
+  #renderFilms = (from, to) => {
+    this.#filmInformations
+      .slice(from, to)
+      .forEach((film) => this.#renderFilm(film));
 
-    for (let i = 0; i < Math.min(this.#filmInformations.length, FILMS_PER_STEP); i++) {
-      this.#renderFilm(this.#filmInformations[i]);
-    }
+    this.#renderedFilmCount += FILMS_PER_STEP;
+  };
+
+  #renderFirstLineFilms = () => {
+    const minimalNumOfFilms = Math.min(this.#filmInformations.length, FILMS_PER_STEP);
+
+    render(this.#filmsListComponent, this.#filmsComponent.element);
+    this.#renderFilms(0, minimalNumOfFilms);
 
     if (this.#filmInformations.length > FILMS_PER_STEP) {
       this.#showMoreButtonComponent.setClickHandler(this.#onShowMoreButtonClick);
@@ -91,6 +93,6 @@ export default class FilmsPresenter {
       return;
     }
 
-    this.#renderFilms();
+    this.#renderFirstLineFilms();
   };
 }
