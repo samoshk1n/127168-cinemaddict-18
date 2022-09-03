@@ -1,21 +1,16 @@
-import CommentsModel from '../model/comments-model.js';
+import FilmCardPresenter from './film-card-presenter.js';
 import FilmsView from '../view/films-view.js';
 import FilmsListView from '../view/films-list-view.js';
-import FilmCardView from '../view/film-card-view.js';
-import PopupPresenter from '../presenter/popup-presenter.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
 import {render} from '../framework/render.js';
 import {FILMS_PER_STEP} from '../const.js';
 
-const siteBodyElement = document.querySelector('body');
-
 export default class FilmsPresenter {
+  #filmCardPresenter = null;
   #filmsContainer = null;
   #filmsModel = null;
-  #popupPresenter = null;
 
-  #commentsModel = new CommentsModel();
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
   #showMoreButtonComponent = new ShowMoreButtonView();
@@ -30,7 +25,6 @@ export default class FilmsPresenter {
 
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
-    this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#filmsModel, this.#commentsModel);
     render(this.#filmsComponent, this.#filmsContainer);
     this.#checkAndRenderFilms();
   };
@@ -47,19 +41,9 @@ export default class FilmsPresenter {
     }
   };
 
-  #renderFilm = (filmInformation) => {
-    const filmComponent = new FilmCardView(filmInformation);
-
-    filmComponent.setClickHandler(() => {
-      if (!this.#popupPresenter.popupComponent) {
-        this.#popupPresenter.init(filmInformation.id);
-      } else {
-        this.#popupPresenter.closePopup();
-        this.#popupPresenter.init(filmInformation.id);
-      }
-    });
-
-    render (filmComponent, this.#filmsListComponent.filmsListContainer);
+  #renderFilm = (film) => {
+    this.#filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent);
+    this.#filmCardPresenter.init(film);
   };
 
   #renderFilms = (from, to) => {
