@@ -81,11 +81,7 @@ export default class FilmsPresenter {
   };
 
   #renderEmptyTitle = () => {
-    this.#filmsListComponent.filmsListContainer.remove();
-    this.#filmsListComponent.filmsListTitle.textContent = 'There are no movies in our database';
-    this.#filmsListComponent.filmsListTitle.classList.toggle('visually-hidden');
-    // Вариативность отображения скорее всего доработается во вью, когда будем работать с фильтрами
-
+    this.#filmsListComponent.createEmptyTitle();
     render(this.#filmsListComponent, this.#filmsComponent.element);
   };
 
