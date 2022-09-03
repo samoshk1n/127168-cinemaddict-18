@@ -56,13 +56,15 @@ export default class PopupPresenter {
     render(this.#popupComponent, this.#popupContainer);
     render(this.#filmDetailsComponent, this.#popupComponent.topContainer);
     render(this.#filmDetailsControlsComponent, this.#popupComponent.topContainer);
+    this.#renderComments();
+    render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
+  };
 
+  #renderComments = () => {
     for (const currentComment of this.#collectedComments) {
       this.#commentComponent = new CommentView(currentComment);
       render(this.#commentComponent, this.#popupComponent.commentsList);
     }
-
-    render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
   };
 
   #initListesers = () => {
