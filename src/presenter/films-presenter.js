@@ -43,7 +43,7 @@ export default class FilmsPresenter {
       .slice(this.#renderedFilmCount, this.#renderedFilmCount + FILMS_PER_STEP)
       .forEach((film) => this.#renderFilm(film));
 
-    render(this.#showMoreButtonComponent, this.filmsListElementContainer);
+    render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
     this.#renderedFilmCount += FILMS_PER_STEP;
 
     if (this.#renderedFilmCount >= this.#filmInformations.length) {
@@ -64,7 +64,7 @@ export default class FilmsPresenter {
       }
     });
 
-    render (filmComponent, this.filmsListElementContainer);
+    render (filmComponent, this.#filmsListComponent.filmsListContainer);
   };
 
   #renderFilms = () => {
@@ -76,7 +76,7 @@ export default class FilmsPresenter {
 
     if (this.#filmInformations.length > FILMS_PER_STEP) {
       this.#showMoreButtonComponent.setClickHandler(this.#onShowMoreButtonClick);
-      render(this.#showMoreButtonComponent, this.filmsListElementContainer);
+      render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
     }
   };
 
@@ -97,10 +97,4 @@ export default class FilmsPresenter {
 
     this.#renderFilms();
   };
-
-  get filmsListElementContainer () {
-    const filmsListElement = this.#filmsListComponent.element;
-
-    return filmsListElement.querySelector('.films-list__container');
-  }
 }
