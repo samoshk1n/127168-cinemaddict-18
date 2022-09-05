@@ -1,15 +1,20 @@
 import FilmCardPresenter from './film-card-presenter.js';
 import FilmsView from '../view/films-view.js';
 import FilmsListView from '../view/films-list-view.js';
+import PopupPresenter from './popup-presenter.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
 import {render} from '../framework/render.js';
 import {FILMS_PER_STEP} from '../const.js';
 
+const siteBodyElement = document.querySelector('body');
+
 export default class FilmsPresenter {
+  #commentsModel = null;
   #filmCardPresenter = null;
   #filmsContainer = null;
   #filmsModel = null;
+  #popupPresenter = null;
 
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
@@ -18,13 +23,15 @@ export default class FilmsPresenter {
   #filmInformations = [];
   #renderedFilmCount = 0;
 
-  constructor (filmsContainer, filmsModel) {
+  constructor (filmsContainer, filmsModel, commentsModel) {
     this.#filmsContainer = filmsContainer;
     this.#filmsModel = filmsModel;
+    this.#commentsModel = commentsModel;
   }
 
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
+    this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#commentsModel);
     render(this.#filmsComponent, this.#filmsContainer);
     this.#checkAndRenderFilms();
   };
@@ -42,7 +49,7 @@ export default class FilmsPresenter {
   };
 
   #renderFilm = (film) => {
-    this.#filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent);
+    this.#filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter);
     this.#filmCardPresenter.init(film);
   };
 

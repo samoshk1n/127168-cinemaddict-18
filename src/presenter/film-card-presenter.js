@@ -1,25 +1,19 @@
-import CommentsModel from '../model/comments-model.js';
 import FilmCardView from '../view/film-card-view.js';
-// import PopupPresenter from './popup-presenter.js';
 
 import {render} from '../framework/render.js';
-
-// const siteBodyElement = document.querySelector('body');
 
 export default class FilmCardPresenter {
   #filmInformation = null;
   #filmsListComponent = null;
   #popupPresenter = null;
 
-  #commentsModel = new CommentsModel();
-
-  constructor(filmsListComponent) {
+  constructor(filmsListComponent, popupPresenter) {
     this.#filmsListComponent = filmsListComponent;
+    this.#popupPresenter = popupPresenter;
   }
 
   init = (filmInformation) => {
     this.#filmInformation = filmInformation;
-    // this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#filmsModel, this.#commentsModel);
     this.#renderFilm(this.#filmInformation);
   };
 
@@ -28,10 +22,10 @@ export default class FilmCardPresenter {
 
     filmComponent.setClickHandler(() => {
       if (!this.#popupPresenter.popupComponent) {
-        this.#popupPresenter.init(filmInformation.id);
+        this.#popupPresenter.init(filmInformation);
       } else {
         this.#popupPresenter.closePopup();
-        this.#popupPresenter.init(filmInformation.id);
+        this.#popupPresenter.init(filmInformation);
       }
     });
 
