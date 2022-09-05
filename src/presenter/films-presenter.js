@@ -4,14 +4,16 @@ import FilmsListView from '../view/films-list-view.js';
 import PopupPresenter from './popup-presenter.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
-import {render} from '../framework/render.js';
+import {
+  render,
+  remove
+} from '../framework/render.js';
 import {FILMS_PER_STEP} from '../const.js';
 
 const siteBodyElement = document.querySelector('body');
 
 export default class FilmsPresenter {
   #commentsModel = null;
-  #filmCardPresenter = null;
   #filmsContainer = null;
   #filmsModel = null;
   #popupPresenter = null;
@@ -20,6 +22,7 @@ export default class FilmsPresenter {
   #filmsListComponent = new FilmsListView();
   #showMoreButtonComponent = new ShowMoreButtonView();
 
+  #filmCardPresenter = new Map();
   #filmInformations = [];
   #renderedFilmCount = 0;
 
@@ -49,8 +52,9 @@ export default class FilmsPresenter {
   };
 
   #renderFilm = (film) => {
-    this.#filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter);
-    this.#filmCardPresenter.init(film);
+    const filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter);
+    filmCardPresenter.init(film);
+    this.#filmCardPresenter.set(film.id, filmCardPresenter);
   };
 
   #renderFilms = (from, to) => {
@@ -85,5 +89,12 @@ export default class FilmsPresenter {
     }
 
     this.#renderFirstLineFilms();
+  };
+
+  #clearFilmList = () => {
+    this.#filmCardPresenter.forEach((presenter) => presenter.destroy());
+    this.#filmCardPresenter.clear();
+    this.#renderedFilmCount = 0;
+    remove(this.#showMoreButtonComponent);
   };
 }

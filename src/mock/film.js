@@ -19,6 +19,7 @@ import {
 
 import {NUMBER_OF_COMMENTS} from '../const.js';
 import {generateRandomDatePast} from '../utils/date.js';
+import {nanoid} from 'nanoid';
 
 const MIN_WRITERS = 1;
 const MAX_WRITERS = 3;
@@ -33,7 +34,7 @@ const WATCHED_YEARS_AGO = 2;
 const MIN_COMMENTS = 0;
 const MAX_COMMENTS = 5;
 
-export const generateFilm = (id) => {
+export const generateFilm = () => {
   const commonTitle = getRandomArrayElement(TITLES);
   const randomPoster = getRandomArrayElement(POSTERS);
   const numberOfWriters = getRandomIntFromInterval(MIN_WRITERS, MAX_WRITERS);
@@ -43,7 +44,7 @@ export const generateFilm = (id) => {
   const commentIdentificators = Array.from({length: NUMBER_OF_COMMENTS}, (_value, index) => index);
 
   return {
-    id,
+    id: nanoid(),
     comments: getSomeRandomArrayElements(commentIdentificators, numberOfComments),
     filmInfo: {
       title: commonTitle,
