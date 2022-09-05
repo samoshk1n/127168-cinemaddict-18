@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {cutEndOfDescription} from '../utils/text.js';
+import {KEYS_IN_ORDER} from '../const.js';
 
 import {
   convertMinutesToHoursMinutes,
@@ -62,5 +63,23 @@ export default class FilmCardView extends AbstractView {
   #clickHandler = (evt) => {
     evt.preventDefault();
     this._callback.click();
+  };
+
+  #addActiveButtonClass = (button) => button.classList.add('film-card__controls-item--active');
+
+  #removeActiveButtonClass = (button) => button.classList.remove('film-card__controls-item--active');
+
+  updateItemButtons = () => {
+    const buttons = this.element.querySelectorAll('.film-card__controls-item');
+
+    KEYS_IN_ORDER.forEach((key, index) => {
+      const userDetails = this.#film.userDetails;
+
+      if (userDetails[key]) {
+        this.#addActiveButtonClass(buttons[index]);
+      } else {
+        this.#removeActiveButtonClass(buttons[index]);
+      }
+    });
   };
 }
