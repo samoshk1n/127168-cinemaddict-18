@@ -24,7 +24,7 @@ export default class FilmCardPresenter {
   };
 
   #prepareCard = (filmComponent, filmInformation) => {
-    filmComponent.updateItemButtons();
+    filmComponent.updateItemButtons(filmInformation);
 
     filmComponent.setClickHandler(() => {
       if (!this.#popupPresenter.popupComponent) {
@@ -35,6 +35,8 @@ export default class FilmCardPresenter {
       }
     });
   };
+
+  updateCard = (filmInformation) => this.#filmComponent.updateItemButtons(filmInformation);
 
   destroy = () => remove(this.#filmComponent);
 }

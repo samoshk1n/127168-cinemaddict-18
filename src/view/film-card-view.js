@@ -69,11 +69,11 @@ export default class FilmCardView extends AbstractView {
 
   #removeActiveButtonClass = (button) => button.classList.remove('film-card__controls-item--active');
 
-  updateItemButtons = () => {
+  updateItemButtons = (filmInformation) => {
     const buttons = this.element.querySelectorAll('.film-card__controls-item');
 
     KEYS_IN_ORDER.forEach((key, index) => {
-      const userDetails = this.#film.userDetails;
+      const userDetails = filmInformation.userDetails;
 
       if (userDetails[key]) {
         this.#addActiveButtonClass(buttons[index]);

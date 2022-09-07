@@ -35,7 +35,7 @@ export default class FilmsPresenter {
 
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
-    this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#commentsModel);
+    this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#commentsModel, this.#handleFilmChange);
     render(this.#filmsComponent, this.#filmsContainer);
     this.#checkAndRenderFilms();
   };
@@ -101,6 +101,6 @@ export default class FilmsPresenter {
 
   #handleFilmChange = (updatedFilm) => {
     this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
-    this.filmCardPresenter.get(updatedFilm.id).init(updatedFilm);
+    this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
   };
 }
