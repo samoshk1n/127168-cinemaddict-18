@@ -8,6 +8,7 @@ import {
   render,
   remove
 } from '../framework/render.js';
+import {updateItem} from '../utils/data.js';
 import {FILMS_PER_STEP} from '../const.js';
 
 const siteBodyElement = document.querySelector('body');
@@ -96,5 +97,10 @@ export default class FilmsPresenter {
     this.#filmCardPresenter.clear();
     this.#renderedFilmCount = 0;
     remove(this.#showMoreButtonComponent);
+  };
+
+  #handleFilmChange = (updatedFilm) => {
+    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
+    this.filmCardPresenter.get(updatedFilm.id).init(updatedFilm);
   };
 }
