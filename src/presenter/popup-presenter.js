@@ -109,4 +109,8 @@ export default class PopupPresenter {
   get popupComponent() {
     return this.#popupComponent;
   }
+
+  get filmDetailsControlsComponent() {
+    return this.#filmDetailsControlsComponent;
+  }
 }

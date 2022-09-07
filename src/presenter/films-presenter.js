@@ -35,7 +35,7 @@ export default class FilmsPresenter {
 
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
-    this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#commentsModel, this.#handleFilmChange);
+    this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#commentsModel, this.#handleFilmCardChange);
     render(this.#filmsComponent, this.#filmsContainer);
     this.#checkAndRenderFilms();
   };
@@ -53,7 +53,7 @@ export default class FilmsPresenter {
   };
 
   #renderFilm = (film) => {
-    const filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter);
+    const filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter, this.#handlePopupChange);
     filmCardPresenter.init(film);
     this.#filmCardPresenter.set(film.id, filmCardPresenter);
   };
@@ -73,7 +73,7 @@ export default class FilmsPresenter {
     this.#renderFilms(0, minimalNumOfFilms);
 
     if (this.#filmInformations.length > FILMS_PER_STEP) {
-      this.#showMoreButtonComponent.setClickHandler(this.#onShowMoreButtonClick);
+      this.#showMoreButtonComponent.setPopupClickHandler(this.#onShowMoreButtonClick);
       render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
     }
   };
@@ -99,8 +99,16 @@ export default class FilmsPresenter {
     remove(this.#showMoreButtonComponent);
   };
 
-  #handleFilmChange = (updatedFilm) => {
+  #handleFilmCardChange = (updatedFilm) => {
     this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
     this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
+  };
+
+  #handlePopupChange = (updatedFilm) => {
+    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
+    this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
+    if (this.#popupPresenter.popupComponent) {
+      this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
+    }
   };
 }
