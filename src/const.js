@@ -19,7 +19,6 @@ const CATEGORY_MATCH = {
   }
 };
 const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
-const ID_GAP = 1;
 const FILMS_PER_STEP = 5;
 const KEYS_IN_ORDER = ['watchlist', 'alreadyWatched', 'favorite'];
 const NUMBER_OF_COMMENTS = 50;
@@ -28,7 +27,6 @@ const NUMBER_OF_FILMS = 18;
 export {
   CATEGORY_MATCH,
   EMOTIONS,
-  ID_GAP,
   FILMS_PER_STEP,
   KEYS_IN_ORDER,
   NUMBER_OF_COMMENTS,

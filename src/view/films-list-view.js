@@ -19,4 +19,10 @@ export default class FilmsListView extends AbstractView {
   get filmsListContainer() {
     return this.element.querySelector('.films-list__container');
   }
+
+  createEmptyTitle = () => {
+    this.filmsListContainer.remove();
+    this.filmsListTitle.textContent = 'There are no movies in our database';
+    this.filmsListTitle.classList.toggle('visually-hidden');
+  };
 }

@@ -1,3 +1,5 @@
+const NUMBER_OF_SEPARATION = 3;
+
 const correctEndOfWord = (word, array) => (array.length === 1)
   ? word
   : `${word}s`;
@@ -15,7 +17,7 @@ const makeFirstLetterUp = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };
 
-const separateNumber = (number, count = 3) => {
+const separateNumber = (number, count = NUMBER_OF_SEPARATION) => {
   const stringNumber = String(number);
   const numOfSeparation = Math.floor(stringNumber.length / count);
   let updatedNum = '';
