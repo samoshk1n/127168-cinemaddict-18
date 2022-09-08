@@ -18,6 +18,7 @@ export default class FilmsPresenter {
   #filmsModel = null;
   #popupPresenter = null;
   #sortPresenter = null;
+  #sourcedFilms = null;
 
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
@@ -35,8 +36,9 @@ export default class FilmsPresenter {
 
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
+    this.#sourcedFilms = [...this.#filmsModel.films];
     this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleFilmCardChange);
-    this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this.#filmInformations, this);
+    this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this);
     this.#sortPresenter.init();
     render(this.#filmsComponent, this.#filmsContainer);
     this.checkAndRenderFilms();
@@ -102,20 +104,31 @@ export default class FilmsPresenter {
   };
 
   #handleFilmCardChange = (updatedFilm) => {
-    this.#updateFilmInformation(updatedFilm);
+    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
     this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
   };
 
   #handlePopupChange = (updatedFilm) => {
-    this.#updateFilmInformation(updatedFilm);
+    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
     this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
     if (this.#popupPresenter.popupComponent) {
       this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
     }
   };
 
-  #updateFilmInformation = (updatedFilm) => {
-    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
-    this.#sortPresenter.sourcedFilms = updateItem(this.#filmInformations, updatedFilm);
-  };
+  get films() {
+    return this.#filmInformations;
+  }
+
+  set films(newFilms) {
+    this.#filmInformations = newFilms;
+  }
+
+  get sourcedFilms() {
+    return this.#sourcedFilms;
+  }
+
+  set sourcedFilms(newFilms) {
+    this.#sourcedFilms = newFilms;
+  }
 }

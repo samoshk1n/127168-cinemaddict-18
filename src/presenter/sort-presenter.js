@@ -6,7 +6,6 @@ import {
 import {SORT_TYPE} from '../const.js';
 
 export default class SortPresenter {
-  #films = null;
   #filmsComponent = null;
   #filmsPresenter = null;
 
@@ -14,15 +13,13 @@ export default class SortPresenter {
   #currentSortType = SORT_TYPE.DEFAULT;
   #sourcedFilms = [];
 
-  constructor (filmsComponent, films, filmsPresenter) {
+  constructor (filmsComponent, filmPresenter) {
     this.#filmsComponent = filmsComponent;
-    this.#films = films;
-    this.#filmsPresenter = filmsPresenter;
+    this.#filmsPresenter = filmPresenter;
   }
 
   init = () => {
-    this.#sourcedFilms = [...this.#films];
-    if (this.#films.length) {
+    if (this.#filmsPresenter.films.length) {
       this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
       render(this.#sortComponent, this.#filmsComponent, RenderPosition.AFTERBEGIN);
     }
@@ -41,23 +38,15 @@ export default class SortPresenter {
   #sortFilms = (sortType) => {
     switch (sortType) {
       case SORT_TYPE.DATE:
-        this.#films.sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
+        this.#filmsPresenter.films.sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
         break;
       case SORT_TYPE.RATING:
-        this.#films.sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
+        this.#filmsPresenter.films.sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
         break;
       default:
-        this.#films = [...this.#sourcedFilms];
+        this.#filmsPresenter.films = [...this.#filmsPresenter.sourcedFilms];
     }
 
     this.#currentSortType = sortType;
   };
-
-  get sourcedFilms() {
-    return this.#sourcedFilms;
-  }
-
-  set sourcedFilms(updatedFilms) {
-    this.#sourcedFilms = updatedFilms;
-  }
 }
