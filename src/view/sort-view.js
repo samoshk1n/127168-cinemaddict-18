@@ -10,6 +10,8 @@ const createSortTemplate = () => (
 );
 
 export default class SortView extends AbstractView {
+  #currentSortType = SORT_TYPE.DEFAULT;
+
   get template() {
     return createSortTemplate();
   }
@@ -25,6 +27,13 @@ export default class SortView extends AbstractView {
     }
 
     evt.preventDefault();
+    this.#changeActiveClass(evt.target);
     this._callback.sortTypeChange(evt.target.dataset.sortType);
+  };
+
+  #changeActiveClass = (currentElement) => {
+    const buttons = this.element.querySelectorAll('.sort__button');
+    buttons.forEach((button) => button.classList.remove('sort__button--active'));
+    currentElement.classList.add('sort__button--active');
   };
 }

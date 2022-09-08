@@ -36,10 +36,10 @@ export default class FilmsPresenter {
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
     this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleFilmCardChange);
-    this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this.#filmInformations);
+    this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this.#filmInformations, this);
     this.#sortPresenter.init();
     render(this.#filmsComponent, this.#filmsContainer);
-    this.#checkAndRenderFilms();
+    this.checkAndRenderFilms();
   };
 
   #onShowMoreButtonClick = () => {
@@ -85,7 +85,7 @@ export default class FilmsPresenter {
     render(this.#filmsListComponent, this.#filmsComponent.element);
   };
 
-  #checkAndRenderFilms = () => {
+  checkAndRenderFilms = () => {
     if (!this.#filmInformations.length) {
       this.#renderEmptyTitle();
       return;
@@ -94,7 +94,7 @@ export default class FilmsPresenter {
     this.#renderFirstLineFilms();
   };
 
-  #clearFilmList = () => {
+  clearFilmList = () => {
     this.#filmCardPresenter.forEach((presenter) => presenter.destroy());
     this.#filmCardPresenter.clear();
     this.#renderedFilmCount = 0;

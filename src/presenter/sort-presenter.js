@@ -8,14 +8,16 @@ import {SORT_TYPE} from '../const.js';
 export default class SortPresenter {
   #films = null;
   #filmsComponent = null;
+  #filmsPresenter = null;
 
   #sortComponent = new SortView();
   #currentSortType = SORT_TYPE.DEFAULT;
   #sourcedFilms = [];
 
-  constructor (filmsComponent, films) {
+  constructor (filmsComponent, films, filmsPresenter) {
     this.#filmsComponent = filmsComponent;
     this.#films = films;
+    this.#filmsPresenter = filmsPresenter;
   }
 
   init = () => {
@@ -32,8 +34,8 @@ export default class SortPresenter {
     }
 
     this.#sortFilms(sortType);
-    // - Очищаем список
-    // - Рендерим список заново
+    this.#filmsPresenter.clearFilmList();
+    this.#filmsPresenter.checkAndRenderFilms();
   };
 
   #sortFilms = (sortType) => {
