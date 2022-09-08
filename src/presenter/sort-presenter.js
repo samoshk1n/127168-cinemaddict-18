@@ -1,21 +1,21 @@
 import SortView from '../view/sort-view.js';
-import {render} from '../framework/render.js';
+import {
+  render,
+  RenderPosition
+} from '../framework/render.js';
 
 export default class SortPresenter {
-  #filmsModel = null;
-  #filmInformations = null;
-  #sortContainer = null;
+  #films = null;
+  #filmsComponent = null;
 
-  constructor (sortContainer, filmsModel) {
-    this.#sortContainer = sortContainer;
-    this.#filmsModel = filmsModel;
+  constructor (filmsComponent, films) {
+    this.#filmsComponent = filmsComponent;
+    this.#films = films;
   }
 
   init = () => {
-    this.#filmInformations = [...this.#filmsModel.films];
-
-    if (this.#filmInformations.length) {
-      render(new SortView(), this.#sortContainer);
+    if (this.#films.length) {
+      render(new SortView(), this.#filmsComponent, RenderPosition.AFTERBEGIN);
     }
   };
 }

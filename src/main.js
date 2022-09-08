@@ -1,7 +1,6 @@
 import FilmsPresenter from './presenter/films-presenter.js';
 import NavigationPresenter from './presenter/navigation-presenter.js';
 import ProfilePresenter from './presenter/profile-presenter.js';
-import SortPresenter from './presenter/sort-presenter.js';
 import StatisticsPresenter from './presenter/statistics-presenter.js';
 
 import CommentsModel from './model/comments-model.js';
@@ -19,11 +18,9 @@ const statisticsModel = new StatisticsModel();
 const filmsPresenter = new FilmsPresenter(siteMainElement, filmsModel, commentsModel);
 const navigationPresenter = new NavigationPresenter(siteMainElement, filmsModel);
 const profilePresenter = new ProfilePresenter(siteHeaderElement);
-const sortPresenter = new SortPresenter(siteMainElement, filmsModel);
 const statisticsPresenter = new StatisticsPresenter(statisticElement, statisticsModel);
 
 profilePresenter.init();
 navigationPresenter.init();
-sortPresenter.init();
 filmsPresenter.init();
 statisticsPresenter.init();

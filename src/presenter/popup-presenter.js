@@ -9,6 +9,8 @@ import {
   prepareComments
 } from '../utils/popup.js';
 
+const siteBodyElement = document.querySelector('body');
+
 export default class PopupPresenter {
   #changeData = null;
   #collectedComments = null;
@@ -17,13 +19,11 @@ export default class PopupPresenter {
   #film = null;
   #filmDetailsComponent = null;
   #filmDetailsControlsComponent = null;
-  #popupContainer = null;
   #popupComponent = null;
 
   #newCommentComponent = new NewCommentView();
 
-  constructor (popupContainer, commentsModel, changeData) {
-    this.#popupContainer = popupContainer;
+  constructor (commentsModel, changeData) {
     this.#commentsModel = commentsModel;
     this.#changeData = changeData;
   }
@@ -59,7 +59,7 @@ export default class PopupPresenter {
   };
 
   #renderPopup = () => {
-    render(this.#popupComponent, this.#popupContainer);
+    render(this.#popupComponent, siteBodyElement);
     render(this.#filmDetailsComponent, this.#popupComponent.topContainer);
     render(this.#filmDetailsControlsComponent, this.#popupComponent.topContainer);
     this.#renderComments();
