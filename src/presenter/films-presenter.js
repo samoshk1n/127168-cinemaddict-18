@@ -102,15 +102,20 @@ export default class FilmsPresenter {
   };
 
   #handleFilmCardChange = (updatedFilm) => {
-    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
+    this.#updateFilmInformation(updatedFilm);
     this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
   };
 
   #handlePopupChange = (updatedFilm) => {
-    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
+    this.#updateFilmInformation(updatedFilm);
     this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
     if (this.#popupPresenter.popupComponent) {
       this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
     }
+  };
+
+  #updateFilmInformation = (updatedFilm) => {
+    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
+    this.#sortPresenter.sourcedFilms = updateItem(this.#filmInformations, updatedFilm);
   };
 }
