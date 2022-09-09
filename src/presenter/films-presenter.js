@@ -2,6 +2,7 @@ import FilmCardPresenter from './film-card-presenter.js';
 import FilmsView from '../view/films-view.js';
 import FilmsListView from '../view/films-list-view.js';
 import PopupPresenter from './popup-presenter.js';
+import SortPresenter from '../presenter/sort-presenter.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
 import {
@@ -11,13 +12,13 @@ import {
 import {updateItem} from '../utils/data.js';
 import {FILMS_PER_STEP} from '../const.js';
 
-const siteBodyElement = document.querySelector('body');
-
 export default class FilmsPresenter {
   #commentsModel = null;
   #filmsContainer = null;
   #filmsModel = null;
   #popupPresenter = null;
+  #sortPresenter = null;
+  #sourcedFilms = null;
 
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
@@ -35,9 +36,12 @@ export default class FilmsPresenter {
 
   init = () => {
     this.#filmInformations = [...this.#filmsModel.films];
-    this.#popupPresenter = new PopupPresenter(siteBodyElement, this.#commentsModel, this.#handleFilmCardChange);
+    this.#sourcedFilms = [...this.#filmsModel.films];
+    this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleFilmCardChange);
+    this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this);
+    this.#sortPresenter.init();
     render(this.#filmsComponent, this.#filmsContainer);
-    this.#checkAndRenderFilms();
+    this.checkAndRenderFilms();
   };
 
   #onShowMoreButtonClick = () => {
@@ -83,7 +87,7 @@ export default class FilmsPresenter {
     render(this.#filmsListComponent, this.#filmsComponent.element);
   };
 
-  #checkAndRenderFilms = () => {
+  checkAndRenderFilms = () => {
     if (!this.#filmInformations.length) {
       this.#renderEmptyTitle();
       return;
@@ -92,7 +96,7 @@ export default class FilmsPresenter {
     this.#renderFirstLineFilms();
   };
 
-  #clearFilmList = () => {
+  clearFilmList = () => {
     this.#filmCardPresenter.forEach((presenter) => presenter.destroy());
     this.#filmCardPresenter.clear();
     this.#renderedFilmCount = 0;
@@ -111,4 +115,20 @@ export default class FilmsPresenter {
       this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
     }
   };
+
+  get films() {
+    return this.#filmInformations;
+  }
+
+  set films(newFilms) {
+    this.#filmInformations = newFilms;
+  }
+
+  get sourcedFilms() {
+    return this.#sourcedFilms;
+  }
+
+  set sourcedFilms(newFilms) {
+    this.#sourcedFilms = newFilms;
+  }
 }
