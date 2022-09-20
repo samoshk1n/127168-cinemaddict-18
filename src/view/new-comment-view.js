@@ -89,14 +89,4 @@ export default class NewCommentView extends AbstractStatefulView {
     this.element.querySelector('.film-details__comment-input')
       .addEventListener('input', this.#commentInputHandler);
   };
-
-  static parseCommentToState = (comment) => ({...comment,
-  // прописать изменяющиеся свойства
-  });
-
-  static parseStateToComment = (state) => {
-    const comment = {...state};
-    // добавить нужную инфу, удалить ненужные свойства
-    return comment;
-  };
 }
