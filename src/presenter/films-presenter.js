@@ -105,7 +105,7 @@ export default class FilmsPresenter {
 
   #handleFilmCardChange = (updatedFilm) => {
     this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
-    this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
+    this.#filmCardPresenter.get(updatedFilm.id)?.updateCard(updatedFilm);
   };
 
   #handlePopupChange = (updatedFilm) => {
