@@ -76,9 +76,18 @@ export default class NewCommentView extends AbstractStatefulView {
     }
   };
 
+  #commentInputHandler = (evt) => {
+    evt.preventDefault();
+    this._setState({
+      comment: evt.target.value
+    });
+  };
+
   #setInnerHandlers = () => {
     this.element.querySelector('.film-details__emoji-list')
       .addEventListener('click', this.#emojiInputHandler);
+    this.element.querySelector('.film-details__comment-input')
+      .addEventListener('input', this.#commentInputHandler);
   };
 
   static parseCommentToState = (comment) => ({...comment,
