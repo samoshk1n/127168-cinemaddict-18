@@ -46,11 +46,40 @@ export default class NewCommentView extends AbstractStatefulView {
     super();
 
     this._state = state;
+
+    this.#setInnerHandlers();
   }
 
   get template() {
     return createNewCommentTemplate(this._state);
   }
+
+  _restoreHandlers = () => {
+    this.#setInnerHandlers();
+  };
+
+  #emojiInputHandler = (evt) => {
+    evt.preventDefault();
+
+    const target = evt.target;
+
+    if (target.nodeName === 'IMG') {
+      this.updateElement({
+        emotion: target.parentNode.htmlFor.replace('emoji-', ''),
+      });
+    }
+
+    if ((target.nodeName === 'LABEL')) {
+      this.updateElement({
+        emotion: target.htmlFor.replace('emoji-', ''),
+      });
+    }
+  };
+
+  #setInnerHandlers = () => {
+    this.element.querySelector('.film-details__emoji-list')
+      .addEventListener('click', this.#emojiInputHandler);
+  };
 
   static parseCommentToState = (comment) => ({...comment,
   // прописать изменяющиеся свойства
