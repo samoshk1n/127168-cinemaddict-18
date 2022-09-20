@@ -1,4 +1,4 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 const createNewCommentTemplate = () => (
   `<form class="film-details__new-comment" action="" method="get">
@@ -32,8 +32,18 @@ const createNewCommentTemplate = () => (
   </form>`
 );
 
-export default class NewCommentView extends AbstractView {
+export default class NewCommentView extends AbstractStatefulView {
   get template() {
     return createNewCommentTemplate();
   }
+
+  static parseCommentToState = (comment) => ({...comment,
+  // прописать изменяющиеся свойства
+  });
+
+  static parseStateToComment = (state) => {
+    const comment = {...state};
+    // добавить нужную инфу, удалить ненужные свойства
+    return comment;
+  };
 }
