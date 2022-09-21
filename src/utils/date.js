@@ -1,9 +1,12 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import {getRandomIntFromInterval} from '../utils/random.js';
 
 const MINUTES_IN_HOUR = 60;
 const HOURS_IN_DAY = 24;
 const DAYS_IN_YEAR = 365; // принебрегаем високосными годами
+
+dayjs.extend(relativeTime);
 
 const convertMinutesToHoursMinutes = (minutes) => {
   if (minutes < MINUTES_IN_HOUR) {
@@ -33,8 +36,8 @@ const humanizeDate = (date, type) => {
       return dayjs(date).format('YYYY');
     case 'day-month-year':
       return dayjs(date).format('D MMMM YYYY');
-    case 'full':
-      return dayjs(date).format('YYYY/MM/DD HH:mm');
+    case 'human':
+      return dayjs(date).fromNow();
     default:
       return 'Something goes wrong';
   }
