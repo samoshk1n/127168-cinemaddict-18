@@ -1,27 +1,22 @@
-import CommentView from '../view/comment-view.js';
+import CommentsPresenter from './comments-presenter.js';
 import FilmDetailsControlsView from '../view/film-details-controls-view.js';
 import FilmDetailsView from '../view/film-details-view.js';
-import NewCommentView from '../view/new-comment-view.js';
 import PopupView from '../view/popup-view.js';
 import {render} from '../framework/render.js';
 import {
   toggleHideOverflow,
-  prepareComments
 } from '../utils/popup.js';
 
 const siteBodyElement = document.querySelector('body');
 
 export default class PopupPresenter {
   #changeData = null;
-  #collectedComments = null;
-  #commentComponent = null;
   #commentsModel = null;
+  #commentsPresenter = null;
   #film = null;
   #filmDetailsComponent = null;
   #filmDetailsControlsComponent = null;
   #popupComponent = null;
-
-  #newCommentComponent = new NewCommentView();
 
   constructor (commentsModel, changeData) {
     this.#commentsModel = commentsModel;
@@ -44,7 +39,7 @@ export default class PopupPresenter {
 
   #preparePopup = (film) => {
     this.#film = film;
-    this.#collectedComments = prepareComments(film.comments, this.#commentsModel);
+    this.#commentsPresenter = new CommentsPresenter(film, this.#commentsModel);
     this.#popupComponent = new PopupView(film.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(film);
     this.#prepareFilmDetailsControls(film);
@@ -62,15 +57,7 @@ export default class PopupPresenter {
     render(this.#popupComponent, siteBodyElement);
     render(this.#filmDetailsComponent, this.#popupComponent.topContainer);
     render(this.#filmDetailsControlsComponent, this.#popupComponent.topContainer);
-    this.#renderComments();
-    render(this.#newCommentComponent, this.#popupComponent.commentsWrap);
-  };
-
-  #renderComments = () => {
-    for (const currentComment of this.#collectedComments) {
-      this.#commentComponent = new CommentView(currentComment);
-      render(this.#commentComponent, this.#popupComponent.commentsList);
-    }
+    this.#commentsPresenter.init(this.#popupComponent.filmDetailsInnerElement);
   };
 
   #initListesers = () => {
