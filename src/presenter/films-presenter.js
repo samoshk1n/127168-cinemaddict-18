@@ -44,6 +44,10 @@ export default class FilmsPresenter {
     this.checkAndRenderFilms();
   };
 
+  get filmsNew() {
+    return this.#filmsModel.films;
+  }
+
   #onShowMoreButtonClick = () => {
     this.#showMoreButtonComponent.element.remove();
 
