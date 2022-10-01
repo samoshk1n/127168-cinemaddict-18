@@ -18,14 +18,12 @@ export default class FilmsPresenter {
   #filmsModel = null;
   #popupPresenter = null;
   #sortPresenter = null;
-  #sourcedFilms = null;
 
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
   #showMoreButtonComponent = new ShowMoreButtonView();
 
   #filmCardPresenter = new Map();
-  #filmInformations = [];
   #renderedFilmCount = 0;
 
   constructor (filmsContainer, filmsModel, commentsModel) {
@@ -35,26 +33,20 @@ export default class FilmsPresenter {
   }
 
   init = () => {
-    this.#filmInformations = [...this.#filmsModel.films];
-    this.#sourcedFilms = [...this.#filmsModel.films];
     this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleFilmCardChange);
     this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this);
     this.#sortPresenter.init();
     render(this.#filmsComponent, this.#filmsContainer);
-    this.checkAndRenderFilms();
+    this.checkAndRenderFilms(this.films);
   };
-
-  get filmsNew() {
-    return this.#filmsModel.films;
-  }
 
   #onShowMoreButtonClick = () => {
     this.#showMoreButtonComponent.element.remove();
 
-    this.#renderFilms(this.#renderedFilmCount, this.#renderedFilmCount + FILMS_PER_STEP);
+    this.#renderFilms(this.#renderedFilmCount, this.#renderedFilmCount + FILMS_PER_STEP, this.films);
     render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
 
-    if (this.#renderedFilmCount >= this.#filmInformations.length) {
+    if (this.#renderedFilmCount >= this.films.length) {
       this.#showMoreButtonComponent.element.remove();
       this.#showMoreButtonComponent.removeElement();
     }
@@ -66,21 +58,21 @@ export default class FilmsPresenter {
     this.#filmCardPresenter.set(film.id, filmCardPresenter);
   };
 
-  #renderFilms = (from, to) => {
-    this.#filmInformations
+  #renderFilms = (from, to, films) => {
+    films
       .slice(from, to)
       .forEach((film) => this.#renderFilm(film));
 
     this.#renderedFilmCount += FILMS_PER_STEP;
   };
 
-  #renderFirstLineFilms = () => {
-    const minimalNumOfFilms = Math.min(this.#filmInformations.length, FILMS_PER_STEP);
+  #renderFirstLineFilms = (films) => {
+    const minimalNumOfFilms = Math.min(films.length, FILMS_PER_STEP);
 
     render(this.#filmsListComponent, this.#filmsComponent.element);
-    this.#renderFilms(0, minimalNumOfFilms);
+    this.#renderFilms(0, minimalNumOfFilms, films);
 
-    if (this.#filmInformations.length > FILMS_PER_STEP) {
+    if (films.length > FILMS_PER_STEP) {
       this.#showMoreButtonComponent.setPopupClickHandler(this.#onShowMoreButtonClick);
       render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
     }
@@ -91,13 +83,13 @@ export default class FilmsPresenter {
     render(this.#filmsListComponent, this.#filmsComponent.element);
   };
 
-  checkAndRenderFilms = () => {
-    if (!this.#filmInformations.length) {
+  checkAndRenderFilms = (films) => {
+    if (!films.length) {
       this.#renderEmptyTitle();
       return;
     }
 
-    this.#renderFirstLineFilms();
+    this.#renderFirstLineFilms(films);
   };
 
   clearFilmList = () => {
@@ -108,12 +100,12 @@ export default class FilmsPresenter {
   };
 
   #handleFilmCardChange = (updatedFilm) => {
-    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
+    this.films = updateItem(this.films, updatedFilm);
     this.#filmCardPresenter.get(updatedFilm.id)?.updateCard(updatedFilm);
   };
 
   #handlePopupChange = (updatedFilm) => {
-    this.#filmInformations = updateItem(this.#filmInformations, updatedFilm);
+    this.films = updateItem(this.films, updatedFilm);
     this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
     if (this.#popupPresenter.popupComponent) {
       this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
@@ -121,18 +113,6 @@ export default class FilmsPresenter {
   };
 
   get films() {
-    return this.#filmInformations;
-  }
-
-  set films(newFilms) {
-    this.#filmInformations = newFilms;
-  }
-
-  get sourcedFilms() {
-    return this.#sourcedFilms;
-  }
-
-  set sourcedFilms(newFilms) {
-    this.#sourcedFilms = newFilms;
+    return this.#filmsModel.films;
   }
 }
