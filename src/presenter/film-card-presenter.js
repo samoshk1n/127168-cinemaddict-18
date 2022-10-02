@@ -60,7 +60,7 @@ export default class FilmCardPresenter {
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.MINOR,
+      UPDATE_TYPE.PATCH,
       changededFilm
     );
   };
@@ -70,7 +70,7 @@ export default class FilmCardPresenter {
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.MINOR,
+      UPDATE_TYPE.PATCH,
       changededFilm
     );
   };
@@ -80,7 +80,7 @@ export default class FilmCardPresenter {
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.MINOR,
+      UPDATE_TYPE.PATCH,
       changededFilm
     );
   };

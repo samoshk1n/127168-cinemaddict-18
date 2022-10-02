@@ -9,7 +9,11 @@ import {
   render,
   remove
 } from '../framework/render.js';
-import {FILMS_PER_STEP} from '../const.js';
+import {
+  FILMS_PER_STEP,
+  UPDATE_TYPE,
+  USER_ACTION
+} from '../const.js';
 
 export default class FilmsPresenter {
   #commentsModel = null;
@@ -104,30 +108,30 @@ export default class FilmsPresenter {
     remove(this.#showMoreButtonComponent);
   };
 
-  // #handleFilmCardChange = (updatedFilm) => {
-  //   this.#filmCardPresenter.get(updatedFilm.id)?.updateCard(updatedFilm);
-  // };
-
-  // #handlePopupChange = (updatedFilm) => {
-  //   this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
-  //   if (this.#popupPresenter.popupComponent) {
-  //     this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
-  //   }
-  // };
-
   #handleViewAction = (actionType, updateType, update) => {
-    console.log(actionType, updateType, update);
-    // Здесь будем вызывать обновление модели.
-    // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
-    // updateType - тип изменений, нужно чтобы понять, что после нужно обновить
-    // update - обновленные данные
+    switch (actionType) {
+      case USER_ACTION.UPDATE_FILM:
+        this.#filmsModel.updateFilm(updateType, update);
+        break;
+      case USER_ACTION.ADD_COMMENT:
+        break;
+      case USER_ACTION.DELETE_COMMENT:
+        break;
+    }
   };
 
   #handleModelEvent = (updateType, data) => {
-    console.log(updateType, data);
-    // В зависимости от типа изменений решаем, что делать:
-    // - обновить часть списка (например, когда поменялось описание)
-    // - обновить список (например, когда задача ушла в архив)
-    // - обновить всю доску (например, при переключении фильтра)
+    switch (updateType) {
+      case UPDATE_TYPE.PATCH:
+        this.#filmCardPresenter.get(data.id)?.updateCard(data);
+        if (this.#popupPresenter.popupComponent) {
+          this.#popupPresenter.updateControlsButton();
+        }
+        break;
+      case UPDATE_TYPE.MINOR:
+        break;
+      case UPDATE_TYPE.MAJOR:
+        break;
+    }
   };
 }

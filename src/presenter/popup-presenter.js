@@ -75,10 +75,9 @@ export default class PopupPresenter {
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.MINOR,
+      UPDATE_TYPE.PATCH,
       changededFilm
     );
-    this.#filmDetailsControlsComponent.updateControlsButton();
   };
 
   #handleWatchedClick = () => {
@@ -86,10 +85,9 @@ export default class PopupPresenter {
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.MINOR,
+      UPDATE_TYPE.PATCH,
       changededFilm
     );
-    this.#filmDetailsControlsComponent.updateControlsButton();
   };
 
   #handleFavoriteClick = () => {
@@ -97,10 +95,9 @@ export default class PopupPresenter {
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.MINOR,
+      UPDATE_TYPE.PATCH,
       changededFilm
     );
-    this.#filmDetailsControlsComponent.updateControlsButton();
   };
 
   closePopup = () => {
@@ -110,11 +107,9 @@ export default class PopupPresenter {
     toggleHideOverflow();
   };
 
+  updateControlsButton = () => this.#filmDetailsControlsComponent.updateControlsButton();
+
   get popupComponent() {
     return this.#popupComponent;
-  }
-
-  get filmDetailsControlsComponent() {
-    return this.#filmDetailsControlsComponent;
   }
 }
