@@ -8,17 +8,19 @@ import {SORT_TYPE} from '../const.js';
 export default class SortPresenter {
   #filmsComponent = null;
   #filmsPresenter = null;
+  #filmsModel = null;
 
   #sortComponent = new SortView();
   #currentSortType = SORT_TYPE.DEFAULT;
 
-  constructor (filmsComponent, filmPresenter) {
+  constructor (filmsComponent, filmPresenter, filmsModel) {
     this.#filmsComponent = filmsComponent;
     this.#filmsPresenter = filmPresenter;
+    this.#filmsModel = filmsModel;
   }
 
   init = () => {
-    if (this.#filmsPresenter.films.length) {
+    if (this.films.length) {
       this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
       render(this.#sortComponent, this.#filmsComponent, RenderPosition.AFTERBEGIN);
     }
@@ -29,22 +31,20 @@ export default class SortPresenter {
       return;
     }
 
-    const films = this.#sortFilms(sortType);
+    this.#currentSortType = sortType;
+    const films = this.films;
     this.#filmsPresenter.clearFilmList();
     this.#filmsPresenter.checkAndRenderFilms(films);
   };
 
-  #sortFilms = (sortType) => {
-    switch (sortType) {
+  get films() {
+    switch (this.#currentSortType) {
       case SORT_TYPE.DATE:
-        this.#currentSortType = sortType;
-        return [...this.#filmsPresenter.films].sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
+        return [...this.#filmsModel.films].sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
       case SORT_TYPE.RATING:
-        this.#currentSortType = sortType;
-        return [...this.#filmsPresenter.films].sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
+        return [...this.#filmsModel.films].sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
     }
 
-    this.#currentSortType = sortType;
-    return this.#filmsPresenter.films;
-  };
+    return this.#filmsModel.films;
+  }
 }

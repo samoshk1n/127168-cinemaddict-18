@@ -22,7 +22,7 @@ const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 const FILMS_PER_STEP = 5;
 const KEYS_IN_ORDER = ['watchlist', 'alreadyWatched', 'favorite'];
 const NUMBER_OF_COMMENTS = 50;
-const NUMBER_OF_FILMS = 18;
+const NUMBER_OF_FILMS = 13;
 const SORT_TYPE = {
   DEFAULT: 'default',
   DATE: 'date',
