@@ -7,6 +7,11 @@ import {
   toggleHideOverflow,
 } from '../utils/popup.js';
 
+import {
+  USER_ACTION,
+  UPDATE_TYPE
+} from '../const.js';
+
 const siteBodyElement = document.querySelector('body');
 
 export default class PopupPresenter {
@@ -68,21 +73,33 @@ export default class PopupPresenter {
   #handleWatchlistClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
-    this.#changeData(changededFilm);
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      UPDATE_TYPE.MINOR,
+      changededFilm
+    );
     this.#filmDetailsControlsComponent.updateControlsButton();
   };
 
   #handleWatchedClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
-    this.#changeData(changededFilm);
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      UPDATE_TYPE.MINOR,
+      changededFilm
+    );
     this.#filmDetailsControlsComponent.updateControlsButton();
   };
 
   #handleFavoriteClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
-    this.#changeData(changededFilm);
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      UPDATE_TYPE.MINOR,
+      changededFilm
+    );
     this.#filmDetailsControlsComponent.updateControlsButton();
   };
 

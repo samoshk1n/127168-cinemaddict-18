@@ -29,10 +29,12 @@ export default class FilmsPresenter {
     this.#filmsContainer = filmsContainer;
     this.#filmsModel = filmsModel;
     this.#commentsModel = commentsModel;
+
+    this.#filmsModel.addObserver(this.#handleModelEvent);
   }
 
   init = () => {
-    this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleFilmCardChange);
+    this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleViewAction);
     this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this, this.#filmsModel);
     this.#sortPresenter.init();
     render(this.#filmsComponent, this.#filmsContainer);
@@ -59,7 +61,7 @@ export default class FilmsPresenter {
   };
 
   #renderFilm = (film) => {
-    const filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter, this.#handlePopupChange);
+    const filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter, this.#handleViewAction);
     filmCardPresenter.init(film);
     this.#filmCardPresenter.set(film.id, filmCardPresenter);
   };
@@ -102,14 +104,30 @@ export default class FilmsPresenter {
     remove(this.#showMoreButtonComponent);
   };
 
-  #handleFilmCardChange = (updatedFilm) => {
-    this.#filmCardPresenter.get(updatedFilm.id)?.updateCard(updatedFilm);
+  // #handleFilmCardChange = (updatedFilm) => {
+  //   this.#filmCardPresenter.get(updatedFilm.id)?.updateCard(updatedFilm);
+  // };
+
+  // #handlePopupChange = (updatedFilm) => {
+  //   this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
+  //   if (this.#popupPresenter.popupComponent) {
+  //     this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
+  //   }
+  // };
+
+  #handleViewAction = (actionType, updateType, update) => {
+    console.log(actionType, updateType, update);
+    // Здесь будем вызывать обновление модели.
+    // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
+    // updateType - тип изменений, нужно чтобы понять, что после нужно обновить
+    // update - обновленные данные
   };
 
-  #handlePopupChange = (updatedFilm) => {
-    this.#filmCardPresenter.get(updatedFilm.id).updateCard(updatedFilm);
-    if (this.#popupPresenter.popupComponent) {
-      this.#popupPresenter.filmDetailsControlsComponent.updateControlsButton();
-    }
+  #handleModelEvent = (updateType, data) => {
+    console.log(updateType, data);
+    // В зависимости от типа изменений решаем, что делать:
+    // - обновить часть списка (например, когда поменялось описание)
+    // - обновить список (например, когда задача ушла в архив)
+    // - обновить всю доску (например, при переключении фильтра)
   };
 }
