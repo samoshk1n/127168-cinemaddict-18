@@ -42,7 +42,7 @@ export default class FilmsPresenter {
   }
 
   init = () => {
-    this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleViewAction);
+    this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleViewAction, this.#navigationModel);
     this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this, this.#filmsModel, this.#navigationModel);
     this.renderBoard();
   };

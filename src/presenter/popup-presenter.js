@@ -8,6 +8,7 @@ import {
 } from '../utils/popup.js';
 
 import {
+  NAVIGATION_TYPE,
   USER_ACTION,
   UPDATE_TYPE
 } from '../const.js';
@@ -21,11 +22,13 @@ export default class PopupPresenter {
   #film = null;
   #filmDetailsComponent = null;
   #filmDetailsControlsComponent = null;
+  #navigationModel = null;
   #popupComponent = null;
 
-  constructor (commentsModel, changeData) {
+  constructor (commentsModel, changeData, navigationModel) {
     this.#commentsModel = commentsModel;
     this.#changeData = changeData;
+    this.#navigationModel = navigationModel;
   }
 
   init = (film) => {
@@ -75,7 +78,7 @@ export default class PopupPresenter {
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.PATCH,
+      this.#chooseInterfaceUpdate(),
       changededFilm
     );
   };
@@ -85,7 +88,7 @@ export default class PopupPresenter {
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.PATCH,
+      this.#chooseInterfaceUpdate(),
       changededFilm
     );
   };
@@ -95,10 +98,12 @@ export default class PopupPresenter {
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.PATCH,
+      this.#chooseInterfaceUpdate(),
       changededFilm
     );
   };
+
+  #chooseInterfaceUpdate = () => this.#navigationModel.currentNavigation === NAVIGATION_TYPE.ALL ? UPDATE_TYPE.PATCH : UPDATE_TYPE.MINOR;
 
   closePopup = () => {
     this.#popupComponent.element.remove();
