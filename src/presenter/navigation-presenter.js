@@ -1,23 +1,26 @@
 import NavigationView from '../view/navigation-view.js';
 import {render} from '../framework/render.js';
-import {KEYS_IN_ORDER} from '../const.js';
+import {
+  KEYS_IN_ORDER,
+  NAVIGATION_TYPE
+} from '../const.js';
 
 export default class NavigationPresenter {
-  #filmInformations = null;
   #filmsModel = null;
   #navigationContainer = null;
+  #navigationModel = null;
   #propertiesCounts = null;
 
-  constructor (navigationContainer, filmsModel) {
+  constructor (navigationContainer, filmsModel, navigationModel) {
     this.#filmsModel = filmsModel;
     this.#navigationContainer = navigationContainer;
+    this.#navigationModel = navigationModel;
   }
 
   init = () => {
-    this.#filmInformations = [...this.#filmsModel.films];
-    this.#propertiesCounts = this.#createPropertiesCounts(KEYS_IN_ORDER, this.#filmInformations);
+    this.#propertiesCounts = this.#createPropertiesCounts(KEYS_IN_ORDER, this.#filmsModel.films);
 
-    render(new NavigationView(this.#propertiesCounts), this.#navigationContainer);
+    render(new NavigationView(this.#propertiesCounts, NAVIGATION_TYPE.ALL), this.#navigationContainer);
   };
 
   #calculateNumFilmsByProperty = (films, property) => {

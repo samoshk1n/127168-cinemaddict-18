@@ -30,10 +30,10 @@ const SORT_TYPE = {
 };
 
 const NAVIGATION_TYPE = {
-  ALL: 'ALL',
-  WATCHLIST: 'WATCHLIST',
-  HISTORY: 'HISTORY',
-  FAVORITES: 'FAVORITES',
+  ALL: 'all',
+  WATCHLIST: 'watchlist',
+  HISTORY: 'alreadyWatched',
+  FAVORITES: 'favorite',
 };
 
 const USER_ACTION = {

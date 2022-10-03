@@ -18,7 +18,7 @@ const filmsModel = new FilmsModel();
 const navigationModel = new NavigationModel();
 const statisticsModel = new StatisticsModel();
 const filmsPresenter = new FilmsPresenter(siteMainElement, filmsModel, commentsModel);
-const navigationPresenter = new NavigationPresenter(siteMainElement, filmsModel);
+const navigationPresenter = new NavigationPresenter(siteMainElement, filmsModel, navigationModel);
 const profilePresenter = new ProfilePresenter(siteHeaderElement);
 const statisticsPresenter = new StatisticsPresenter(statisticElement, statisticsModel);
 
