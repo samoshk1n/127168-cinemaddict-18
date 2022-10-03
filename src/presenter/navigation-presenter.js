@@ -1,21 +1,57 @@
 import NavigationView from '../view/navigation-view.js';
-import {render} from '../framework/render.js';
 import {filter} from '../utils/filter.js';
-import {NAVIGATION_TYPE} from '../const.js';
+import {
+  NAVIGATION_TYPE,
+  UPDATE_TYPE
+} from '../const.js';
+import {
+  remove,
+  render,
+  replace
+} from '../framework/render.js';
 
 export default class NavigationPresenter {
   #filmsModel = null;
   #navigationContainer = null;
   #navigationModel = null;
 
+  #navigationComponent = null;
+
   constructor (navigationContainer, filmsModel, navigationModel) {
     this.#filmsModel = filmsModel;
     this.#navigationContainer = navigationContainer;
     this.#navigationModel = navigationModel;
+
+    this.#filmsModel.addObserver(this.#handleModelEvent);
+    this.#navigationModel.addObserver(this.#handleModelEvent);
   }
 
   init = () => {
-    render(new NavigationView(this.filters, NAVIGATION_TYPE.ALL), this.#navigationContainer);
+    const filters = this.filters;
+    const prevNavigationComponent = this.#navigationComponent;
+
+    this.#navigationComponent = new NavigationView(filters, this.#navigationModel.filter);
+    this.#navigationComponent.setNavigationTypeChangeHandler(this.#handleNavigationTypeChange);
+
+    if (prevNavigationComponent === null) {
+      render(this.#navigationComponent, this.#navigationContainer);
+      return;
+    }
+
+    replace(this.#navigationComponent, prevNavigationComponent);
+    remove(prevNavigationComponent);
+  };
+
+  #handleModelEvent = () => {
+    this.init();
+  };
+
+  #handleNavigationTypeChange = (navigationType) => {
+    if (this.#navigationModel.filter === navigationType) {
+      return;
+    }
+
+    this.#navigationModel.setFilter(UPDATE_TYPE.MAJOR, navigationType);
   };
 
   get filters() {

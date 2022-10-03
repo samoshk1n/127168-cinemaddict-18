@@ -37,11 +37,10 @@ export default class NavigationView extends AbstractView {
   };
 
   #navigationTypeChangeHandler = (evt) => {
-    if (evt.target.tagName !== 'A') {
+    if (evt.target.tagName !== 'A' && evt.target.tagName !== 'SPAN') {
       return;
     }
 
     evt.preventDefault();
-    console.log(evt.target.tagName);
   };
 }
