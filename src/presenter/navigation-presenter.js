@@ -1,15 +1,12 @@
 import NavigationView from '../view/navigation-view.js';
 import {render} from '../framework/render.js';
-import {
-  KEYS_IN_ORDER,
-  NAVIGATION_TYPE
-} from '../const.js';
+import {filter} from '../utils/filter.js';
+import {NAVIGATION_TYPE} from '../const.js';
 
 export default class NavigationPresenter {
   #filmsModel = null;
   #navigationContainer = null;
   #navigationModel = null;
-  #propertiesCounts = null;
 
   constructor (navigationContainer, filmsModel, navigationModel) {
     this.#filmsModel = filmsModel;
@@ -18,32 +15,33 @@ export default class NavigationPresenter {
   }
 
   init = () => {
-    this.#propertiesCounts = this.#createPropertiesCounts(KEYS_IN_ORDER, this.#filmsModel.films);
-
-    render(new NavigationView(this.#propertiesCounts, NAVIGATION_TYPE.ALL), this.#navigationContainer);
+    render(new NavigationView(this.filters, NAVIGATION_TYPE.ALL), this.#navigationContainer);
   };
 
-  #calculateNumFilmsByProperty = (films, property) => {
-    let numberOfFilms = 0;
+  get filters() {
+    const films = this.#filmsModel.films;
 
-    films.forEach((film) => {
-      const {userDetails} = film;
-
-      if (userDetails[property]) {
-        numberOfFilms++;
+    return [
+      {
+        name: NAVIGATION_TYPE.ALL,
+        href: 'all',
+        count: '',
+      },
+      {
+        name: NAVIGATION_TYPE.WATCHLIST,
+        href: 'watchlist',
+        count: filter[NAVIGATION_TYPE.WATCHLIST](films).length,
+      },
+      {
+        name: NAVIGATION_TYPE.HISTORY,
+        href: 'history',
+        count: filter[NAVIGATION_TYPE.HISTORY](films).length,
+      },
+      {
+        name: NAVIGATION_TYPE.FAVORITES,
+        href: 'favorites',
+        count: filter[NAVIGATION_TYPE.FAVORITES](films).length,
       }
-    });
-
-    return numberOfFilms;
-  };
-
-  #createPropertiesCounts = (properties, films) => {
-    const propertiesCounts = {};
-
-    properties.forEach((property) => {
-      propertiesCounts[property] = this.#calculateNumFilmsByProperty(films, property);
-    });
-
-    return propertiesCounts;
-  };
+    ];
+  }
 }

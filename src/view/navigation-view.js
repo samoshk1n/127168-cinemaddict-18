@@ -1,49 +1,34 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {
-  KEYS_IN_ORDER,
-  CATEGORY_MATCH,
-  NAVIGATION_TYPE
-} from '../const.js';
-import {makeFirstLetterUp} from '../utils/text.js';
 
-const createNavigationItems = (propertiesCounts, currentNavigationType) => {
-  let navigationItem = '';
+const createNavigationItemTemplate = (filter, currentNavigationType) => {
+  const {name, href, count} = filter;
 
-  KEYS_IN_ORDER.forEach((key) => {
-    const navigationMatchValue = CATEGORY_MATCH[key].navigation;
-    const propertyCount = propertiesCounts[key];
-
-    navigationItem += (
-      `<a href="#${navigationMatchValue}"
-      class="main-navigation__item ${currentNavigationType === key ? 'main-navigation__item--active' : ''}">${makeFirstLetterUp(navigationMatchValue)}
-      <span class="main-navigation__item-count">${propertyCount}</span>
-      </a>`
-    );
-  });
-
-  return navigationItem;
+  return `<a href="#${href}"
+  class="main-navigation__item ${currentNavigationType === name ? 'main-navigation__item--active' : ''}">${name}
+  ${count ? `<span class="main-navigation__item-count">${count}</span>` : ''}
+  </a>`;
 };
 
-const createNavigationTemplate = (propertiesCounts, currentNavigationType) => (
-  `<nav class="main-navigation">
-    <a href="#all"
-    class="main-navigation__item ${currentNavigationType === NAVIGATION_TYPE.ALL ? 'main-navigation__item--active' : ''}">All movies</a>
-    ${createNavigationItems(propertiesCounts, currentNavigationType)}
-  </nav>`
-);
+const createNavigationTemplate = (navigationItems, currentNavigationType) => {
+  const navigationItemsTemplate = navigationItems
+    .map((filter) => createNavigationItemTemplate(filter, currentNavigationType))
+    .join('');
+
+  return `<nav class="main-navigation">${navigationItemsTemplate}<nav>`;
+};
 
 export default class NavigationView extends AbstractView {
-  #propertiesCounts = null;
+  #filters = null;
   #currentNavigationType = null;
 
-  constructor(propertiesCounts, currentNavigationType) {
+  constructor(filters, currentNavigationType) {
     super();
-    this.#propertiesCounts = propertiesCounts;
+    this.#filters = filters;
     this.#currentNavigationType = currentNavigationType;
   }
 
   get template() {
-    return createNavigationTemplate(this.#propertiesCounts, this.#currentNavigationType);
+    return createNavigationTemplate(this.#filters, this.#currentNavigationType);
   }
 
   setNavigationTypeChangeHandler = (callback) => {
