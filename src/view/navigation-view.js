@@ -4,7 +4,8 @@ const createNavigationItemTemplate = (filter, currentNavigationType) => {
   const {name, href, count} = filter;
 
   return `<a href="#${href}"
-  class="main-navigation__item ${currentNavigationType === name ? 'main-navigation__item--active' : ''}">${name}
+  class="main-navigation__item ${currentNavigationType === name ? 'main-navigation__item--active' : ''}"
+  data-navigation-type="${name}">${name}
   ${count ? `<span class="main-navigation__item-count">${count}</span>` : ''}
   </a>`;
 };
@@ -42,5 +43,14 @@ export default class NavigationView extends AbstractView {
     }
 
     evt.preventDefault();
+
+    const target = evt.target;
+
+    switch(target.nodeName) {
+      case 'A':
+        return this._callback.navigationTypeChange(target.dataset.navigationType);
+      case 'SPAN':
+        this._callback.navigationTypeChange(target.parentNode.dataset.navigationType);
+    }
   };
 }

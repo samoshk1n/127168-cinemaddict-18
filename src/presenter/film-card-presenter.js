@@ -6,6 +6,7 @@ import {
 } from '../framework/render.js';
 
 import {
+  NAVIGATION_TYPE,
   USER_ACTION,
   UPDATE_TYPE
 } from '../const.js';
@@ -15,12 +16,14 @@ export default class FilmCardPresenter {
   #film = null;
   #filmComponent = null;
   #filmsListComponent = null;
+  #navigationModel = null;
   #popupPresenter = null;
 
-  constructor(filmsListComponent, popupPresenter, changeData) {
+  constructor(filmsListComponent, popupPresenter, changeData, navigationModel) {
     this.#filmsListComponent = filmsListComponent;
     this.#popupPresenter = popupPresenter;
     this.#changeData = changeData;
+    this.#navigationModel = navigationModel;
   }
 
   init = (filmInformation) => {
@@ -60,7 +63,7 @@ export default class FilmCardPresenter {
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.PATCH,
+      this.#chooseInterfaceUpdate(),
       changededFilm
     );
   };
@@ -70,7 +73,7 @@ export default class FilmCardPresenter {
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.PATCH,
+      this.#chooseInterfaceUpdate(),
       changededFilm
     );
   };
@@ -80,10 +83,12 @@ export default class FilmCardPresenter {
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
     this.#changeData(
       USER_ACTION.UPDATE_FILM,
-      UPDATE_TYPE.PATCH,
+      this.#chooseInterfaceUpdate(),
       changededFilm
     );
   };
+
+  #chooseInterfaceUpdate = () => this.#navigationModel.currentNavigation === NAVIGATION_TYPE.ALL ? UPDATE_TYPE.PATCH : UPDATE_TYPE.MINOR;
 
   updateCard = (filmInformation) => this.#filmComponent.updateItemButtons(filmInformation);
 

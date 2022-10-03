@@ -1,4 +1,5 @@
 import SortView from '../view/sort-view.js';
+import {filter} from '../utils/filter.js';
 import {
   render,
   RenderPosition
@@ -9,14 +10,16 @@ export default class SortPresenter {
   #filmsComponent = null;
   #filmsPresenter = null;
   #filmsModel = null;
+  #navigationModel = null;
   #sortComponent = null;
 
   #currentSortType = SORT_TYPE.DEFAULT;
 
-  constructor (filmsComponent, filmPresenter, filmsModel) {
+  constructor (filmsComponent, filmPresenter, filmsModel, navigationModel) {
     this.#filmsComponent = filmsComponent;
     this.#filmsPresenter = filmPresenter;
     this.#filmsModel = filmsModel;
+    this.#navigationModel = navigationModel;
   }
 
   init = () => {
@@ -38,14 +41,18 @@ export default class SortPresenter {
   };
 
   get films() {
+    const navigationType = this.#navigationModel.filter;
+    const films = this.#filmsModel.films;
+    const filteredFilms = filter[navigationType](films);
+
     switch (this.#currentSortType) {
       case SORT_TYPE.DATE:
-        return [...this.#filmsModel.films].sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
+        return filteredFilms.sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
       case SORT_TYPE.RATING:
-        return [...this.#filmsModel.films].sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
+        return filteredFilms.sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
     }
 
-    return this.#filmsModel.films;
+    return filteredFilms;
   }
 
   get currentSortType() {

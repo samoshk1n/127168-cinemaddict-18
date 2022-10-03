@@ -12,4 +12,8 @@ export default class NavigationModel extends Observable {
     this.#navigation = navigation;
     this._notify(updateType, navigation);
   };
+
+  get currentNavigation() {
+    return this.#navigation;
+  }
 }

@@ -51,7 +51,7 @@ export default class NavigationPresenter {
       return;
     }
 
-    this.#navigationModel.setFilter(UPDATE_TYPE.MAJOR, navigationType);
+    this.#navigationModel.setNavigation(UPDATE_TYPE.MAJOR, navigationType);
   };
 
   get filters() {

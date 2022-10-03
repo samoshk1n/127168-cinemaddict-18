@@ -20,6 +20,7 @@ export default class FilmsPresenter {
   #commentsModel = null;
   #filmsContainer = null;
   #filmsModel = null;
+  #navigationModel = null;
   #popupPresenter = null;
   #showMoreButtonComponent = null;
   #sortPresenter = null;
@@ -30,17 +31,19 @@ export default class FilmsPresenter {
   #filmCardPresenter = new Map();
   #renderedFilmCount = FILMS_PER_STEP;
 
-  constructor (filmsContainer, filmsModel, commentsModel) {
+  constructor (filmsContainer, filmsModel, commentsModel, navigationModel) {
     this.#filmsContainer = filmsContainer;
     this.#filmsModel = filmsModel;
     this.#commentsModel = commentsModel;
+    this.#navigationModel = navigationModel;
 
     this.#filmsModel.addObserver(this.#handleModelEvent);
+    this.#navigationModel.addObserver(this.#handleModelEvent);
   }
 
   init = () => {
     this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleViewAction);
-    this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this, this.#filmsModel);
+    this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this, this.#filmsModel, this.#navigationModel);
     this.renderBoard();
   };
 
@@ -64,7 +67,12 @@ export default class FilmsPresenter {
   };
 
   #renderFilm = (film) => {
-    const filmCardPresenter = new FilmCardPresenter(this.#filmsListComponent, this.#popupPresenter, this.#handleViewAction);
+    const filmCardPresenter = new FilmCardPresenter(
+      this.#filmsListComponent,
+      this.#popupPresenter,
+      this.#handleViewAction,
+      this.#navigationModel
+    );
     filmCardPresenter.init(film);
     this.#filmCardPresenter.set(film.id, filmCardPresenter);
   };
