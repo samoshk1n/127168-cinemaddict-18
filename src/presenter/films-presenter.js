@@ -11,6 +11,7 @@ import {
 } from '../framework/render.js';
 import {
   FILMS_PER_STEP,
+  SORT_TYPE,
   UPDATE_TYPE,
   USER_ACTION
 } from '../const.js';
@@ -20,14 +21,14 @@ export default class FilmsPresenter {
   #filmsContainer = null;
   #filmsModel = null;
   #popupPresenter = null;
+  #showMoreButtonComponent = null;
   #sortPresenter = null;
 
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
-  #showMoreButtonComponent = new ShowMoreButtonView();
 
   #filmCardPresenter = new Map();
-  #renderedFilmCount = 0;
+  #renderedFilmCount = FILMS_PER_STEP;
 
   constructor (filmsContainer, filmsModel, commentsModel) {
     this.#filmsContainer = filmsContainer;
@@ -40,23 +41,21 @@ export default class FilmsPresenter {
   init = () => {
     this.#popupPresenter = new PopupPresenter(this.#commentsModel, this.#handleViewAction);
     this.#sortPresenter = new SortPresenter(this.#filmsComponent.element, this, this.#filmsModel);
-    this.#sortPresenter.init();
-    render(this.#filmsComponent, this.#filmsContainer);
-    this.checkAndRenderFilms(this.#sortPresenter.films);
+    this.renderBoard();
   };
 
   #onShowMoreButtonClick = () => {
     this.#showMoreButtonComponent.element.remove();
 
-    const filmsCount = this.#sortPresenter.films.length;
-    const newRenderedFilmCount = Math.min(filmsCount, this.#renderedFilmCount + FILMS_PER_STEP);
+    const filmCount = this.#sortPresenter.films.length;
+    const newRenderedFilmCount = Math.min(filmCount, this.#renderedFilmCount + FILMS_PER_STEP);
     const films = this.#sortPresenter.films.slice(this.#renderedFilmCount, newRenderedFilmCount);
 
     this.#renderedFilmCount = newRenderedFilmCount;
 
     this.#renderFilms(films);
 
-    if (this.#renderedFilmCount >= filmsCount) {
+    if (this.#renderedFilmCount >= filmCount) {
       this.#showMoreButtonComponent.element.remove();
       this.#showMoreButtonComponent.removeElement();
     } else {
@@ -73,15 +72,16 @@ export default class FilmsPresenter {
   #renderFilms = (films) => films.forEach((film) => this.#renderFilm(film));
 
   #renderBoardFilms = (films) => {
-    const filmsCount = films.length;
-    const newRenderedFilmCount = Math.min(filmsCount, FILMS_PER_STEP);
+    const filmCount = films.length;
+    const newRenderedFilmCount = Math.min(filmCount, this.#renderedFilmCount);
     const startFilms = films.slice(0, newRenderedFilmCount);
 
     render(this.#filmsListComponent, this.#filmsComponent.element);
     this.#renderFilms(startFilms);
     this.#renderedFilmCount = newRenderedFilmCount;
 
-    if (filmsCount > FILMS_PER_STEP) {
+    if (filmCount > this.#renderedFilmCount) {
+      this.#showMoreButtonComponent = new ShowMoreButtonView();
       this.#showMoreButtonComponent.setPopupClickHandler(this.#onShowMoreButtonClick);
       render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
     }
@@ -98,14 +98,36 @@ export default class FilmsPresenter {
       return;
     }
 
+    this.#sortPresenter.init();
     this.#renderBoardFilms(films);
   };
 
-  clearFilmList = () => {
+  clearFilmList = ({resetRenderedFilmCount = false, resetSortType = false} = {}) => {
+    const filmCount = this.#sortPresenter.films.length;
+
     this.#filmCardPresenter.forEach((presenter) => presenter.destroy());
     this.#filmCardPresenter.clear();
-    this.#renderedFilmCount = 0;
+
+    remove(this.#sortPresenter.sortComponent);
     remove(this.#showMoreButtonComponent);
+
+    if (resetRenderedFilmCount) {
+      this.#renderedFilmCount = FILMS_PER_STEP;
+    } else {
+      this.#renderedFilmCount = Math.min(filmCount, this.#renderedFilmCount);
+    }
+
+    if (resetSortType) {
+      this.#sortPresenter.currentSortType = SORT_TYPE.DEFAULT;
+    }
+  };
+
+  renderBoard = () => {
+    const films = this.#sortPresenter.films;
+
+    render(this.#filmsComponent, this.#filmsContainer);
+
+    this.checkAndRenderFilms(films);
   };
 
   #handleViewAction = (actionType, updateType, update) => {
@@ -124,14 +146,24 @@ export default class FilmsPresenter {
     switch (updateType) {
       case UPDATE_TYPE.PATCH:
         this.#filmCardPresenter.get(data.id)?.updateCard(data);
-        if (this.#popupPresenter.popupComponent) {
-          this.#popupPresenter.updateControlsButton();
-        }
+        this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
         break;
       case UPDATE_TYPE.MINOR:
+        this.clearFilmList();
+        this.renderBoard();
+        this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
         break;
       case UPDATE_TYPE.MAJOR:
+        this.clearFilmList({resetRenderedFilmCount: true, resetSortType: true});
+        this.renderBoard();
+        this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
         break;
+    }
+  };
+
+  #checkAndUpdatePopup = (popupComponent) => {
+    if (popupComponent) {
+      this.#popupPresenter.updateControlsButton();
     }
   };
 }

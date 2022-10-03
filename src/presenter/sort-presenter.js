@@ -9,8 +9,8 @@ export default class SortPresenter {
   #filmsComponent = null;
   #filmsPresenter = null;
   #filmsModel = null;
+  #sortComponent = null;
 
-  #sortComponent = new SortView();
   #currentSortType = SORT_TYPE.DEFAULT;
 
   constructor (filmsComponent, filmPresenter, filmsModel) {
@@ -21,6 +21,7 @@ export default class SortPresenter {
 
   init = () => {
     if (this.films.length) {
+      this.#sortComponent = new SortView(this.#currentSortType);
       this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
       render(this.#sortComponent, this.#filmsComponent, RenderPosition.AFTERBEGIN);
     }
@@ -32,9 +33,8 @@ export default class SortPresenter {
     }
 
     this.#currentSortType = sortType;
-    const films = this.films;
-    this.#filmsPresenter.clearFilmList();
-    this.#filmsPresenter.checkAndRenderFilms(films);
+    this.#filmsPresenter.clearFilmList({resetRenderedFilmCount: true});
+    this.#filmsPresenter.renderBoard();
   };
 
   get films() {
@@ -46,5 +46,17 @@ export default class SortPresenter {
     }
 
     return this.#filmsModel.films;
+  }
+
+  get currentSortType() {
+    return this.#currentSortType;
+  }
+
+  set currentSortType(sortType) {
+    this.#currentSortType = sortType;
+  }
+
+  get sortComponent() {
+    return this.#sortComponent;
   }
 }
