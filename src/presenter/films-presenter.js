@@ -19,16 +19,17 @@ import {
 
 export default class FilmsPresenter {
   #commentsModel = null;
+  #currentFilter = null;
   #filmsContainer = null;
   #filmsModel = null;
   #navigationModel = null;
+  #noFilmComponent = null;
   #popupPresenter = null;
   #showMoreButtonComponent = null;
   #sortPresenter = null;
 
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
-  #noFilmComponent = new NoFilmView();
 
   #filmCardPresenter = new Map();
   #renderedFilmCount = FILMS_PER_STEP;
@@ -108,9 +109,11 @@ export default class FilmsPresenter {
     const filmCount = films.length;
     const newRenderedFilmCount = Math.min(filmCount, this.#renderedFilmCount);
     const startFilms = films.slice(0, newRenderedFilmCount);
+    this.#currentFilter = this.#navigationModel.filter;
 
     render(this.#filmsComponent, this.#filmsContainer);
 
+    this.#noFilmComponent = new NoFilmView(this.#currentFilter);
     if (!filmCount) {
       render(this.#noFilmComponent, this.#filmsComponent.element);
       return;
