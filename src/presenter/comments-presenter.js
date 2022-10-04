@@ -34,7 +34,12 @@ export default class CommentsPresenter {
   #renderComments = () => {
     for (const currentComment of this.#collectedComments) {
       this.#commentComponent = new CommentView(currentComment);
+      this.#commentComponent.setDeleteCommentClickHandler(this.#foo);
       render(this.#commentComponent, this.#commentsContainerComponent.commentsList);
     }
+  };
+
+  #foo = () => {
+    console.log('q');
   };
 }
