@@ -43,6 +43,10 @@ export default class CommentView extends AbstractView {
 
   #deleteCommentClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.deleteCommentClick();
+    this._callback.deleteCommentClick(this.currentCommentID);
   };
+
+  get currentCommentID() {
+    return this.#currentComment.id;
+  }
 }

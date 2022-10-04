@@ -47,7 +47,7 @@ export default class PopupPresenter {
 
   #preparePopup = (film) => {
     this.#film = film;
-    this.#commentsPresenter = new CommentsPresenter(film, this.#commentsModel);
+    this.#commentsPresenter = new CommentsPresenter(film, this.#commentsModel, this.#changeData);
     this.#popupComponent = new PopupView(film.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(film);
     this.#prepareFilmDetailsControls(film);
@@ -113,6 +113,8 @@ export default class PopupPresenter {
   };
 
   updateControlsButton = () => this.#filmDetailsControlsComponent.updateControlsButton();
+
+  updateComments = () => this.#commentsPresenter.init(this.#popupComponent.filmDetailsInnerElement);
 
   get popupComponent() {
     return this.#popupComponent;

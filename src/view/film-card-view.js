@@ -114,4 +114,11 @@ export default class FilmCardView extends AbstractView {
       }
     });
   };
+
+  updateCommentsCount = (filmInformation) => {
+    const commentsCountElement = this.element.querySelector('.film-card__comments');
+    const numComments = filmInformation.comments.length;
+
+    commentsCountElement.innerText = `${numComments} comments`;
+  };
 }

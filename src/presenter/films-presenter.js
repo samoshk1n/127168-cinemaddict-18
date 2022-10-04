@@ -139,6 +139,7 @@ export default class FilmsPresenter {
       case USER_ACTION.ADD_COMMENT:
         break;
       case USER_ACTION.DELETE_COMMENT:
+        this.#filmsModel.updateFilm(updateType, update);
         break;
     }
   };
@@ -165,6 +166,7 @@ export default class FilmsPresenter {
   #checkAndUpdatePopup = (popupComponent) => {
     if (popupComponent) {
       this.#popupPresenter.updateControlsButton();
+      this.#popupPresenter.updateComments();
     }
   };
 }

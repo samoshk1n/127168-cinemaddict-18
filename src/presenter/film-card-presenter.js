@@ -90,7 +90,10 @@ export default class FilmCardPresenter {
 
   #chooseInterfaceUpdate = () => this.#navigationModel.currentNavigation === NAVIGATION_TYPE.ALL ? UPDATE_TYPE.PATCH : UPDATE_TYPE.MINOR;
 
-  updateCard = (filmInformation) => this.#filmComponent.updateItemButtons(filmInformation);
+  updateCard = (filmInformation) => {
+    this.#filmComponent.updateItemButtons(filmInformation);
+    this.#filmComponent.updateCommentsCount(filmInformation);
+  };
 
   destroy = () => remove(this.#filmComponent);
 }
