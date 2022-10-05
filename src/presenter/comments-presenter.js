@@ -3,11 +3,14 @@ import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import {remove, render} from '../framework/render.js';
 import {prepareComments} from '../utils/popup.js';
+import {nanoid} from 'nanoid';
 
 import {
   UPDATE_TYPE,
   USER_ACTION
 } from '../const.js';
+
+const USER_NAME = 'Dima Samoshkin';
 
 export default class CommentsPresenter {
   #changeData = null;
@@ -16,8 +19,8 @@ export default class CommentsPresenter {
   #commentsContainerComponent = null;
   #commentsModel = null;
   #film = null;
+  #newCommentComponent = null;
 
-  #newCommentComponent = new NewCommentView();
 
   constructor (film, commentsModel, changeData) {
     this.#film = film;
@@ -27,10 +30,12 @@ export default class CommentsPresenter {
 
   init = (container) => {
     if (this.#commentsContainerComponent) {
+      remove(this.#newCommentComponent);
       remove(this.#commentsContainerComponent);
     }
 
     this.#commentsContainerComponent = new CommentsContainerView(this.#film.comments.length);
+    this.#newCommentComponent = new NewCommentView();
     this.#collectedComments = prepareComments(this.#film.comments, this.#commentsModel);
 
     this.#renderComponent(container);
@@ -39,13 +44,10 @@ export default class CommentsPresenter {
   #renderComponent = (container) => {
     render(this.#commentsContainerComponent, container);
     this.#renderComments();
-    this.#newCommentComponent.setAddCommentShortcutHandler(this.#foo);
+    this.#newCommentComponent.setAddCommentShortcutHandler(this.#handleAddComment);
     render(this.#newCommentComponent, this.#commentsContainerComponent.commentsWrap);
   };
 
-  #foo = () => {
-    console.log('Ку');
-  };
 
   #renderComments = () => {
     for (const currentComment of this.#collectedComments) {
@@ -53,6 +55,29 @@ export default class CommentsPresenter {
       this.#commentComponent.setDeleteCommentClickHandler(this.#handleDeleteComment);
       render(this.#commentComponent, this.#commentsContainerComponent.commentsList);
     }
+  };
+
+  #handleAddComment = (comment) => {
+    const changededFilm = {...this.#film};
+    const newCommentID = nanoid();
+    const currentDate = new Date();
+
+    changededFilm.comments.push(newCommentID);
+
+    const updatedComment = {
+      ...comment,
+      id: newCommentID,
+      author: USER_NAME,
+      date: currentDate
+    };
+
+    this.#commentsModel.addComment(updatedComment);
+
+    this.#changeData(
+      USER_ACTION.DELETE_COMMENT,
+      UPDATE_TYPE.PATCH,
+      changededFilm
+    );
   };
 
   #handleDeleteComment = (currentCommentID) => {

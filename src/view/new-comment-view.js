@@ -93,7 +93,7 @@ export default class NewCommentView extends AbstractStatefulView {
     if ((this._state.comment && this._state.emotion) &&
        ((evt.metaKey && evt.key === 'Enter') ||
        (evt.ctrlKey && evt.key === 'Enter'))) {
-      this._callback.addCommentShortcut();
+      this._callback.addCommentShortcut(this._state);
     }
   };
 

@@ -1,9 +1,6 @@
 import {generateComment} from '../mock/comment.js';
 import {NUMBER_OF_COMMENTS} from '../const.js';
 import Observable from '../framework/observable.js';
-import {nanoid} from 'nanoid';
-
-const USER_NAME = 'Dima Samoshkin';
 
 export default class CommentsModel extends Observable {
   #comments = Array.from({length: NUMBER_OF_COMMENTS}, (_value, index) => generateComment(index));
@@ -12,17 +9,8 @@ export default class CommentsModel extends Observable {
     return this.#comments;
   }
 
-  addComment = (updateType, update) => {
-    const newComment = {
-      ...update,
-      id: nanoid(),
-      author: USER_NAME,
-      date: new Date()
-    };
-
+  addComment = (newComment) => {
     this.#comments.push(newComment);
-
-    this._notify(updateType, update);
   };
 
   deleteComment = (currentID) => {

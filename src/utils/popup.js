@@ -2,7 +2,7 @@ const collectComments = (filmCommentsInformation, commentsContent) => {
   const sortedComments = [];
 
   for (const filmCommentId of filmCommentsInformation) {
-    const currentComment = commentsContent[filmCommentId];
+    const currentComment = commentsContent.find((comment) => comment.id === filmCommentId);
     sortedComments.push(currentComment);
   }
 
