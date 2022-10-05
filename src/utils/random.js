@@ -10,9 +10,6 @@ const getRandomIntFromInterval = (a = 0, b = 1) => {
   return Math.floor(result);
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomIntFromInterval(0, elements.length - 1)];
-
 export {
-  getRandomArrayElement,
   getRandomIntFromInterval
 };
