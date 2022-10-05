@@ -109,6 +109,7 @@ export default class PopupPresenter {
     this.#popupComponent.element.remove();
     this.#popupComponent = null;
     document.removeEventListener('keydown', this.#escKeyDownHandler);
+    document.removeEventListener('keydown', this.#commentsPresenter.addNewCommentKeydownCallback);
     toggleHideOverflow();
   };
 

@@ -39,7 +39,12 @@ export default class CommentsPresenter {
   #renderComponent = (container) => {
     render(this.#commentsContainerComponent, container);
     this.#renderComments();
+    this.#newCommentComponent.setAddCommentShortcutHandler(this.#foo);
     render(this.#newCommentComponent, this.#commentsContainerComponent.commentsWrap);
+  };
+
+  #foo = () => {
+    console.log('Ку');
   };
 
   #renderComments = () => {
@@ -63,5 +68,10 @@ export default class CommentsPresenter {
       UPDATE_TYPE.PATCH,
       changededFilm
     );
+    // this.#commentsModel.deleteComment(currentCommentID);
   };
+
+  get addNewCommentKeydownCallback() {
+    return this.#newCommentComponent.addCommentShortcutHandler;
+  }
 }
