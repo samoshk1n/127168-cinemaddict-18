@@ -32,3 +32,4 @@ profilePresenter.init();
 navigationPresenter.init();
 filmsPresenter.init();
 statisticsPresenter.init();
+filmsModel.init();

@@ -22,7 +22,6 @@ const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 const FILMS_PER_STEP = 5;
 const KEYS_IN_ORDER = ['watchlist', 'alreadyWatched', 'favorite'];
 const NUMBER_OF_COMMENTS = 50;
-const NUMBER_OF_FILMS = 13;
 const SORT_TYPE = {
   DEFAULT: 'default',
   DATE: 'date',
@@ -66,7 +65,6 @@ export {
   KEYS_IN_ORDER,
   NAVIGATION_TYPE,
   NUMBER_OF_COMMENTS,
-  NUMBER_OF_FILMS,
   SORT_TYPE,
   USER_ACTION,
   UPDATE_TYPE
