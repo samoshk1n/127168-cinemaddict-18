@@ -2,7 +2,6 @@ import CommentsContainerView from '../view/comments-container-view.js';
 import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import {remove, render} from '../framework/render.js';
-import {prepareComments} from '../utils/popup.js';
 import {nanoid} from 'nanoid';
 
 import {
@@ -28,7 +27,7 @@ export default class CommentsPresenter {
     this.#changeData = changeData;
   }
 
-  init = (container) => {
+  init = async (container) => {
     if (this.#commentsContainerComponent) {
       remove(this.#newCommentComponent);
       remove(this.#commentsContainerComponent);
@@ -37,8 +36,8 @@ export default class CommentsPresenter {
 
     this.#commentsContainerComponent = new CommentsContainerView(this.#film.comments.length);
     this.#newCommentComponent = new NewCommentView();
-    this.#collectedComments = prepareComments(this.#film.comments, this.#commentsModel);
-
+    await this.#commentsModel.init(this.#film.id);
+    this.#collectedComments = this.#commentsModel.comments;
     this.#renderComponent(container);
   };
 

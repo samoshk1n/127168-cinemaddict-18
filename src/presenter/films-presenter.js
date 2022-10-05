@@ -1,6 +1,7 @@
 import FilmCardPresenter from './film-card-presenter.js';
 import FilmsView from '../view/films-view.js';
 import FilmsListView from '../view/films-list-view.js';
+import LoadingView from '../view/loading-view.js';
 import NoFilmView from '../view/no-film-view.js';
 import PopupPresenter from './popup-presenter.js';
 import SortPresenter from '../presenter/sort-presenter.js';
@@ -30,9 +31,11 @@ export default class FilmsPresenter {
 
   #filmsComponent = new FilmsView();
   #filmsListComponent = new FilmsListView();
+  #loadingComponent = new LoadingView();
 
   #filmCardPresenter = new Map();
   #renderedFilmCount = FILMS_PER_STEP;
+  #isLoading = true;
 
   constructor (filmsContainer, filmsModel, commentsModel, navigationModel) {
     this.#filmsContainer = filmsContainer;
@@ -82,6 +85,8 @@ export default class FilmsPresenter {
 
   #renderFilms = (films) => films.forEach((film) => this.#renderFilm(film));
 
+  #renderLoading = () => render(this.#loadingComponent, this.#filmsComponent.element);
+
   clearFilmList = ({resetRenderedFilmCount = false, resetSortType = false} = {}) => {
     const filmCount = this.#sortPresenter.films.length;
 
@@ -90,6 +95,7 @@ export default class FilmsPresenter {
 
     remove(this.#sortPresenter.sortComponent);
     remove(this.#noFilmComponent);
+    remove(this.#loadingComponent);
     remove(this.#showMoreButtonComponent);
     remove(this.#filmsListComponent);
 
@@ -105,13 +111,19 @@ export default class FilmsPresenter {
   };
 
   renderBoard = () => {
+    render(this.#filmsComponent, this.#filmsContainer);
+
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
+
     const films = this.#sortPresenter.films;
     const filmCount = films.length;
     const newRenderedFilmCount = Math.min(filmCount, this.#renderedFilmCount);
     const startFilms = films.slice(0, newRenderedFilmCount);
     this.#currentFilter = this.#navigationModel.filter;
 
-    render(this.#filmsComponent, this.#filmsContainer);
 
     this.#noFilmComponent = new NoFilmView(this.#currentFilter);
     if (!filmCount) {
@@ -160,6 +172,11 @@ export default class FilmsPresenter {
         this.clearFilmList({resetRenderedFilmCount: true, resetSortType: true});
         this.renderBoard();
         this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
+        break;
+      case UPDATE_TYPE.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.renderBoard();
         break;
     }
   };

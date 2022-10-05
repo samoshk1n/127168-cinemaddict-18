@@ -1,9 +1,21 @@
-import {generateComment} from '../mock/comment.js';
-import {NUMBER_OF_COMMENTS} from '../const.js';
 import Observable from '../framework/observable.js';
 
 export default class CommentsModel extends Observable {
-  #comments = Array.from({length: NUMBER_OF_COMMENTS}, (_value, index) => generateComment(index));
+  #commentsApiService = null;
+  #comments = [];
+
+  constructor(commentsApiService) {
+    super();
+    this.#commentsApiService = commentsApiService;
+  }
+
+  init = async (id) => {
+    try {
+      this.#comments = await this.#commentsApiService.getComments(id);
+    } catch(err) {
+      this.#comments = [];
+    }
+  };
 
   get comments () {
     return this.#comments;
