@@ -53,9 +53,14 @@ const HTTP_METHOD = {
   PUT: 'PUT',
 };
 
+const AUTHORIZATION = 'Basic d97h8q4hgcg029d84';
+const END_POINT = 'https://18.ecmascript.pages.academy/cinemaddict/';
+
 export {
+  AUTHORIZATION,
   CATEGORY_MATCH,
   EMOTIONS,
+  END_POINT,
   FILMS_PER_STEP,
   HTTP_METHOD,
   KEYS_IN_ORDER,

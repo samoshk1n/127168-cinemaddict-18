@@ -3,7 +3,18 @@ import Observable from '../framework/observable.js';
 import {NUMBER_OF_FILMS} from '../const.js';
 
 export default class FilmsModel extends Observable {
+  #filmsApiService = null;
   #films = Array.from({length: NUMBER_OF_FILMS}, generateFilm);
+
+  constructor(filmsApiService) {
+    super();
+    this.#filmsApiService = filmsApiService;
+
+    this.#filmsApiService.films.then((films) => {
+      console.log(films);
+
+    });
+  }
 
   get films () {
     return this.#films;
