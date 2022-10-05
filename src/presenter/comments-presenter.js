@@ -2,7 +2,6 @@ import CommentsContainerView from '../view/comments-container-view.js';
 import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import {remove, render} from '../framework/render.js';
-import {nanoid} from 'nanoid';
 
 import {
   UPDATE_TYPE,
@@ -59,14 +58,10 @@ export default class CommentsPresenter {
 
   #handleAddComment = (comment) => {
     const changededFilm = {...this.#film};
-    const newCommentID = nanoid();
     const currentDate = new Date();
-
-    changededFilm.comments.push(newCommentID);
 
     const updatedComment = {
       ...comment,
-      id: newCommentID,
       author: USER_NAME,
       date: currentDate
     };
