@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {humanizeDate} from '../utils/date.js';
+import he from 'he';
 
 const createCommentTemplate = (currentComment) => {
   const {
@@ -14,7 +15,7 @@ const createCommentTemplate = (currentComment) => {
       <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="${emotion}">
     </span>
     <div>
-      <p class="film-details__comment-text">${comment}</p>
+      <p class="film-details__comment-text">${he.encode(comment)}</p>
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${author}</span>
         <span class="film-details__comment-day">${humanizeDate(date, 'human')}</span>
@@ -34,5 +35,19 @@ export default class CommentView extends AbstractView {
 
   get template() {
     return createCommentTemplate(this.#currentComment);
+  }
+
+  setDeleteCommentClickHandler = (callback) => {
+    this._callback.deleteCommentClick = callback;
+    this.element.querySelector('.film-details__comment-delete').addEventListener('click', this.#deleteCommentClickHandler);
+  };
+
+  #deleteCommentClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.deleteCommentClick(this.currentCommentID);
+  };
+
+  get currentCommentID() {
+    return this.#currentComment.id;
   }
 }

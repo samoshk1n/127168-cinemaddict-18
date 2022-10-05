@@ -83,6 +83,20 @@ export default class NewCommentView extends AbstractStatefulView {
     });
   };
 
+  setAddCommentShortcutHandler = (callback) => {
+    this._callback.addCommentShortcut = callback;
+    document.addEventListener('keydown', this.addCommentShortcutHandler);
+  };
+
+  addCommentShortcutHandler = (evt) => {
+
+    if ((this._state.comment && this._state.emotion) &&
+       ((evt.metaKey && evt.key === 'Enter') ||
+       (evt.ctrlKey && evt.key === 'Enter'))) {
+      this._callback.addCommentShortcut(this._state);
+    }
+  };
+
   #setInnerHandlers = () => {
     this.element.querySelector('.film-details__emoji-list')
       .addEventListener('click', this.#emojiInputHandler);

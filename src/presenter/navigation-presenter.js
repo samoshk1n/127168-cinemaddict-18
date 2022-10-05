@@ -1,46 +1,83 @@
 import NavigationView from '../view/navigation-view.js';
-import {render} from '../framework/render.js';
-import {KEYS_IN_ORDER} from '../const.js';
+import {filter} from '../utils/filter.js';
+import {
+  NAVIGATION_TYPE,
+  UPDATE_TYPE
+} from '../const.js';
+import {
+  remove,
+  render,
+  replace
+} from '../framework/render.js';
 
 export default class NavigationPresenter {
-  #filmInformations = null;
   #filmsModel = null;
   #navigationContainer = null;
-  #propertiesCounts = null;
+  #navigationModel = null;
 
-  constructor (navigationContainer, filmsModel) {
+  #navigationComponent = null;
+
+  constructor (navigationContainer, filmsModel, navigationModel) {
     this.#filmsModel = filmsModel;
     this.#navigationContainer = navigationContainer;
+    this.#navigationModel = navigationModel;
+
+    this.#filmsModel.addObserver(this.#handleModelEvent);
+    this.#navigationModel.addObserver(this.#handleModelEvent);
   }
 
   init = () => {
-    this.#filmInformations = [...this.#filmsModel.films];
-    this.#propertiesCounts = this.#createPropertiesCounts(KEYS_IN_ORDER, this.#filmInformations);
+    const filters = this.filters;
+    const prevNavigationComponent = this.#navigationComponent;
 
-    render(new NavigationView(this.#propertiesCounts), this.#navigationContainer);
+    this.#navigationComponent = new NavigationView(filters, this.#navigationModel.filter);
+    this.#navigationComponent.setNavigationTypeChangeHandler(this.#handleNavigationTypeChange);
+
+    if (prevNavigationComponent === null) {
+      render(this.#navigationComponent, this.#navigationContainer);
+      return;
+    }
+
+    replace(this.#navigationComponent, prevNavigationComponent);
+    remove(prevNavigationComponent);
   };
 
-  #calculateNumFilmsByProperty = (films, property) => {
-    let numberOfFilms = 0;
+  #handleModelEvent = () => {
+    this.init();
+  };
 
-    films.forEach((film) => {
-      const {userDetails} = film;
+  #handleNavigationTypeChange = (navigationType) => {
+    if (this.#navigationModel.filter === navigationType) {
+      return;
+    }
 
-      if (userDetails[property]) {
-        numberOfFilms++;
+    this.#navigationModel.setNavigation(UPDATE_TYPE.MAJOR, navigationType);
+  };
+
+  get filters() {
+    const films = this.#filmsModel.films;
+
+    return [
+      {
+        name: NAVIGATION_TYPE.ALL,
+        href: 'all',
+        count: '',
+      },
+      {
+        name: NAVIGATION_TYPE.WATCHLIST,
+        href: 'watchlist',
+        count: filter[NAVIGATION_TYPE.WATCHLIST](films).length,
+      },
+      {
+        name: NAVIGATION_TYPE.HISTORY,
+        href: 'history',
+        count: filter[NAVIGATION_TYPE.HISTORY](films).length,
+      },
+      {
+        name: NAVIGATION_TYPE.FAVORITES,
+        href: 'favorites',
+        count: filter[NAVIGATION_TYPE.FAVORITES](films).length,
       }
-    });
-
-    return numberOfFilms;
-  };
-
-  #createPropertiesCounts = (properties, films) => {
-    const propertiesCounts = {};
-
-    properties.forEach((property) => {
-      propertiesCounts[property] = this.#calculateNumFilmsByProperty(films, property);
-    });
-
-    return propertiesCounts;
-  };
+    ];
+  }
 }

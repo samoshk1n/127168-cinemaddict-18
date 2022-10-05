@@ -5,17 +5,25 @@ import {
   render
 } from '../framework/render.js';
 
+import {
+  NAVIGATION_TYPE,
+  USER_ACTION,
+  UPDATE_TYPE
+} from '../const.js';
+
 export default class FilmCardPresenter {
   #changeData = null;
   #film = null;
   #filmComponent = null;
   #filmsListComponent = null;
+  #navigationModel = null;
   #popupPresenter = null;
 
-  constructor(filmsListComponent, popupPresenter, changeData) {
+  constructor(filmsListComponent, popupPresenter, changeData, navigationModel) {
     this.#filmsListComponent = filmsListComponent;
     this.#popupPresenter = popupPresenter;
     this.#changeData = changeData;
+    this.#navigationModel = navigationModel;
   }
 
   init = (filmInformation) => {
@@ -53,22 +61,39 @@ export default class FilmCardPresenter {
   #handleWatchlistClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
-    this.#changeData(changededFilm);
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      this.#chooseInterfaceUpdate(),
+      changededFilm
+    );
   };
 
   #handleWatchedClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
-    this.#changeData(changededFilm);
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      this.#chooseInterfaceUpdate(),
+      changededFilm
+    );
   };
 
   #handleFavoriteClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
-    this.#changeData(changededFilm);
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      this.#chooseInterfaceUpdate(),
+      changededFilm
+    );
   };
 
-  updateCard = (filmInformation) => this.#filmComponent.updateItemButtons(filmInformation);
+  #chooseInterfaceUpdate = () => this.#navigationModel.currentNavigation === NAVIGATION_TYPE.ALL ? UPDATE_TYPE.PATCH : UPDATE_TYPE.MINOR;
+
+  updateCard = (filmInformation) => {
+    this.#filmComponent.updateItemButtons(filmInformation);
+    this.#filmComponent.updateCommentsCount(filmInformation);
+  };
 
   destroy = () => remove(this.#filmComponent);
 }

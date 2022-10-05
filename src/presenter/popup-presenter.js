@@ -7,6 +7,12 @@ import {
   toggleHideOverflow,
 } from '../utils/popup.js';
 
+import {
+  NAVIGATION_TYPE,
+  USER_ACTION,
+  UPDATE_TYPE
+} from '../const.js';
+
 const siteBodyElement = document.querySelector('body');
 
 export default class PopupPresenter {
@@ -16,11 +22,13 @@ export default class PopupPresenter {
   #film = null;
   #filmDetailsComponent = null;
   #filmDetailsControlsComponent = null;
+  #navigationModel = null;
   #popupComponent = null;
 
-  constructor (commentsModel, changeData) {
+  constructor (commentsModel, changeData, navigationModel) {
     this.#commentsModel = commentsModel;
     this.#changeData = changeData;
+    this.#navigationModel = navigationModel;
   }
 
   init = (film) => {
@@ -39,7 +47,7 @@ export default class PopupPresenter {
 
   #preparePopup = (film) => {
     this.#film = film;
-    this.#commentsPresenter = new CommentsPresenter(film, this.#commentsModel);
+    this.#commentsPresenter = new CommentsPresenter(film, this.#commentsModel, this.#changeData);
     this.#popupComponent = new PopupView(film.comments.length);
     this.#filmDetailsComponent = new FilmDetailsView(film);
     this.#prepareFilmDetailsControls(film);
@@ -68,36 +76,48 @@ export default class PopupPresenter {
   #handleWatchlistClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
-    this.#changeData(changededFilm);
-    this.#filmDetailsControlsComponent.updateControlsButton();
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      this.#chooseInterfaceUpdate(),
+      changededFilm
+    );
   };
 
   #handleWatchedClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
-    this.#changeData(changededFilm);
-    this.#filmDetailsControlsComponent.updateControlsButton();
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      this.#chooseInterfaceUpdate(),
+      changededFilm
+    );
   };
 
   #handleFavoriteClick = () => {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
-    this.#changeData(changededFilm);
-    this.#filmDetailsControlsComponent.updateControlsButton();
+    this.#changeData(
+      USER_ACTION.UPDATE_FILM,
+      this.#chooseInterfaceUpdate(),
+      changededFilm
+    );
   };
+
+  #chooseInterfaceUpdate = () => this.#navigationModel.currentNavigation === NAVIGATION_TYPE.ALL ? UPDATE_TYPE.PATCH : UPDATE_TYPE.MINOR;
 
   closePopup = () => {
     this.#popupComponent.element.remove();
     this.#popupComponent = null;
     document.removeEventListener('keydown', this.#escKeyDownHandler);
+    document.removeEventListener('keydown', this.#commentsPresenter.addNewCommentKeydownCallback);
     toggleHideOverflow();
   };
 
+  updateControlsButton = () => this.#filmDetailsControlsComponent.updateControlsButton();
+
+  updateComments = () => this.#commentsPresenter.init(this.#popupComponent.filmDetailsInnerElement);
+
   get popupComponent() {
     return this.#popupComponent;
-  }
-
-  get filmDetailsControlsComponent() {
-    return this.#filmDetailsControlsComponent;
   }
 }
