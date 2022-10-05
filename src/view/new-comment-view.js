@@ -102,6 +102,5 @@ export default class NewCommentView extends AbstractStatefulView {
       .addEventListener('click', this.#emojiInputHandler);
     this.element.querySelector('.film-details__comment-input')
       .addEventListener('input', this.#commentInputHandler);
-    this.setAddCommentShortcutHandler(this._callback.addCommentShortcut);
   };
 }

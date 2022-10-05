@@ -32,6 +32,7 @@ export default class CommentsPresenter {
     if (this.#commentsContainerComponent) {
       remove(this.#newCommentComponent);
       remove(this.#commentsContainerComponent);
+      document.removeEventListener('keydown', this.#newCommentComponent.addCommentShortcutHandler);
     }
 
     this.#commentsContainerComponent = new CommentsContainerView(this.#film.comments.length);
