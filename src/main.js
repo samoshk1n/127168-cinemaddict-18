@@ -8,6 +8,7 @@ import FilmsModel from './model/films-model.js';
 import NavigationModel from './model/navigation-model.js';
 import StatisticsModel from './model/statistics-model.js';
 
+
 import FilmsApiService from './films-api-service.js';
 import {
   AUTHORIZATION,
