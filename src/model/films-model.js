@@ -1,4 +1,5 @@
 import Observable from '../framework/observable.js';
+import {UPDATE_TYPE} from '../const.js';
 
 export default class FilmsModel extends Observable {
   #filmsApiService = null;
@@ -16,6 +17,8 @@ export default class FilmsModel extends Observable {
     } catch(err) {
       this.#films = [];
     }
+
+    this._notify(UPDATE_TYPE.INIT);
   };
 
   #adaptToClient = (film) => {
