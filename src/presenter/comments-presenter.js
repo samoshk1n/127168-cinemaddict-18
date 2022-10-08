@@ -1,6 +1,7 @@
 import CommentsContainerView from '../view/comments-container-view.js';
 import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
+import {sortComments} from '../utils/popup.js';
 import {remove, render} from '../framework/render.js';
 
 import {
@@ -12,7 +13,7 @@ const USER_NAME = 'Dima Samoshkin';
 
 export default class CommentsPresenter {
   #changeData = null;
-  #collectedComments = null;
+  #sortedComments = null;
   #commentComponent = null;
   #commentsContainerComponent = null;
   #commentsModel = null;
@@ -36,7 +37,7 @@ export default class CommentsPresenter {
     this.#commentsContainerComponent = new CommentsContainerView(this.#film.comments.length);
     this.#newCommentComponent = new NewCommentView();
     await this.#commentsModel.init(this.#film.id);
-    this.#collectedComments = this.#commentsModel.comments;
+    this.#sortedComments = sortComments(this.#commentsModel);
     this.#renderComponent(container);
   };
 
@@ -49,7 +50,7 @@ export default class CommentsPresenter {
 
 
   #renderComments = () => {
-    for (const currentComment of this.#collectedComments) {
+    for (const currentComment of this.#sortedComments) {
       this.#commentComponent = new CommentView(currentComment);
       this.#commentComponent.setDeleteCommentClickHandler(this.#handleDeleteComment);
       render(this.#commentComponent, this.#commentsContainerComponent.commentsList);

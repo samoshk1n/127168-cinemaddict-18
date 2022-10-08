@@ -1,18 +1,8 @@
-const collectComments = (filmCommentsInformation, commentsContent) => {
-  const sortedComments = [];
+import dayjs from 'dayjs';
 
-  for (const filmCommentId of filmCommentsInformation) {
-    const currentComment = commentsContent.find((comment) => comment.id === filmCommentId);
-    sortedComments.push(currentComment);
-  }
-
-  return sortedComments;
-};
-
-const prepareComments = (commentsInformation, commentsModel) => {
+const sortComments = (commentsModel) => {
   const commentsContent = commentsModel.comments;
-  const collectedComments = collectComments(commentsInformation, commentsContent);
-  return collectedComments.sort((a, b) => a.date - b.date);
+  return commentsContent.sort((a, b) => dayjs(a.date) - dayjs(b.date));
 };
 
 const toggleHideOverflow = () => {
@@ -21,6 +11,6 @@ const toggleHideOverflow = () => {
 };
 
 export {
-  prepareComments,
+  sortComments,
   toggleHideOverflow
 };
