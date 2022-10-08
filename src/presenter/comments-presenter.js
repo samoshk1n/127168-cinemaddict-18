@@ -70,7 +70,7 @@ export default class CommentsPresenter {
     this.#commentsModel.addComment(updatedComment);
 
     this.#changeData(
-      UserAction.DELETE_COMMENT,
+      UserAction.ADD_COMMENT,
       UpdateType.PATCH,
       changededFilm
     );

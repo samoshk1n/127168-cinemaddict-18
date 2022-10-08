@@ -161,17 +161,16 @@ export default class FilmsPresenter {
     switch (updateType) {
       case UpdateType.PATCH:
         this.#filmCardPresenter.get(data.id)?.updateCard(data);
-        this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
+        this.#checkAndUpdateControlsPopup(this.#popupPresenter.popupComponent);
         break;
       case UpdateType.MINOR:
         this.clearFilmList();
         this.renderBoard();
-        this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
+        this.#checkAndUpdateControlsPopup(this.#popupPresenter.popupComponent);
         break;
       case UpdateType.MAJOR:
         this.clearFilmList({resetRenderedFilmCount: true, resetSortType: true});
         this.renderBoard();
-        this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
         break;
       case UpdateType.INIT:
         this.#isLoading = false;
@@ -181,10 +180,10 @@ export default class FilmsPresenter {
     }
   };
 
-  #checkAndUpdatePopup = (popupComponent) => {
+  #checkAndUpdateControlsPopup = (popupComponent) => {
     if (popupComponent) {
       this.#popupPresenter.updateControlsButton();
-      this.#popupPresenter.updateComments();
+      // this.#popupPresenter.updateComments();
     }
   };
 }
