@@ -6,7 +6,6 @@ import StatisticsPresenter from './presenter/statistics-presenter.js';
 import CommentsModel from './model/comments-model.js';
 import FilmsModel from './model/films-model.js';
 import NavigationModel from './model/navigation-model.js';
-import StatisticsModel from './model/statistics-model.js';
 
 import CommentsApiService from './comments-api-service.js';
 import FilmsApiService from './films-api-service.js';
@@ -23,11 +22,10 @@ const statisticElement = siteBodyElement.querySelector('.footer__statistics');
 const commentsModel = new CommentsModel(new CommentsApiService(END_POINT, AUTHORIZATION));
 const filmsModel = new FilmsModel(new FilmsApiService(END_POINT, AUTHORIZATION));
 const navigationModel = new NavigationModel();
-const statisticsModel = new StatisticsModel();
 const filmsPresenter = new FilmsPresenter(siteMainElement, filmsModel, commentsModel, navigationModel);
 const navigationPresenter = new NavigationPresenter(siteMainElement, filmsModel, navigationModel);
 const profilePresenter = new ProfilePresenter(siteHeaderElement);
-const statisticsPresenter = new StatisticsPresenter(statisticElement, statisticsModel);
+const statisticsPresenter = new StatisticsPresenter(statisticElement, filmsModel);
 
 profilePresenter.init();
 navigationPresenter.init();

@@ -1,14 +1,30 @@
 import StatisticsView from '../view/statistics-view.js';
-import {render} from '../framework/render.js';
+import {UpdateType} from '../const.js';
+import {
+  render,
+  replace
+} from '../framework/render.js';
 
 export default class StatisticsPresenter {
   #statisticsContainer = null;
-  #statisticsModel = null;
+  #filmsModel = null;
+  #loadingStatisticsComponent = null;
 
-  constructor (statisticsContainer, statisticsModel) {
+  constructor (statisticsContainer, filmsModel) {
     this.#statisticsContainer = statisticsContainer;
-    this.#statisticsModel = statisticsModel;
+    this.#filmsModel = filmsModel;
+
+    this.#filmsModel.addObserver(this.#handleModelEvent);
   }
 
-  init = () => render(new StatisticsView(this.#statisticsModel.totalMovies), this.#statisticsContainer);
+  init = () => {
+    this.#loadingStatisticsComponent = new StatisticsView(this.#filmsModel);
+    render(this.#loadingStatisticsComponent, this.#statisticsContainer);
+  };
+
+  #handleModelEvent = (updateType) => {
+    if (updateType === UpdateType.INIT) {
+      replace(new StatisticsView(this.#filmsModel), this.#loadingStatisticsComponent);
+    }
+  };
 }

@@ -1,17 +1,17 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {separateNumber} from '../utils/text.js';
 
-const createStatisticsTemplate = (totalMovies) => `<p>${separateNumber(totalMovies)} movies inside</p>`;
+const createStatisticsTemplate = (totalMovies) => `<p>${separateNumber(totalMovies.films.length)} movies inside</p>`;
 
 export default class StatisticsView extends AbstractView {
-  #totalMovies = null;
+  #filmsModel = null;
 
-  constructor (totalMovies) {
+  constructor (filmsModel) {
     super();
-    this.#totalMovies = totalMovies;
+    this.#filmsModel = filmsModel;
   }
 
   get template() {
-    return createStatisticsTemplate(this.#totalMovies);
+    return createStatisticsTemplate(this.#filmsModel);
   }
 }
