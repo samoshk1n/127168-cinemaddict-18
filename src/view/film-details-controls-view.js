@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {
-  CATEGORY_MATCH,
+  CategoryMatch,
   KEYS_IN_ORDER
 } from '../const.js';
 
@@ -30,14 +30,14 @@ export default class FilmDetailsControlsView extends AbstractView {
 
   updateControlsButton = () => {
     KEYS_IN_ORDER.forEach((key) => {
-      const currentButton = this.element.querySelector(`#${CATEGORY_MATCH[key].id}`);
+      const currentButton = this.element.querySelector(`#${CategoryMatch[key].id}`);
       const userDetails = this.#film.userDetails;
 
       if (userDetails[key]) {
-        currentButton.textContent = CATEGORY_MATCH[key].active;
+        currentButton.textContent = CategoryMatch[key].active;
         this.#addActiveButtonClass(currentButton);
       } else {
-        currentButton.textContent = CATEGORY_MATCH[key].inactive;
+        currentButton.textContent = CategoryMatch[key].inactive;
         this.#removeActiveButtonClass(currentButton);
       }
     });

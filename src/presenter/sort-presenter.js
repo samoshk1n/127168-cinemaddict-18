@@ -4,7 +4,7 @@ import {
   render,
   RenderPosition
 } from '../framework/render.js';
-import {SORT_TYPE} from '../const.js';
+import {SortType} from '../const.js';
 
 export default class SortPresenter {
   #filmsComponent = null;
@@ -13,7 +13,7 @@ export default class SortPresenter {
   #navigationModel = null;
   #sortComponent = null;
 
-  #currentSortType = SORT_TYPE.DEFAULT;
+  #currentSortType = SortType.DEFAULT;
 
   constructor (filmsComponent, filmPresenter, filmsModel, navigationModel) {
     this.#filmsComponent = filmsComponent;
@@ -46,9 +46,9 @@ export default class SortPresenter {
     const filteredFilms = filter[navigationType](films);
 
     switch (this.#currentSortType) {
-      case SORT_TYPE.DATE:
+      case SortType.DATE:
         return filteredFilms.sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
-      case SORT_TYPE.RATING:
+      case SortType.RATING:
         return filteredFilms.sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
     }
 

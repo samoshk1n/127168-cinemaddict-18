@@ -1,8 +1,8 @@
 import NavigationView from '../view/navigation-view.js';
 import {filter} from '../utils/filter.js';
 import {
-  NAVIGATION_TYPE,
-  UPDATE_TYPE
+  NavigationType,
+  UpdateType
 } from '../const.js';
 import {
   remove,
@@ -51,7 +51,7 @@ export default class NavigationPresenter {
       return;
     }
 
-    this.#navigationModel.setNavigation(UPDATE_TYPE.MAJOR, navigationType);
+    this.#navigationModel.setNavigation(UpdateType.MAJOR, navigationType);
   };
 
   get filters() {
@@ -59,24 +59,24 @@ export default class NavigationPresenter {
 
     return [
       {
-        name: NAVIGATION_TYPE.ALL,
+        name: NavigationType.ALL,
         href: 'all',
         count: '',
       },
       {
-        name: NAVIGATION_TYPE.WATCHLIST,
+        name: NavigationType.WATCHLIST,
         href: 'watchlist',
-        count: filter[NAVIGATION_TYPE.WATCHLIST](films).length,
+        count: filter[NavigationType.WATCHLIST](films).length,
       },
       {
-        name: NAVIGATION_TYPE.HISTORY,
+        name: NavigationType.HISTORY,
         href: 'history',
-        count: filter[NAVIGATION_TYPE.HISTORY](films).length,
+        count: filter[NavigationType.HISTORY](films).length,
       },
       {
-        name: NAVIGATION_TYPE.FAVORITES,
+        name: NavigationType.FAVORITES,
         href: 'favorites',
-        count: filter[NAVIGATION_TYPE.FAVORITES](films).length,
+        count: filter[NavigationType.FAVORITES](films).length,
       }
     ];
   }

@@ -4,8 +4,8 @@ import NewCommentView from '../view/new-comment-view.js';
 import {remove, render} from '../framework/render.js';
 
 import {
-  UPDATE_TYPE,
-  USER_ACTION
+  UpdateType,
+  UserAction
 } from '../const.js';
 
 const USER_NAME = 'Dima Samoshkin';
@@ -69,8 +69,8 @@ export default class CommentsPresenter {
     this.#commentsModel.addComment(updatedComment);
 
     this.#changeData(
-      USER_ACTION.DELETE_COMMENT,
-      UPDATE_TYPE.PATCH,
+      UserAction.DELETE_COMMENT,
+      UpdateType.PATCH,
       changededFilm
     );
   };
@@ -84,8 +84,8 @@ export default class CommentsPresenter {
     }
 
     this.#changeData(
-      USER_ACTION.DELETE_COMMENT,
-      UPDATE_TYPE.PATCH,
+      UserAction.DELETE_COMMENT,
+      UpdateType.PATCH,
       changededFilm
     );
     // this.#commentsModel.deleteComment(currentCommentID);

@@ -13,9 +13,9 @@ import {
 } from '../framework/render.js';
 import {
   FILMS_PER_STEP,
-  SORT_TYPE,
-  UPDATE_TYPE,
-  USER_ACTION
+  SortType,
+  UpdateType,
+  UserAction
 } from '../const.js';
 
 export default class FilmsPresenter {
@@ -106,7 +106,7 @@ export default class FilmsPresenter {
     }
 
     if (resetSortType) {
-      this.#sortPresenter.currentSortType = SORT_TYPE.DEFAULT;
+      this.#sortPresenter.currentSortType = SortType.DEFAULT;
     }
   };
 
@@ -145,13 +145,13 @@ export default class FilmsPresenter {
 
   #handleViewAction = (actionType, updateType, update) => {
     switch (actionType) {
-      case USER_ACTION.UPDATE_FILM:
+      case UserAction.UPDATE_FILM:
         this.#filmsModel.updateFilm(updateType, update);
         break;
-      case USER_ACTION.ADD_COMMENT:
+      case UserAction.ADD_COMMENT:
         // this.#filmsModel.updateFilm(updateType, update);
         break;
-      case USER_ACTION.DELETE_COMMENT:
+      case UserAction.DELETE_COMMENT:
         this.#filmsModel.updateFilm(updateType, update);
         break;
     }
@@ -159,21 +159,21 @@ export default class FilmsPresenter {
 
   #handleModelEvent = (updateType, data) => {
     switch (updateType) {
-      case UPDATE_TYPE.PATCH:
+      case UpdateType.PATCH:
         this.#filmCardPresenter.get(data.id)?.updateCard(data);
         this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
         break;
-      case UPDATE_TYPE.MINOR:
+      case UpdateType.MINOR:
         this.clearFilmList();
         this.renderBoard();
         this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
         break;
-      case UPDATE_TYPE.MAJOR:
+      case UpdateType.MAJOR:
         this.clearFilmList({resetRenderedFilmCount: true, resetSortType: true});
         this.renderBoard();
         this.#checkAndUpdatePopup(this.#popupPresenter.popupComponent);
         break;
-      case UPDATE_TYPE.INIT:
+      case UpdateType.INIT:
         this.#isLoading = false;
         remove(this.#loadingComponent);
         this.renderBoard();

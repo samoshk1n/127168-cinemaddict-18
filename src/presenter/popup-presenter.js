@@ -8,9 +8,9 @@ import {
 } from '../utils/popup.js';
 
 import {
-  NAVIGATION_TYPE,
-  USER_ACTION,
-  UPDATE_TYPE
+  NavigationType,
+  UserAction,
+  UpdateType
 } from '../const.js';
 
 const siteBodyElement = document.querySelector('body');
@@ -77,7 +77,7 @@ export default class PopupPresenter {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.watchlist = !this.#film.userDetails.watchlist;
     this.#changeData(
-      USER_ACTION.UPDATE_FILM,
+      UserAction.UPDATE_FILM,
       this.#chooseInterfaceUpdate(),
       changededFilm
     );
@@ -87,7 +87,7 @@ export default class PopupPresenter {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.alreadyWatched = !this.#film.userDetails.alreadyWatched;
     this.#changeData(
-      USER_ACTION.UPDATE_FILM,
+      UserAction.UPDATE_FILM,
       this.#chooseInterfaceUpdate(),
       changededFilm
     );
@@ -97,13 +97,13 @@ export default class PopupPresenter {
     const changededFilm = {...this.#film};
     changededFilm.userDetails.favorite = !this.#film.userDetails.favorite;
     this.#changeData(
-      USER_ACTION.UPDATE_FILM,
+      UserAction.UPDATE_FILM,
       this.#chooseInterfaceUpdate(),
       changededFilm
     );
   };
 
-  #chooseInterfaceUpdate = () => this.#navigationModel.currentNavigation === NAVIGATION_TYPE.ALL ? UPDATE_TYPE.PATCH : UPDATE_TYPE.MINOR;
+  #chooseInterfaceUpdate = () => this.#navigationModel.currentNavigation === NavigationType.ALL ? UpdateType.PATCH : UpdateType.MINOR;
 
   closePopup = () => {
     this.#popupComponent.element.remove();

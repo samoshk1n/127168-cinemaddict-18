@@ -1,15 +1,15 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {NAVIGATION_TYPE} from '../const.js';
+import {NavigationType} from '../const.js';
 
-const NO_FILMS_TEXT = {
-  [NAVIGATION_TYPE.ALL]: 'There are no movies in our database',
-  [NAVIGATION_TYPE.WATCHLIST]: 'There are no movies in watchlist',
-  [NAVIGATION_TYPE.HISTORY]: 'There are no movies in history',
-  [NAVIGATION_TYPE.FAVORITES]: 'There are no movies in favorites',
+const NoFilmsText = {
+  [NavigationType.ALL]: 'There are no movies in our database',
+  [NavigationType.WATCHLIST]: 'There are no movies in watchlist',
+  [NavigationType.HISTORY]: 'There are no movies in history',
+  [NavigationType.FAVORITES]: 'There are no movies in favorites',
 };
 
 const createNoFilmTemplate = (currentFilter) => {
-  const noFilmTextValue = NO_FILMS_TEXT[currentFilter];
+  const noFilmTextValue = NoFilmsText[currentFilter];
 
   return (
     `<section class="films-list">

@@ -1,73 +1,74 @@
-const CATEGORY_MATCH = {
+const FILMS_PER_STEP = 5;
+const AUTHORIZATION = 'Basic d97h8q4hgcg029d84';
+const END_POINT = 'https://18.ecmascript.pages.academy/cinemaddict/';
+
+const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
+const KEYS_IN_ORDER = ['watchlist', 'alreadyWatched', 'favorite'];
+
+
+// В CategoryMatch свойства записаны через camelCase из-за перечисления в коде по KEYS_IN_ORDER (для сохранения порядка). В свою очередь, наименования 'watchlist', 'alreadyWatched', 'favorite' - это наименования из структуры данных. Поэтому эти свойства оставлены в написании camelCase
+const CategoryMatch = {
   watchlist: {
     active: 'Already in watchlist',
     inactive: 'Add to watchlist',
-    id: 'watchlist',
-    navigation: 'watchlist'
+    id: 'watchlist'
   },
   alreadyWatched: {
     active: 'Already watched',
     inactive: 'Not watched yet',
-    id: 'watched',
-    navigation: 'history'
+    id: 'watched'
   },
   favorite: {
     active: 'Already in favorites',
     inactive: 'Add to favorites',
-    id: 'favorite',
-    navigation: 'favorites'
+    id: 'favorite'
   }
 };
-const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
-const FILMS_PER_STEP = 5;
-const KEYS_IN_ORDER = ['watchlist', 'alreadyWatched', 'favorite'];
 
-const SORT_TYPE = {
+const SortType = {
   DEFAULT: 'default',
   DATE: 'date',
   RATING: 'rating',
 };
 
-const NAVIGATION_TYPE = {
+const NavigationType = {
   ALL: 'All movies',
   WATCHLIST: 'Watchlist',
   HISTORY: 'History',
   FAVORITES: 'Favorites',
 };
 
-const USER_ACTION = {
+const UserAction = {
   UPDATE_FILM: 'UPDATE_FILM',
   ADD_COMMENT: 'ADD_COMMENT',
   DELETE_COMMENT: 'DELETE_COMMENT',
 };
 
-const UPDATE_TYPE = {
+const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
   INIT: 'INIT'
 };
 
-const HTTP_METHOD = {
+const HttpMethod = {
   GET: 'GET',
   PUT: 'PUT',
   POST: 'POST',
   DELETE: 'DELETE'
 };
 
-const AUTHORIZATION = 'Basic d97h8q4hgcg029d84';
-const END_POINT = 'https://18.ecmascript.pages.academy/cinemaddict/';
 
 export {
   AUTHORIZATION,
-  CATEGORY_MATCH,
+  CategoryMatch,
   EMOTIONS,
   END_POINT,
   FILMS_PER_STEP,
-  HTTP_METHOD,
+  HttpMethod,
   KEYS_IN_ORDER,
-  NAVIGATION_TYPE,
-  SORT_TYPE,
-  USER_ACTION,
-  UPDATE_TYPE
+  NavigationType,
+  SortType,
+  UserAction,
+  UpdateType
 };
