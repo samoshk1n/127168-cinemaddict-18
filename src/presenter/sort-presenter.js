@@ -5,6 +5,7 @@ import {
   RenderPosition
 } from '../framework/render.js';
 import {SortType} from '../const.js';
+import dayjs from 'dayjs';
 
 export default class SortPresenter {
   #filmsComponent = null;
@@ -47,7 +48,7 @@ export default class SortPresenter {
 
     switch (this.#currentSortType) {
       case SortType.DATE:
-        return filteredFilms.sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
+        return filteredFilms.sort((a, b) => dayjs(b.filmInfo.release.date) - dayjs(a.filmInfo.release.date));
       case SortType.RATING:
         return filteredFilms.sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
     }

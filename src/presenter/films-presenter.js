@@ -138,7 +138,7 @@ export default class FilmsPresenter {
 
     if (filmCount > this.#renderedFilmCount) {
       this.#showMoreButtonComponent = new ShowMoreButtonView();
-      this.#showMoreButtonComponent.setPopupClickHandler(this.#onShowMoreButtonClick);
+      this.#showMoreButtonComponent.setShowMoreButtonClickHandler(this.#onShowMoreButtonClick);
       render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
     }
   };
