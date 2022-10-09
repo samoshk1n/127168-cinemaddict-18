@@ -24,7 +24,7 @@ const filmsModel = new FilmsModel(new FilmsApiService(END_POINT, AUTHORIZATION))
 const navigationModel = new NavigationModel();
 const filmsPresenter = new FilmsPresenter(siteMainElement, filmsModel, commentsModel, navigationModel);
 const navigationPresenter = new NavigationPresenter(siteMainElement, filmsModel, navigationModel);
-const profilePresenter = new ProfilePresenter(siteHeaderElement);
+const profilePresenter = new ProfilePresenter(siteHeaderElement, filmsModel);
 const statisticsPresenter = new StatisticsPresenter(statisticElement, filmsModel);
 
 profilePresenter.init();

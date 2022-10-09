@@ -81,7 +81,5 @@ export default class FilmsModel extends Observable {
     } catch(err) {
       throw new Error('Can\'t update film');
     }
-
-
   };
 }

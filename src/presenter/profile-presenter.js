@@ -1,12 +1,30 @@
 import ProfileView from '../view/profile-view.js';
-import {render} from '../framework/render.js';
+import {remove, render} from '../framework/render.js';
 
 export default class ProfilePresenter {
+  #filmsModel = null;
+  #profileComponent = null;
   #profileContainer = null;
 
-  constructor (profileContainer) {
+  constructor (profileContainer, filmsModel) {
     this.#profileContainer = profileContainer;
+    this.#filmsModel = filmsModel;
+
+    this.#filmsModel.addObserver(this.#handleModelEvent);
   }
 
-  init = () => render(new ProfileView(), this.#profileContainer);
+  init = () => {
+    if (this.#profileComponent) {
+      remove(this.#profileComponent);
+    }
+
+    this.#profileComponent = new ProfileView(this.#filmsModel);
+    render(this.#profileComponent, this.#profileContainer);
+  };
+
+  #handleModelEvent = (updateType) => {
+    if (updateType) {
+      this.init();
+    }
+  };
 }

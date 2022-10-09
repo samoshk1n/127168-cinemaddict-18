@@ -25,6 +25,25 @@ const CategoryMatch = {
   }
 };
 
+const ProfileRank = {
+  NO_RANK: {
+    TEXT: '',
+    MAX_LENGTH: 0,
+  },
+  NOVICE: {
+    TEXT: 'Novice',
+    MAX_LENGTH: 10,
+  },
+  FAN: {
+    TEXT: 'Fan',
+    MAX_LENGTH: 20,
+  },
+  MOVIE_BUFF: {
+    TEXT: 'Movie Buff',
+    MAX_LENGTH: Infinity,
+  }
+};
+
 const SortType = {
   DEFAULT: 'default',
   DATE: 'date',
@@ -68,6 +87,7 @@ export {
   HttpMethod,
   KEYS_IN_ORDER,
   NavigationType,
+  ProfileRank,
   SortType,
   UserAction,
   UpdateType
