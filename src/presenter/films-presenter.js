@@ -68,7 +68,7 @@ export default class FilmsPresenter {
       this.#showMoreButtonComponent.element.remove();
       this.#showMoreButtonComponent.removeElement();
     } else {
-      render(this.#showMoreButtonComponent, this.#filmsListComponent.filmsListContainer);
+      render(this.#showMoreButtonComponent, this.#filmsListComponent.element);
     }
   };
 
