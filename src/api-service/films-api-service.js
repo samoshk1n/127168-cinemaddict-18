@@ -1,5 +1,5 @@
-import ApiService from './framework/api-service.js';
-import {HttpMethod} from './const.js';
+import ApiService from '../framework/api-service.js';
+import {HttpMethod} from '../const.js';
 
 export default class FilmsApiService extends ApiService {
   get films() {

@@ -36,7 +36,7 @@ export default class CommentsPresenter {
 
     this.#commentsContainerComponent = new CommentsContainerView(this.#film.comments.length);
     this.#newCommentComponent = new NewCommentView();
-    await this.#commentsModel.init(this.#film.id);
+    await this.#commentsModel.init(this.#film);
     this.#sortedComments = sortComments(this.#commentsModel);
     this.#renderComponent(container);
   };

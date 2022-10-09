@@ -7,8 +7,8 @@ import CommentsModel from './model/comments-model.js';
 import FilmsModel from './model/films-model.js';
 import NavigationModel from './model/navigation-model.js';
 
-import CommentsApiService from './comments-api-service.js';
-import FilmsApiService from './films-api-service.js';
+import CommentsApiService from './api-service/comments-api-service.js';
+import FilmsApiService from './api-service/films-api-service.js';
 import {
   AUTHORIZATION,
   END_POINT
